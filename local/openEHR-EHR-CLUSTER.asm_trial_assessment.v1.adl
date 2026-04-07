@@ -1,0 +1,733 @@
+archetype (adl_version=1.4; uid=5a2246c4-8244-40a3-8966-fcc7083836e3)
+	openEHR-EHR-CLUSTER.asm_trial_assessment.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Epilepsiespezifische Beurteilung eines einzelnen ASM-Therapieversuchs als Cluster neben publizierten Medikationsartefakten.">
+			use = <"Als zusaetzlicher Cluster in Templates mit medication_order und action.medication fuer Ansprechen, Adaequanz, Nebenwirkungen und regulatorische Valproat-PPP-Compliance eines ASM-Versuchs.">
+			misuse = <"Nicht als Ersatz fuer publizierte Medikationsidentitaet, Verordnungsstruktur oder vollstaendige Medikationslisten verwenden.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Epilepsy-specific assessment of one ASM trial as a cluster that complements published medication artefacts.">
+			use = <"Use as a companion cluster inside templates that already use medication_order and action.medication for medication identity and workflow. The cluster also captures regulatory valproate pregnancy-prevention-programme compliance where applicable.">
+			misuse = <"Do not use as a replacement for published medication identity, prescribing structure, or complete medication lists.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"61fccd55ced45ba988feace1fb18024a">
+		["build_uid"] = <"1500cc8d-d2a7-32a0-89fe-4425a9daac33">
+	>
+
+definition
+	CLUSTER[at0000] matches {    -- ASM-Therapieversuchsbeurteilung
+		items cardinality matches {0..*; unordered} matches {
+			ELEMENT[at0010] occurrences matches {0..1} matches {    -- Rohdosisnotation
+				value matches {
+					DV_TEXT matches {*}
+				}
+			}
+			ELEMENT[at0011] occurrences matches {0..1} matches {    -- Dosis pro kg mg
+				value matches {
+					DV_QUANTITY matches {*}
+				}
+			}
+			ELEMENT[at0012] occurrences matches {0..1} matches {    -- Maximaldosis mg
+				value matches {
+					DV_QUANTITY matches {*}
+				}
+			}
+			ELEMENT[at0013] occurrences matches {0..1} matches {    -- Versuchsdauer Monate
+				value matches {
+					DV_QUANTITY matches {*}
+				}
+			}
+			ELEMENT[at0014] occurrences matches {0..1} matches {    -- Aktuell aktiv
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0015] occurrences matches {0..1} matches {    -- Anfallsansprechen
+				value matches {
+					DV_CODED_TEXT matches {
+						defining_code matches {
+							[local::
+							at0100,    -- Anfallsfrei
+							at0101,    -- Mehr als 50 Prozent Reduktion
+							at0102,    -- Weniger als 50 Prozent Reduktion
+							at0103,    -- Kein Ansprechen
+							at0104,    -- Verschlechterung
+							at0105]    -- Unbekannt
+						}
+					}
+				}
+			}
+			ELEMENT[at0016] occurrences matches {0..1} matches {    -- Grund fuer Absetzen
+				value matches {
+					DV_CODED_TEXT matches {
+						defining_code matches {
+							[local::
+							at0106,    -- Wirksamkeit unzureichend
+							at0107,    -- Nebenwirkung
+							at0108,    -- Beides
+							at0109,    -- Geplanter Ausschleichversuch
+							at0110,    -- Protokoll abgeschlossen
+							at0111,    -- Entscheidung der Sorgeberechtigten
+							at0112,    -- Unbekannt
+							at0113]    -- Weiter laufend
+						}
+					}
+				}
+			}
+			ELEMENT[at0017] occurrences matches {0..1} matches {    -- Adaequater Versuch
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0018] occurrences matches {0..1} matches {    -- Nebenwirkung vorhanden
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0019] occurrences matches {0..*} matches {    -- Nebenwirkungstyp
+				value matches {
+					DV_CODED_TEXT matches {
+						defining_code matches {
+							[local::
+							at0114,    -- Kognitive Verlangsamung
+							at0115,    -- Verhaltensaggression
+							at0116,    -- Verhaltensirritabilitaet
+							at0117,    -- Sedierung
+							at0118,    -- Gewichtszunahme
+							at0119,    -- Gewichtsverlust
+							at0120,    -- Alopezie
+							at0121,    -- Exanthem
+							at0122,    -- Stevens-Johnson-Syndrom
+							at0123,    -- Hepatotoxizitaet
+							at0124,    -- Pankreatitis
+							at0125,    -- Teratogenitaetsrisiko
+							at0126,    -- Hyponatriaemie
+							at0127,    -- Diplopie
+							at0128,    -- Schwindel
+							at0129,    -- Ataxie
+							at0130,    -- Tremor
+							at0131,    -- Nierensteine
+							at0132,    -- Depressive Stimmung
+							at0133,    -- Psychose
+							at0134,    -- Suizidgedanken
+							at0135,    -- Keine
+							at0136]    -- Andere
+						}
+					}
+				}
+			}
+			ELEMENT[at0020] occurrences matches {0..1} matches {    -- Schweregrad der Nebenwirkung
+				value matches {
+					DV_CODED_TEXT matches {
+						defining_code matches {
+							[local::
+							at0137,    -- Leicht
+							at0138,    -- Moderat
+							at0139,    -- Schwer
+							at0140]    -- Lebensbedrohlich
+						}
+					}
+				}
+			}
+			ELEMENT[at0021] occurrences matches {0..1} matches {    -- Nebenwirkung fuehrte zum Absetzen
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0022] occurrences matches {0..1} matches {    -- Valproat-PPP anwendbar
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0023] occurrences matches {0..1} matches {    -- Valproat-Alternativen geprueft
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0024] occurrences matches {0..1} matches {    -- Valproat-PPP-Aufklaerung abgeschlossen
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0025] occurrences matches {0..1} matches {    -- Jaehrliche Valproat-Bestaetigung abgeschlossen
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0026] occurrences matches {0..1} matches {    -- Valproat-PPP-Status
+				value matches {
+					DV_CODED_TEXT matches {
+						defining_code matches {
+							[local::
+							at0141,    -- Nicht anwendbar
+							at0142,    -- Erforderlich, aber nicht begonnen
+							at0143,    -- Aktiv und konform
+							at0144,    -- Aktiv, aber ueberfaellig
+							at0145]    -- Abgelehnt oder nicht dokumentiert
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	terminologies_available = <"SNOMED-CT", ...>
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"ASM-Therapieversuchsbeurteilung">
+					description = <"Cluster fuer die epilepsiespezifische Beurteilung eines einzelnen ASM-Therapieversuchs.">
+				>
+				["at0010"] = <
+					text = <"Rohdosisnotation">
+					description = <"Rohnotation wie X-Y-Z.">
+				>
+				["at0011"] = <
+					text = <"Dosis pro kg mg">
+					description = <"Gewichtsbezogene Dosis in mg/kg.">
+				>
+				["at0012"] = <
+					text = <"Maximaldosis mg">
+					description = <"Erreichte Maximaldosis in Milligramm.">
+				>
+				["at0013"] = <
+					text = <"Versuchsdauer Monate">
+					description = <"Dauer des Therapieversuchs in Monaten.">
+				>
+				["at0014"] = <
+					text = <"Aktuell aktiv">
+					description = <"Kennzeichnet einen laufenden Therapieversuch.">
+				>
+				["at0015"] = <
+					text = <"Anfallsansprechen">
+					description = <"Klinisches Ansprechen auf das ASM.">
+				>
+				["at0016"] = <
+					text = <"Grund fuer Absetzen">
+					description = <"Grund fuer Beendigung des Therapieversuchs.">
+				>
+				["at0017"] = <
+					text = <"Adaequater Versuch">
+					description = <"Kennzeichnet einen adaequaten Therapieversuch.">
+				>
+				["at0018"] = <
+					text = <"Nebenwirkung vorhanden">
+					description = <"Kennzeichnet dokumentierte Nebenwirkungen.">
+				>
+				["at0019"] = <
+					text = <"Nebenwirkungstyp">
+					description = <"Art der Nebenwirkung.">
+				>
+				["at0020"] = <
+					text = <"Schweregrad der Nebenwirkung">
+					description = <"Schweregrad der Nebenwirkung.">
+				>
+				["at0021"] = <
+					text = <"Nebenwirkung fuehrte zum Absetzen">
+					description = <"Kennzeichnet, ob die Nebenwirkung zum Absetzen fuehrte.">
+				>
+				["at0022"] = <
+					text = <"Valproat-PPP anwendbar">
+					description = <"Kennzeichnet, ob ein Valproat Pregnancy Prevention Programme relevant ist.">
+				>
+				["at0023"] = <
+					text = <"Valproat-Alternativen geprueft">
+					description = <"Kennzeichnet, ob therapeutische Alternativen zu Valproat geprueft wurden.">
+				>
+				["at0024"] = <
+					text = <"Valproat-PPP-Aufklaerung abgeschlossen">
+					description = <"Kennzeichnet eine dokumentierte PPP-Aufklaerung.">
+				>
+				["at0025"] = <
+					text = <"Jaehrliche Valproat-Bestaetigung abgeschlossen">
+					description = <"Kennzeichnet eine dokumentierte jaehrliche Risiko- oder Bestaetigungspruefung.">
+				>
+				["at0026"] = <
+					text = <"Valproat-PPP-Status">
+					description = <"Strukturierter Status der regulatorischen PPP-Compliance.">
+				>
+				["at0100"] = <
+					text = <"Anfallsfrei">
+					description = <"Anfallsfreiheit unter Therapie.">
+				>
+				["at0101"] = <
+					text = <"Mehr als 50 Prozent Reduktion">
+					description = <"Mehr als 50 Prozent Reduktion der Anfallslast.">
+				>
+				["at0102"] = <
+					text = <"Weniger als 50 Prozent Reduktion">
+					description = <"Weniger als 50 Prozent Reduktion der Anfallslast.">
+				>
+				["at0103"] = <
+					text = <"Kein Ansprechen">
+					description = <"Kein klinisch relevantes Ansprechen.">
+				>
+				["at0104"] = <
+					text = <"Verschlechterung">
+					description = <"Klinische Verschlechterung.">
+				>
+				["at0105"] = <
+					text = <"Unbekannt">
+					description = <"Ansprechen unbekannt.">
+				>
+				["at0106"] = <
+					text = <"Wirksamkeit unzureichend">
+					description = <"Absetzen wegen mangelnder Wirksamkeit.">
+				>
+				["at0107"] = <
+					text = <"Nebenwirkung">
+					description = <"Absetzen wegen Nebenwirkungen.">
+				>
+				["at0108"] = <
+					text = <"Beides">
+					description = <"Absetzen wegen Wirksamkeits- und Nebenwirkungsproblemen.">
+				>
+				["at0109"] = <
+					text = <"Geplanter Ausschleichversuch">
+					description = <"Geplantes Ausschleichen.">
+				>
+				["at0110"] = <
+					text = <"Protokoll abgeschlossen">
+					description = <"Geplanter Protokollabschluss.">
+				>
+				["at0111"] = <
+					text = <"Entscheidung der Sorgeberechtigten">
+					description = <"Absetzen auf Wunsch der Sorgeberechtigten.">
+				>
+				["at0112"] = <
+					text = <"Unbekannt">
+					description = <"Grund unbekannt.">
+				>
+				["at0113"] = <
+					text = <"Weiter laufend">
+					description = <"Therapieversuch laeuft weiter.">
+				>
+				["at0114"] = <
+					text = <"Kognitive Verlangsamung">
+					description = <"Kognitive Verlangsamung.">
+				>
+				["at0115"] = <
+					text = <"Verhaltensaggression">
+					description = <"Aggressives Verhalten.">
+				>
+				["at0116"] = <
+					text = <"Verhaltensirritabilitaet">
+					description = <"Irritabilitaet.">
+				>
+				["at0117"] = <
+					text = <"Sedierung">
+					description = <"Sedierung.">
+				>
+				["at0118"] = <
+					text = <"Gewichtszunahme">
+					description = <"Gewichtszunahme.">
+				>
+				["at0119"] = <
+					text = <"Gewichtsverlust">
+					description = <"Gewichtsverlust.">
+				>
+				["at0120"] = <
+					text = <"Alopezie">
+					description = <"Haarausfall.">
+				>
+				["at0121"] = <
+					text = <"Exanthem">
+					description = <"Hautausschlag.">
+				>
+				["at0122"] = <
+					text = <"Stevens-Johnson-Syndrom">
+					description = <"Stevens-Johnson-Syndrom.">
+				>
+				["at0123"] = <
+					text = <"Hepatotoxizitaet">
+					description = <"Hepatotoxizitaet.">
+				>
+				["at0124"] = <
+					text = <"Pankreatitis">
+					description = <"Pankreatitis.">
+				>
+				["at0125"] = <
+					text = <"Teratogenitaetsrisiko">
+					description = <"Teratogenitaetsrisiko.">
+				>
+				["at0126"] = <
+					text = <"Hyponatriaemie">
+					description = <"Hyponatriaemie.">
+				>
+				["at0127"] = <
+					text = <"Diplopie">
+					description = <"Diplopie.">
+				>
+				["at0128"] = <
+					text = <"Schwindel">
+					description = <"Schwindel.">
+				>
+				["at0129"] = <
+					text = <"Ataxie">
+					description = <"Ataxie.">
+				>
+				["at0130"] = <
+					text = <"Tremor">
+					description = <"Tremor.">
+				>
+				["at0131"] = <
+					text = <"Nierensteine">
+					description = <"Nierensteine.">
+				>
+				["at0132"] = <
+					text = <"Depressive Stimmung">
+					description = <"Depressive Stimmung.">
+				>
+				["at0133"] = <
+					text = <"Psychose">
+					description = <"Psychose.">
+				>
+				["at0134"] = <
+					text = <"Suizidgedanken">
+					description = <"Suizidale Gedanken.">
+				>
+				["at0135"] = <
+					text = <"Keine">
+					description = <"Keine Nebenwirkungen.">
+				>
+				["at0136"] = <
+					text = <"Andere">
+					description = <"Andere Nebenwirkung.">
+				>
+				["at0137"] = <
+					text = <"Leicht">
+					description = <"Leichter Schweregrad.">
+				>
+				["at0138"] = <
+					text = <"Moderat">
+					description = <"Moderater Schweregrad.">
+				>
+				["at0139"] = <
+					text = <"Schwer">
+					description = <"Schwerer Schweregrad.">
+				>
+				["at0140"] = <
+					text = <"Lebensbedrohlich">
+					description = <"Lebensbedrohlicher Schweregrad.">
+				>
+				["at0141"] = <
+					text = <"Nicht anwendbar">
+					description = <"Kein valproatbezogenes PPP erforderlich.">
+				>
+				["at0142"] = <
+					text = <"Erforderlich, aber nicht begonnen">
+					description = <"PPP waere erforderlich, ist aber nicht begonnen oder nicht dokumentiert.">
+				>
+				["at0143"] = <
+					text = <"Aktiv und konform">
+					description = <"PPP ist aktiv und konform dokumentiert.">
+				>
+				["at0144"] = <
+					text = <"Aktiv, aber ueberfaellig">
+					description = <"PPP ist prinzipiell aktiv, aber eine Dokumentationsstufe ist ueberfaellig.">
+				>
+				["at0145"] = <
+					text = <"Abgelehnt oder nicht dokumentiert">
+					description = <"PPP wurde abgelehnt oder nicht ausreichend dokumentiert.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"ASM trial assessment">
+					description = <"Cluster for epilepsy-specific assessment of one ASM trial.">
+				>
+				["at0010"] = <
+					text = <"Dose notation raw">
+					description = <"Raw dose notation such as X-Y-Z.">
+				>
+				["at0011"] = <
+					text = <"Dose per kg mg">
+					description = <"Weight-based dose in mg/kg.">
+				>
+				["at0012"] = <
+					text = <"Max dose reached mg">
+					description = <"Maximum reached dose in milligrams.">
+				>
+				["at0013"] = <
+					text = <"Trial duration months">
+					description = <"Duration of the trial in months.">
+				>
+				["at0014"] = <
+					text = <"Currently active">
+					description = <"Indicates an ongoing trial.">
+				>
+				["at0015"] = <
+					text = <"Seizure response">
+					description = <"Clinical seizure response to the ASM.">
+				>
+				["at0016"] = <
+					text = <"Reason for stop">
+					description = <"Reason why the trial ended.">
+				>
+				["at0017"] = <
+					text = <"Adequate trial">
+					description = <"Indicates that the trial was adequate.">
+				>
+				["at0018"] = <
+					text = <"Adverse event present">
+					description = <"Indicates documented adverse events.">
+				>
+				["at0019"] = <
+					text = <"Adverse event type">
+					description = <"Type of adverse event.">
+				>
+				["at0020"] = <
+					text = <"Adverse event severity">
+					description = <"Severity of the adverse event.">
+				>
+				["at0021"] = <
+					text = <"Adverse event led to stop">
+					description = <"Indicates that the adverse event caused treatment cessation.">
+				>
+				["at0022"] = <
+					text = <"Valproate PPP applicable">
+					description = <"Indicates whether a valproate pregnancy prevention programme is applicable.">
+				>
+				["at0023"] = <
+					text = <"Valproate alternatives reviewed">
+					description = <"Indicates whether therapeutic alternatives to valproate were reviewed.">
+				>
+				["at0024"] = <
+					text = <"Valproate PPP counselling completed">
+					description = <"Indicates documented completion of PPP counselling.">
+				>
+				["at0025"] = <
+					text = <"Valproate annual acknowledgement completed">
+					description = <"Indicates documented annual confirmation or risk review.">
+				>
+				["at0026"] = <
+					text = <"Valproate PPP status">
+					description = <"Structured status of regulatory PPP compliance.">
+				>
+				["at0100"] = <
+					text = <"Seizure free">
+					description = <"Seizure freedom under treatment.">
+				>
+				["at0101"] = <
+					text = <"More than 50 percent reduction">
+					description = <"More than 50 percent reduction in seizure burden.">
+				>
+				["at0102"] = <
+					text = <"Less than 50 percent reduction">
+					description = <"Less than 50 percent reduction in seizure burden.">
+				>
+				["at0103"] = <
+					text = <"No response">
+					description = <"No relevant clinical response.">
+				>
+				["at0104"] = <
+					text = <"Worsening">
+					description = <"Clinical worsening.">
+				>
+				["at0105"] = <
+					text = <"Unknown">
+					description = <"Response unknown.">
+				>
+				["at0106"] = <
+					text = <"Lack of efficacy">
+					description = <"Stopped because of lack of efficacy.">
+				>
+				["at0107"] = <
+					text = <"Adverse event">
+					description = <"Stopped because of adverse events.">
+				>
+				["at0108"] = <
+					text = <"Both">
+					description = <"Stopped because of both efficacy and adverse-event concerns.">
+				>
+				["at0109"] = <
+					text = <"Planned taper">
+					description = <"Planned tapering.">
+				>
+				["at0110"] = <
+					text = <"Protocol completion">
+					description = <"Planned protocol completion.">
+				>
+				["at0111"] = <
+					text = <"Caregiver decision">
+					description = <"Stopped based on caregiver decision.">
+				>
+				["at0112"] = <
+					text = <"Unknown">
+					description = <"Reason unknown.">
+				>
+				["at0113"] = <
+					text = <"Still ongoing">
+					description = <"Trial still ongoing.">
+				>
+				["at0114"] = <
+					text = <"Cognitive slowing">
+					description = <"Cognitive slowing.">
+				>
+				["at0115"] = <
+					text = <"Behavioral aggression">
+					description = <"Behavioral aggression.">
+				>
+				["at0116"] = <
+					text = <"Behavioral irritability">
+					description = <"Behavioral irritability.">
+				>
+				["at0117"] = <
+					text = <"Sedation">
+					description = <"Sedation.">
+				>
+				["at0118"] = <
+					text = <"Weight gain">
+					description = <"Weight gain.">
+				>
+				["at0119"] = <
+					text = <"Weight loss">
+					description = <"Weight loss.">
+				>
+				["at0120"] = <
+					text = <"Alopecia">
+					description = <"Alopecia.">
+				>
+				["at0121"] = <
+					text = <"Rash">
+					description = <"Rash.">
+				>
+				["at0122"] = <
+					text = <"Stevens Johnson syndrome">
+					description = <"Stevens-Johnson syndrome.">
+				>
+				["at0123"] = <
+					text = <"Hepatotoxicity">
+					description = <"Hepatotoxicity.">
+				>
+				["at0124"] = <
+					text = <"Pancreatitis">
+					description = <"Pancreatitis.">
+				>
+				["at0125"] = <
+					text = <"Teratogenicity risk">
+					description = <"Teratogenicity risk.">
+				>
+				["at0126"] = <
+					text = <"Hyponatremia">
+					description = <"Hyponatremia.">
+				>
+				["at0127"] = <
+					text = <"Diplopia">
+					description = <"Diplopia.">
+				>
+				["at0128"] = <
+					text = <"Dizziness">
+					description = <"Dizziness.">
+				>
+				["at0129"] = <
+					text = <"Ataxia">
+					description = <"Ataxia.">
+				>
+				["at0130"] = <
+					text = <"Tremor">
+					description = <"Tremor.">
+				>
+				["at0131"] = <
+					text = <"Kidney stones">
+					description = <"Kidney stones.">
+				>
+				["at0132"] = <
+					text = <"Mood depression">
+					description = <"Depressed mood.">
+				>
+				["at0133"] = <
+					text = <"Psychosis">
+					description = <"Psychosis.">
+				>
+				["at0134"] = <
+					text = <"Suicidal ideation">
+					description = <"Suicidal ideation.">
+				>
+				["at0135"] = <
+					text = <"None">
+					description = <"No adverse event.">
+				>
+				["at0136"] = <
+					text = <"Other">
+					description = <"Other adverse event.">
+				>
+				["at0137"] = <
+					text = <"Mild">
+					description = <"Mild severity.">
+				>
+				["at0138"] = <
+					text = <"Moderate">
+					description = <"Moderate severity.">
+				>
+				["at0139"] = <
+					text = <"Severe">
+					description = <"Severe severity.">
+				>
+				["at0140"] = <
+					text = <"Life threatening">
+					description = <"Life-threatening severity.">
+				>
+				["at0141"] = <
+					text = <"Not applicable">
+					description = <"No valproate-related pregnancy prevention programme is required.">
+				>
+				["at0142"] = <
+					text = <"Required but not started">
+					description = <"PPP would be required but has not been started or documented.">
+				>
+				["at0143"] = <
+					text = <"Active and compliant">
+					description = <"PPP is active and documented as compliant.">
+				>
+				["at0144"] = <
+					text = <"Active but overdue">
+					description = <"PPP is active in principle but at least one documentation step is overdue.">
+				>
+				["at0145"] = <
+					text = <"Declined or not documented">
+					description = <"PPP was declined or remains insufficiently documented.">
+				>
+			>
+		>
+	>
+	term_bindings = <
+		["SNOMED-CT"] = <
+			items = <
+				["at0117"] = <[SNOMED-CT::17971005]>
+				["at0121"] = <[SNOMED-CT::271807003]>
+				["at0123"] = <[SNOMED-CT::197456007]>
+			>
+		>
+	>
