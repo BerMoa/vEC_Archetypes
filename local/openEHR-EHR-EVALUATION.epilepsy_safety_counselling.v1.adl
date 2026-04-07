@@ -1,0 +1,307 @@
+archetype (adl_version=1.4; uid=22a8b404-6107-4fbc-bfb1-ae55df55e556)
+	openEHR-EHR-EVALUATION.epilepsy_safety_counselling.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Dokumentation epilepsiespezifischer Sicherheitsaufklaerung und Risikoberatung.">
+			use = <"Zur strukturierten Dokumentation, welche Sicherheitsaspekte mit Familie oder Patient besprochen wurden, inklusive SUDEP-Datum, Medium und Rueckfragen oder Entscheidungen.">
+			misuse = <"Nicht als Ersatz fuer publizierte Health-Risk- oder allgemeine Aufklaerungsartefakte verwenden, wenn diese den Bedarf bereits vollstaendig abdecken.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Documentation of epilepsy-specific safety counselling and risk discussion.">
+			use = <"Use for structured documentation of which epilepsy safety topics were discussed with the family or patient, including SUDEP date, counselling medium, and questions or decisions.">
+			misuse = <"Do not use as a replacement for published health-risk or generic counselling artefacts when those fully cover the need.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"fd9121f12c419742ed994d6f0c920d13">
+		["build_uid"] = <"67b6f3c0-a27c-3624-8642-010f62b152dc">
+	>
+
+definition
+	EVALUATION[at0000] matches {    -- Epilepsiespezifische Sicherheitsberatung
+		data matches {
+			ITEM_TREE[at0001] matches {    -- Beratungsdaten
+				items cardinality matches {0..*; unordered} matches {
+					ELEMENT[at0010] occurrences matches {0..1} matches {    -- SUDEP besprochen
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0011] occurrences matches {0..1} matches {    -- Notfallplan geprueft
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0012] occurrences matches {0..1} matches {    -- Wassersicherheit besprochen
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0013] occurrences matches {0..1} matches {    -- Badeaufsicht besprochen
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0014] occurrences matches {0..1} matches {    -- Hoehen und Klettern besprochen
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0015] occurrences matches {0..1} matches {    -- Fahrrad- und Verkehrssicherheit besprochen
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0016] occurrences matches {0..1} matches {    -- Schlafsicherheit besprochen
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0017] occurrences matches {0..1} matches {    -- Fahreignung besprochen
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0018] occurrences matches {0..1} matches {    -- Schulischer Notfallplan besprochen
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0019] occurrences matches {0..1} matches {    -- Beratungszusammenfassung
+						value matches {
+							DV_TEXT matches {*}
+						}
+					}
+					ELEMENT[at0020] occurrences matches {0..1} matches {    -- SUDEP-Beratungsdatum
+						value matches {
+							DV_DATE matches {*}
+						}
+					}
+					ELEMENT[at0021] occurrences matches {0..1} matches {    -- SUDEP-Beratungsmedium
+						value matches {
+							DV_CODED_TEXT matches {
+								defining_code matches {
+									[local::
+									at0100,    -- Persoenlich
+									at0101,    -- Schriftliches Material
+									at0102,    -- Digitales Material
+									at0103,    -- Telefon oder Video
+									at0104,    -- Gemischt
+									at0105]    -- Unbekannt
+								}
+							}
+						}
+					}
+					ELEMENT[at0022] occurrences matches {0..1} matches {    -- SUDEP-Rueckfragen oder Entscheidungen
+						value matches {
+							DV_TEXT matches {*}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Epilepsiespezifische Sicherheitsberatung">
+					description = <"Bewertung dokumentierter epilepsiespezifischer Sicherheitsberatung.">
+				>
+				["at0001"] = <
+					text = <"Beratungsdaten">
+					description = <"Strukturierte Daten zur Sicherheitsberatung.">
+				>
+				["at0010"] = <
+					text = <"SUDEP besprochen">
+					description = <"Kennzeichnet eine SUDEP-Aufklaerung.">
+				>
+				["at0011"] = <
+					text = <"Notfallplan geprueft">
+					description = <"Kennzeichnet eine Besprechung des Notfallplans.">
+				>
+				["at0012"] = <
+					text = <"Wassersicherheit besprochen">
+					description = <"Kennzeichnet eine Besprechung von Schwimm- oder Wassersicherheit.">
+				>
+				["at0013"] = <
+					text = <"Badeaufsicht besprochen">
+					description = <"Kennzeichnet eine Besprechung der Badeaufsicht.">
+				>
+				["at0014"] = <
+					text = <"Hoehen und Klettern besprochen">
+					description = <"Kennzeichnet eine Besprechung von Hoehen- oder Kletterrisiken.">
+				>
+				["at0015"] = <
+					text = <"Fahrrad- und Verkehrssicherheit besprochen">
+					description = <"Kennzeichnet eine Besprechung von Verkehrs- und Fahrradsicherheit.">
+				>
+				["at0016"] = <
+					text = <"Schlafsicherheit besprochen">
+					description = <"Kennzeichnet eine Besprechung von Schlafsicherheit.">
+				>
+				["at0017"] = <
+					text = <"Fahreignung besprochen">
+					description = <"Kennzeichnet eine Besprechung von Fahrfaehigkeit oder Fahrverbot.">
+				>
+				["at0018"] = <
+					text = <"Schulischer Notfallplan besprochen">
+					description = <"Kennzeichnet eine Besprechung des schulischen Notfallplans.">
+				>
+				["at0019"] = <
+					text = <"Beratungszusammenfassung">
+					description = <"Freitextzusammenfassung der Sicherheitsberatung.">
+				>
+				["at0020"] = <
+					text = <"SUDEP-Beratungsdatum">
+					description = <"Datum der dokumentierten SUDEP-Aufklaerung.">
+				>
+				["at0021"] = <
+					text = <"SUDEP-Beratungsmedium">
+					description = <"Medium der dokumentierten SUDEP-Beratung.">
+				>
+				["at0022"] = <
+					text = <"SUDEP-Rueckfragen oder Entscheidungen">
+					description = <"Freitext zu Rueckfragen, Entscheidungen oder Vereinbarungen nach SUDEP-Beratung.">
+				>
+				["at0100"] = <
+					text = <"Persoenlich">
+					description = <"Persoenliche Besprechung.">
+				>
+				["at0101"] = <
+					text = <"Schriftliches Material">
+					description = <"Schriftliches Material oder Merkblatt.">
+				>
+				["at0102"] = <
+					text = <"Digitales Material">
+					description = <"Digitales Material oder Link.">
+				>
+				["at0103"] = <
+					text = <"Telefon oder Video">
+					description = <"Telefonische oder videobasierte Beratung.">
+				>
+				["at0104"] = <
+					text = <"Gemischt">
+					description = <"Gemischte Beratungsform.">
+				>
+				["at0105"] = <
+					text = <"Unbekannt">
+					description = <"Medium unbekannt.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Epilepsy safety counselling">
+					description = <"Evaluation of documented epilepsy safety counselling.">
+				>
+				["at0001"] = <
+					text = <"Counselling data">
+					description = <"Structured epilepsy safety-counselling data.">
+				>
+				["at0010"] = <
+					text = <"SUDEP discussed">
+					description = <"Indicates SUDEP counselling.">
+				>
+				["at0011"] = <
+					text = <"Rescue plan reviewed">
+					description = <"Indicates review of the rescue plan.">
+				>
+				["at0012"] = <
+					text = <"Water safety discussed">
+					description = <"Indicates discussion of water or swimming safety.">
+				>
+				["at0013"] = <
+					text = <"Bathing supervision discussed">
+					description = <"Indicates discussion of bathing supervision.">
+				>
+				["at0014"] = <
+					text = <"Climbing heights discussed">
+					description = <"Indicates discussion of heights or climbing risks.">
+				>
+				["at0015"] = <
+					text = <"Cycling traffic safety discussed">
+					description = <"Indicates discussion of traffic and cycling safety.">
+				>
+				["at0016"] = <
+					text = <"Sleep safety discussed">
+					description = <"Indicates discussion of sleep safety.">
+				>
+				["at0017"] = <
+					text = <"Driving guidance discussed">
+					description = <"Indicates discussion of driving guidance or restriction.">
+				>
+				["at0018"] = <
+					text = <"School emergency plan discussed">
+					description = <"Indicates discussion of the school emergency plan.">
+				>
+				["at0019"] = <
+					text = <"Counselling summary">
+					description = <"Free-text summary of safety counselling.">
+				>
+				["at0020"] = <
+					text = <"SUDEP counselling date">
+					description = <"Date of documented SUDEP counselling.">
+				>
+				["at0021"] = <
+					text = <"SUDEP counselling medium">
+					description = <"Medium used for documented SUDEP counselling.">
+				>
+				["at0022"] = <
+					text = <"SUDEP questions and decisions">
+					description = <"Free text about questions, decisions, or agreed actions after SUDEP counselling.">
+				>
+				["at0100"] = <
+					text = <"In person">
+					description = <"In-person discussion.">
+				>
+				["at0101"] = <
+					text = <"Written material">
+					description = <"Written material or leaflet.">
+				>
+				["at0102"] = <
+					text = <"Digital material">
+					description = <"Digital material or link.">
+				>
+				["at0103"] = <
+					text = <"Telephone or video">
+					description = <"Telephone or video counselling.">
+				>
+				["at0104"] = <
+					text = <"Mixed">
+					description = <"Mixed counselling format.">
+				>
+				["at0105"] = <
+					text = <"Unknown">
+					description = <"Counselling medium unknown.">
+				>
+			>
+		>
+	>
