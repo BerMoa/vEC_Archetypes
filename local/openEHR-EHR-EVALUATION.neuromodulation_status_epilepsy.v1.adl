@@ -1,0 +1,344 @@
+archetype (adl_version=1.4; uid=4f5c504e-9841-41e2-a66d-5d9eefbe49d0)
+	openEHR-EHR-EVALUATION.neuromodulation_status_epilepsy.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Laengsschnittbewertung des neuromodulatorischen Therapiezustands bei Epilepsie.">
+			use = <"Zur Dokumentation von Implantationsstatus, Therapieansprechen, Programmierereignissen und relevanten Geraeteproblemen.">
+			misuse = <"Nicht als Ersatz fuer publizierte Prozedurereignisse oder Geraetedokumentation mit voller technischer Parametrisierung verwenden.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Longitudinal evaluation of neuromodulation status in epilepsy care.">
+			use = <"Use for implant status, therapy response, programming follow-up, and clinically relevant device issues.">
+			misuse = <"Do not use as a replacement for published procedure events or fully technical device-programming records.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"022181c6f9b4533ad002b5176856189c">
+		["build_uid"] = <"dd89f6e9-b924-33f0-9d16-78c4b22e435a">
+	>
+
+definition
+	EVALUATION[at0000] matches {    -- Neuromodulationsstatus Epilepsie
+		data matches {
+			ITEM_TREE[at0001] matches {    -- Statusdaten
+				items cardinality matches {0..*; unordered} matches {
+					ELEMENT[at0010] occurrences matches {0..1} matches {    -- Geraetetyp
+						value matches {
+							DV_CODED_TEXT matches {
+								defining_code matches {
+									[local::
+									at0100,    -- Vagusnervstimulation
+									at0101,    -- Responsive Neurostimulation
+									at0102,    -- Tiefe Hirnstimulation
+									at0103]    -- Andere
+								}
+							}
+						}
+					}
+					ELEMENT[at0011] occurrences matches {0..1} matches {    -- Implantationsstatus
+						value matches {
+							DV_CODED_TEXT matches {
+								defining_code matches {
+									[local::
+									at0110,    -- Geplant
+									at0111,    -- Implantiert und aktiv
+									at0112,    -- Implantiert und inaktiv
+									at0113,    -- Explantiert
+									at0114]    -- Kein Kandidat
+								}
+							}
+						}
+					}
+					ELEMENT[at0012] occurrences matches {0..1} matches {    -- Implantationsdatum
+						value matches {
+							DV_DATE matches {*}
+						}
+					}
+					ELEMENT[at0013] occurrences matches {0..1} matches {    -- Letztes Programmierdatum
+						value matches {
+							DV_DATE matches {*}
+						}
+					}
+					ELEMENT[at0014] occurrences matches {0..1} matches {    -- Therapieansprechen
+						value matches {
+							DV_CODED_TEXT matches {
+								defining_code matches {
+									[local::
+									at0120,    -- Anfallsfrei
+									at0121,    -- Ausgepraegte Besserung
+									at0122,    -- Teilweise Besserung
+									at0123,    -- Kein Ansprechen
+									at0124,    -- Verschlechterung
+									at0125]    -- Unbekannt
+								}
+							}
+						}
+					}
+					ELEMENT[at0015] occurrences matches {0..1} matches {    -- Stimulationsbezogene Nebenwirkungen
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0016] occurrences matches {0..1} matches {    -- Batterie- oder Hardwareproblem vorhanden
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0017] occurrences matches {0..1} matches {    -- MRT-Konditionalitaet geprueft
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0018] occurrences matches {0..1} matches {    -- Zusammenfassung der Neuromodulation
+						value matches {
+							DV_TEXT matches {*}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Neuromodulationsstatus Epilepsie">
+					description = <"Bewertung des neuromodulatorischen Therapiezustands.">
+				>
+				["at0001"] = <
+					text = <"Statusdaten">
+					description = <"Strukturierte Daten zum neuromodulatorischen Therapiezustand.">
+				>
+				["at0010"] = <
+					text = <"Geraetetyp">
+					description = <"Art des neuromodulatorischen Systems.">
+				>
+				["at0011"] = <
+					text = <"Implantationsstatus">
+					description = <"Aktueller Implantations- und Aktivierungsstatus.">
+				>
+				["at0012"] = <
+					text = <"Implantationsdatum">
+					description = <"Datum der Implantation.">
+				>
+				["at0013"] = <
+					text = <"Letztes Programmierdatum">
+					description = <"Datum der letzten Programmierung oder Kontrolle.">
+				>
+				["at0014"] = <
+					text = <"Therapieansprechen">
+					description = <"Beurteiltes Ansprechen auf die Neuromodulation.">
+				>
+				["at0015"] = <
+					text = <"Stimulationsbezogene Nebenwirkungen">
+					description = <"Kennzeichnet stimulationsbezogene Nebenwirkungen.">
+				>
+				["at0016"] = <
+					text = <"Batterie- oder Hardwareproblem vorhanden">
+					description = <"Kennzeichnet Batterie- oder Hardwareprobleme.">
+				>
+				["at0017"] = <
+					text = <"MRT-Konditionalitaet geprueft">
+					description = <"Kennzeichnet eine gepruefte MRT-Konditionalitaet.">
+				>
+				["at0018"] = <
+					text = <"Zusammenfassung der Neuromodulation">
+					description = <"Freitextzusammenfassung der Neuromodulation.">
+				>
+				["at0100"] = <
+					text = <"Vagusnervstimulation">
+					description = <"VNS-System.">
+				>
+				["at0101"] = <
+					text = <"Responsive Neurostimulation">
+					description = <"RNS-System.">
+				>
+				["at0102"] = <
+					text = <"Tiefe Hirnstimulation">
+					description = <"DBS-System.">
+				>
+				["at0103"] = <
+					text = <"Andere">
+					description = <"Anderes neuromodulatorisches System.">
+				>
+				["at0110"] = <
+					text = <"Geplant">
+					description = <"Implantation geplant.">
+				>
+				["at0111"] = <
+					text = <"Implantiert und aktiv">
+					description = <"System implantiert und aktiv.">
+				>
+				["at0112"] = <
+					text = <"Implantiert und inaktiv">
+					description = <"System implantiert, aber inaktiv.">
+				>
+				["at0113"] = <
+					text = <"Explantiert">
+					description = <"System explantiert.">
+				>
+				["at0114"] = <
+					text = <"Kein Kandidat">
+					description = <"Kein Kandidat fuer Neuromodulation.">
+				>
+				["at0120"] = <
+					text = <"Anfallsfrei">
+					description = <"Vollstaendige Anfallsfreiheit.">
+				>
+				["at0121"] = <
+					text = <"Ausgepraegte Besserung">
+					description = <"Deutliche Besserung.">
+				>
+				["at0122"] = <
+					text = <"Teilweise Besserung">
+					description = <"Teilweise Besserung.">
+				>
+				["at0123"] = <
+					text = <"Kein Ansprechen">
+					description = <"Kein relevantes Ansprechen.">
+				>
+				["at0124"] = <
+					text = <"Verschlechterung">
+					description = <"Verschlechterung unter Therapie.">
+				>
+				["at0125"] = <
+					text = <"Unbekannt">
+					description = <"Ansprechen unbekannt.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Neuromodulation status epilepsy">
+					description = <"Evaluation of neuromodulation treatment status.">
+				>
+				["at0001"] = <
+					text = <"Status data">
+					description = <"Structured neuromodulation status data.">
+				>
+				["at0010"] = <
+					text = <"Device type">
+					description = <"Type of neuromodulation system.">
+				>
+				["at0011"] = <
+					text = <"Implant status">
+					description = <"Current implantation and activation status.">
+				>
+				["at0012"] = <
+					text = <"Implant date">
+					description = <"Date of implantation.">
+				>
+				["at0013"] = <
+					text = <"Last programming date">
+					description = <"Date of the last programming or review.">
+				>
+				["at0014"] = <
+					text = <"Therapy response">
+					description = <"Assessed response to neuromodulation.">
+				>
+				["at0015"] = <
+					text = <"Stimulation related adverse effects">
+					description = <"Indicates stimulation-related adverse effects.">
+				>
+				["at0016"] = <
+					text = <"Battery or hardware issue present">
+					description = <"Indicates battery or hardware issues.">
+				>
+				["at0017"] = <
+					text = <"MRI conditionality reviewed">
+					description = <"Indicates MRI conditionality review.">
+				>
+				["at0018"] = <
+					text = <"Neuromodulation summary">
+					description = <"Free-text summary of neuromodulation.">
+				>
+				["at0100"] = <
+					text = <"Vagus nerve stimulation">
+					description = <"VNS system.">
+				>
+				["at0101"] = <
+					text = <"Responsive neurostimulation">
+					description = <"RNS system.">
+				>
+				["at0102"] = <
+					text = <"Deep brain stimulation">
+					description = <"DBS system.">
+				>
+				["at0103"] = <
+					text = <"Other">
+					description = <"Other neuromodulation system.">
+				>
+				["at0110"] = <
+					text = <"Planned">
+					description = <"Implantation planned.">
+				>
+				["at0111"] = <
+					text = <"Implanted and active">
+					description = <"System implanted and active.">
+				>
+				["at0112"] = <
+					text = <"Implanted and inactive">
+					description = <"System implanted but inactive.">
+				>
+				["at0113"] = <
+					text = <"Explanted">
+					description = <"System explanted.">
+				>
+				["at0114"] = <
+					text = <"Not candidate">
+					description = <"Not a candidate for neuromodulation.">
+				>
+				["at0120"] = <
+					text = <"Seizure free">
+					description = <"Complete seizure freedom.">
+				>
+				["at0121"] = <
+					text = <"Major response">
+					description = <"Marked improvement.">
+				>
+				["at0122"] = <
+					text = <"Partial response">
+					description = <"Partial improvement.">
+				>
+				["at0123"] = <
+					text = <"No response">
+					description = <"No relevant response.">
+				>
+				["at0124"] = <
+					text = <"Worsening">
+					description = <"Worsening under therapy.">
+				>
+				["at0125"] = <
+					text = <"Unknown">
+					description = <"Response unknown.">
+				>
+			>
+		>
+	>
