@@ -1,0 +1,302 @@
+archetype (adl_version=1.4; uid=3bac59da-01c9-4b06-a661-e7fb4501641c)
+	openEHR-EHR-EVALUATION.cdss_diagnostic_adequacy.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"CDSS-Ampelausgabe zur diagnostischen Adaequanz pro Domaene.">
+			use = <"Zur Dokumentation von Ampelstufe, Regelanzahl, Begruendung und aerztlicher Uebersteuerung. Diese Evaluation beschreibt klinisch kuratierten CDSS-Output und traegt keine NLP-Provenienz.">
+			misuse = <"Nicht als alleinige klinische Entscheidungsgrundlage ohne aerztliche Bestaetigung verwenden.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Traffic-light CDSS output for diagnostic adequacy per domain.">
+			use = <"Use for adequacy level, rule counts, rationale, and physician override metadata. This evaluation represents curated CDSS output and does not carry NLP provenance by default.">
+			misuse = <"Do not use as the sole basis for clinical decision making without physician confirmation.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"7148a4b936e1a73ce81a551b84eb9a11">
+		["build_uid"] = <"a68b5ddb-e895-3c6f-bcba-9127046f01d4">
+	>
+
+definition
+	EVALUATION[at0000] matches {    -- CDSS Diagnoseadaequanz
+		data matches {
+			ITEM_TREE[at0001] matches {    -- Bewertungsdaten
+				items cardinality matches {0..*; unordered} matches {
+					ELEMENT[at0010] occurrences matches {0..1} matches {    -- Domaene
+						value matches {
+							DV_CODED_TEXT matches {
+								defining_code matches {
+									[local::
+									at0100,    -- EEG
+									at0101,    -- MRT
+									at0102,    -- Genetik
+									at0103]    -- Gesamt
+								}
+							}
+						}
+					}
+					ELEMENT[at0011] occurrences matches {0..1} matches {    -- Adaequanzstufe
+						value matches {
+							DV_CODED_TEXT matches {
+								defining_code matches {
+									[local::
+									at0104,    -- Gruen
+									at0105,    -- Gelb
+									at0106]    -- Rot
+								}
+							}
+						}
+					}
+					ELEMENT[at0012] occurrences matches {0..1} matches {    -- Regeln evaluiert
+						value matches {
+							DV_COUNT matches {*}
+						}
+					}
+					ELEMENT[at0013] occurrences matches {0..1} matches {    -- Regeln ausgeloest
+						value matches {
+							DV_COUNT matches {*}
+						}
+					}
+					ELEMENT[at0014] occurrences matches {0..1} matches {    -- Ausgeloeste Regel-IDs
+						value matches {
+							DV_TEXT matches {*}
+						}
+					}
+					ELEMENT[at0015] occurrences matches {0..1} matches {    -- Adaequanzbegruendung
+						value matches {
+							DV_TEXT matches {*}
+						}
+					}
+					ELEMENT[at0016] occurrences matches {0..1} matches {    -- CDSS-Engine-Version
+						value matches {
+							DV_TEXT matches {*}
+						}
+					}
+					ELEMENT[at0017] occurrences matches {0..1} matches {    -- Aerztliche Uebersteuerung
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0018] occurrences matches {0..1} matches {    -- Uebersteuerungsbegruendung
+						value matches {
+							DV_TEXT matches {*}
+						}
+					}
+					ELEMENT[at0019] occurrences matches {0..1} matches {    -- Uebersteuerungszeitpunkt
+						value matches {
+							DV_DATE_TIME matches {*}
+						}
+					}
+					ELEMENT[at0020] occurrences matches {0..1} matches {    -- CDSS-Safety-Gate bestanden
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	terminologies_available = <"LOINC", ...>
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"CDSS Diagnoseadaequanz">
+					description = <"CDSS-Ausgabe zur diagnostischen Adaequanz.">
+				>
+				["at0001"] = <
+					text = <"Bewertungsdaten">
+					description = <"Strukturierte Bewertungsdaten.">
+				>
+				["at0010"] = <
+					text = <"Domaene">
+					description = <"Bewertete diagnostische Domaene.">
+				>
+				["at0011"] = <
+					text = <"Adaequanzstufe">
+					description = <"Ampelstufe der Adaequanz.">
+				>
+				["at0012"] = <
+					text = <"Regeln evaluiert">
+					description = <"Anzahl evaluierter Regeln.">
+				>
+				["at0013"] = <
+					text = <"Regeln ausgeloest">
+					description = <"Anzahl ausgeloester Regeln.">
+				>
+				["at0014"] = <
+					text = <"Ausgeloeste Regel-IDs">
+					description = <"Kommagetrennte Regel-IDs.">
+				>
+				["at0015"] = <
+					text = <"Adaequanzbegruendung">
+					description = <"Menschenlesbare Begruendung.">
+				>
+				["at0016"] = <
+					text = <"CDSS-Engine-Version">
+					description = <"Version der Regelengine.">
+				>
+				["at0017"] = <
+					text = <"Aerztliche Uebersteuerung">
+					description = <"Kennzeichnet eine aerztliche Uebersteuerung.">
+				>
+				["at0018"] = <
+					text = <"Uebersteuerungsbegruendung">
+					description = <"Freitext zur aerztlichen Uebersteuerung.">
+				>
+				["at0019"] = <
+					text = <"Uebersteuerungszeitpunkt">
+					description = <"Zeitpunkt der aerztlichen Uebersteuerung.">
+				>
+				["at0020"] = <
+					text = <"CDSS-Safety-Gate bestanden">
+					description = <"True erst nach aerztlicher Freigabe.">
+				>
+				["at0100"] = <
+					text = <"EEG">
+					description = <"EEG-Domaene.">
+				>
+				["at0101"] = <
+					text = <"MRT">
+					description = <"MRT-Domaene.">
+				>
+				["at0102"] = <
+					text = <"Genetik">
+					description = <"Genetik-Domaene.">
+				>
+				["at0103"] = <
+					text = <"Gesamt">
+					description = <"Gesamtbewertung.">
+				>
+				["at0104"] = <
+					text = <"Gruen">
+					description = <"Adaequat.">
+				>
+				["at0105"] = <
+					text = <"Gelb">
+					description = <"Teilweise adaequat.">
+				>
+				["at0106"] = <
+					text = <"Rot">
+					description = <"Inadaequat.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"CDSS diagnostic adequacy">
+					description = <"CDSS output for diagnostic adequacy.">
+				>
+				["at0001"] = <
+					text = <"Assessment data">
+					description = <"Structured assessment data.">
+				>
+				["at0010"] = <
+					text = <"Domain">
+					description = <"Diagnostic domain being assessed.">
+				>
+				["at0011"] = <
+					text = <"Adequacy level">
+					description = <"Traffic-light adequacy level.">
+				>
+				["at0012"] = <
+					text = <"Rules evaluated count">
+					description = <"Number of evaluated rules.">
+				>
+				["at0013"] = <
+					text = <"Rules triggered count">
+					description = <"Number of triggered rules.">
+				>
+				["at0014"] = <
+					text = <"Triggered rule IDs">
+					description = <"Comma-separated rule identifiers.">
+				>
+				["at0015"] = <
+					text = <"Adequacy rationale">
+					description = <"Human-readable rationale.">
+				>
+				["at0016"] = <
+					text = <"CDSS engine version">
+					description = <"Version of the rule engine.">
+				>
+				["at0017"] = <
+					text = <"Physician override">
+					description = <"Indicates physician override.">
+				>
+				["at0018"] = <
+					text = <"Physician override rationale">
+					description = <"Free-text rationale for the override.">
+				>
+				["at0019"] = <
+					text = <"Physician override timestamp">
+					description = <"Date and time of the override.">
+				>
+				["at0020"] = <
+					text = <"CDSS safe gate passed">
+					description = <"True only after physician confirmation.">
+				>
+				["at0100"] = <
+					text = <"EEG">
+					description = <"EEG domain.">
+				>
+				["at0101"] = <
+					text = <"MRI">
+					description = <"MRI domain.">
+				>
+				["at0102"] = <
+					text = <"Genetics">
+					description = <"Genetics domain.">
+				>
+				["at0103"] = <
+					text = <"Overall">
+					description = <"Overall assessment.">
+				>
+				["at0104"] = <
+					text = <"Green">
+					description = <"Adequate.">
+				>
+				["at0105"] = <
+					text = <"Yellow">
+					description = <"Partially adequate.">
+				>
+				["at0106"] = <
+					text = <"Red">
+					description = <"Inadequate.">
+				>
+			>
+		>
+	>
+	term_bindings = <
+		["LOINC"] = <
+			items = <
+				["at0000"] = <[LOINC::11450-4]>
+			>
+		>
+	>
