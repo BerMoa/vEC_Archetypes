@@ -1,0 +1,501 @@
+archetype (adl_version=1.4; uid=dcd54333-ad13-4ae1-9080-5ff098c0e8b5)
+	openEHR-EHR-OBSERVATION.dietary_therapy_epilepsy.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Strukturierte Beobachtung epilepsiespezifischer diaetetischer Therapien wie ketogener Ernaehrung.">
+			use = <"Eine Instanz pro diaetetischem Therapiezyklus mit Typ, Verlauf, Adhaerenz und klinischem Nutzen.">
+			misuse = <"Nicht fuer allgemeine Ernaehrungsanamnese oder publizierte Lebensmittel- und Nahrungszusammenfassungen verwenden.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Structured observation of epilepsy-specific dietary therapies such as ketogenic treatment.">
+			use = <"Use one instance per dietary-therapy course with type, adherence, response, and discontinuation context.">
+			misuse = <"Do not use for generic nutrition history or published food and nutrition summaries.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"ac4bfe724b4a218dbf7b7ce3ccf0140e">
+		["build_uid"] = <"dc82729e-f034-399a-b51c-676417458723">
+	>
+
+definition
+	OBSERVATION[at0000] matches {    -- Diaetetische Therapie Epilepsie
+		data matches {
+			HISTORY[at0001] matches {    -- Verlauf
+				events cardinality matches {1..1; unordered} matches {
+					POINT_EVENT[at0002] matches {    -- Therapieereignis
+						data matches {
+							ITEM_TREE[at0003] matches {    -- Therapiedaten
+								items cardinality matches {0..*; unordered} matches {
+									ELEMENT[at0010] occurrences matches {0..1} matches {    -- Typ der diaetetischen Therapie
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0100,    -- Klassisch ketogen
+													at0101,    -- Modifizierte Atkins-Diaet
+													at0102,    -- MCT-Diaet
+													at0103,    -- Low glycaemic index therapy
+													at0104]    -- Andere
+												}
+											}
+										}
+									}
+									ELEMENT[at0011] occurrences matches {0..1} matches {    -- Therapiebeginn
+										value matches {
+											DV_DATE matches {*}
+										}
+									}
+									ELEMENT[at0012] occurrences matches {0..1} matches {    -- Therapie aktiv
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0013] occurrences matches {0..1} matches {    -- Primaere Indikation
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0110,    -- Arzneimittelresistente Epilepsie
+													at0111,    -- Metabolische Epilepsie
+													at0112,    -- Syndromspezifische Empfehlung
+													at0113,    -- Bruecke zur Operation
+													at0114]    -- Andere
+												}
+											}
+										}
+									}
+									ELEMENT[at0014] occurrences matches {0..1} matches {    -- Ketoseziel erreicht
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0015] occurrences matches {0..1} matches {    -- Anfallsansprechen
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0120,    -- Anfallsfrei
+													at0121,    -- Ausgepraegte Besserung
+													at0122,    -- Teilweise Besserung
+													at0123,    -- Kein Ansprechen
+													at0124,    -- Verschlechterung
+													at0125]    -- Unbekannt
+												}
+											}
+										}
+									}
+									ELEMENT[at0016] occurrences matches {0..1} matches {    -- Adhaerenzniveau
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0130,    -- Hoch
+													at0131,    -- Moderat
+													at0132,    -- Niedrig
+													at0133]    -- Unbekannt
+												}
+											}
+										}
+									}
+									ELEMENT[at0017] occurrences matches {0..1} matches {    -- Nebenwirkung vorhanden
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0018] occurrences matches {0..1} matches {    -- Nebenwirkungszusammenfassung
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									ELEMENT[at0019] occurrences matches {0..1} matches {    -- Abbruchgrund
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0140,    -- Mangelnde Wirksamkeit
+													at0141,    -- Nebenwirkungen
+													at0142,    -- Mangelnde Adhaerenz
+													at0143,    -- Geplantes Ende
+													at0144,    -- Therapie laeuft weiter
+													at0145]    -- Andere
+												}
+											}
+										}
+									}
+									ELEMENT[at0020] occurrences matches {0..1} matches {    -- Zusammenfassung der diaetetischen Therapie
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Diaetetische Therapie Epilepsie">
+					description = <"Beobachtung epilepsiespezifischer diaetetischer Therapie.">
+				>
+				["at0001"] = <
+					text = <"Verlauf">
+					description = <"Historie diaetetischer Therapie.">
+				>
+				["at0002"] = <
+					text = <"Therapieereignis">
+					description = <"Zeitpunktbezogenes Ereignis der diaetetischen Therapie.">
+				>
+				["at0003"] = <
+					text = <"Therapiedaten">
+					description = <"Strukturierte Daten zur diaetetischen Therapie.">
+				>
+				["at0010"] = <
+					text = <"Typ der diaetetischen Therapie">
+					description = <"Art der eingesetzten diaetetischen Therapie.">
+				>
+				["at0011"] = <
+					text = <"Therapiebeginn">
+					description = <"Beginn der diaetetischen Therapie.">
+				>
+				["at0012"] = <
+					text = <"Therapie aktiv">
+					description = <"Kennzeichnet eine aktuell aktive diaetetische Therapie.">
+				>
+				["at0013"] = <
+					text = <"Primaere Indikation">
+					description = <"Klinische Hauptindikation fuer die Therapie.">
+				>
+				["at0014"] = <
+					text = <"Ketoseziel erreicht">
+					description = <"Kennzeichnet das Erreichen des angestrebten Ketoseziels.">
+				>
+				["at0015"] = <
+					text = <"Anfallsansprechen">
+					description = <"Beobachtetes Anfallsansprechen.">
+				>
+				["at0016"] = <
+					text = <"Adhaerenzniveau">
+					description = <"Beurteilte Adhaerenz gegenueber der Therapie.">
+				>
+				["at0017"] = <
+					text = <"Nebenwirkung vorhanden">
+					description = <"Kennzeichnet therapiebezogene Nebenwirkungen.">
+				>
+				["at0018"] = <
+					text = <"Nebenwirkungszusammenfassung">
+					description = <"Freitext zu Nebenwirkungen.">
+				>
+				["at0019"] = <
+					text = <"Abbruchgrund">
+					description = <"Grund fuer das Beenden oder Aussetzen der Therapie.">
+				>
+				["at0020"] = <
+					text = <"Zusammenfassung der diaetetischen Therapie">
+					description = <"Freitextzusammenfassung der Therapie.">
+				>
+				["at0100"] = <
+					text = <"Klassisch ketogen">
+					description = <"Klassische ketogene Diaet.">
+				>
+				["at0101"] = <
+					text = <"Modifizierte Atkins-Diaet">
+					description = <"Modifizierte Atkins-Diaet.">
+				>
+				["at0102"] = <
+					text = <"MCT-Diaet">
+					description = <"Diaet auf Basis mittelkettiger Triglyzeride.">
+				>
+				["at0103"] = <
+					text = <"Low glycaemic index therapy">
+					description = <"Therapie mit niedrigem glykamischem Index.">
+				>
+				["at0104"] = <
+					text = <"Andere">
+					description = <"Andere diaetetische Therapie.">
+				>
+				["at0110"] = <
+					text = <"Arzneimittelresistente Epilepsie">
+					description = <"Therapie bei arzneimittelresistenter Epilepsie.">
+				>
+				["at0111"] = <
+					text = <"Metabolische Epilepsie">
+					description = <"Therapie bei metabolischer Epilepsie.">
+				>
+				["at0112"] = <
+					text = <"Syndromspezifische Empfehlung">
+					description = <"Therapie aufgrund syndromspezifischer Empfehlung.">
+				>
+				["at0113"] = <
+					text = <"Bruecke zur Operation">
+					description = <"Therapie als Ueberbrueckung bis zur Operation.">
+				>
+				["at0114"] = <
+					text = <"Andere">
+					description = <"Andere Indikation.">
+				>
+				["at0120"] = <
+					text = <"Anfallsfrei">
+					description = <"Vollstaendige Anfallsfreiheit.">
+				>
+				["at0121"] = <
+					text = <"Ausgepraegte Besserung">
+					description = <"Deutliche Anfallsreduktion.">
+				>
+				["at0122"] = <
+					text = <"Teilweise Besserung">
+					description = <"Teilweise Anfallsreduktion.">
+				>
+				["at0123"] = <
+					text = <"Kein Ansprechen">
+					description = <"Kein relevantes Ansprechen.">
+				>
+				["at0124"] = <
+					text = <"Verschlechterung">
+					description = <"Verschlechterung unter Therapie.">
+				>
+				["at0125"] = <
+					text = <"Unbekannt">
+					description = <"Ansprechen unbekannt.">
+				>
+				["at0130"] = <
+					text = <"Hoch">
+					description = <"Hohe Adhaerenz.">
+				>
+				["at0131"] = <
+					text = <"Moderat">
+					description = <"Mittlere Adhaerenz.">
+				>
+				["at0132"] = <
+					text = <"Niedrig">
+					description = <"Geringe Adhaerenz.">
+				>
+				["at0133"] = <
+					text = <"Unbekannt">
+					description = <"Adhaerenz unbekannt.">
+				>
+				["at0140"] = <
+					text = <"Mangelnde Wirksamkeit">
+					description = <"Therapie wegen unzureichender Wirksamkeit beendet.">
+				>
+				["at0141"] = <
+					text = <"Nebenwirkungen">
+					description = <"Therapie wegen Nebenwirkungen beendet.">
+				>
+				["at0142"] = <
+					text = <"Mangelnde Adhaerenz">
+					description = <"Therapie wegen mangelnder Adhaerenz beendet.">
+				>
+				["at0143"] = <
+					text = <"Geplantes Ende">
+					description = <"Therapie planmaessig beendet.">
+				>
+				["at0144"] = <
+					text = <"Therapie laeuft weiter">
+					description = <"Therapie ist noch aktiv.">
+				>
+				["at0145"] = <
+					text = <"Andere">
+					description = <"Anderer Abbruchgrund.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Dietary therapy epilepsy">
+					description = <"Observation of epilepsy-specific dietary therapy.">
+				>
+				["at0001"] = <
+					text = <"History">
+					description = <"History of dietary therapy.">
+				>
+				["at0002"] = <
+					text = <"Therapy event">
+					description = <"Point event for dietary therapy.">
+				>
+				["at0003"] = <
+					text = <"Therapy data">
+					description = <"Structured dietary-therapy data.">
+				>
+				["at0010"] = <
+					text = <"Dietary therapy type">
+					description = <"Type of dietary therapy used.">
+				>
+				["at0011"] = <
+					text = <"Therapy start date">
+					description = <"Start of dietary therapy.">
+				>
+				["at0012"] = <
+					text = <"Therapy active">
+					description = <"Indicates active dietary therapy.">
+				>
+				["at0013"] = <
+					text = <"Primary indication">
+					description = <"Main clinical indication for therapy.">
+				>
+				["at0014"] = <
+					text = <"Ketosis target achieved">
+					description = <"Indicates whether the target ketosis goal was achieved.">
+				>
+				["at0015"] = <
+					text = <"Seizure response">
+					description = <"Observed seizure response.">
+				>
+				["at0016"] = <
+					text = <"Adherence level">
+					description = <"Assessed adherence to therapy.">
+				>
+				["at0017"] = <
+					text = <"Adverse effect present">
+					description = <"Indicates therapy-related adverse effects.">
+				>
+				["at0018"] = <
+					text = <"Adverse effect summary">
+					description = <"Free text about adverse effects.">
+				>
+				["at0019"] = <
+					text = <"Discontinuation reason">
+					description = <"Reason for stopping or pausing therapy.">
+				>
+				["at0020"] = <
+					text = <"Dietary therapy summary">
+					description = <"Free-text therapy summary.">
+				>
+				["at0100"] = <
+					text = <"Classical ketogenic">
+					description = <"Classical ketogenic diet.">
+				>
+				["at0101"] = <
+					text = <"Modified Atkins diet">
+					description = <"Modified Atkins diet.">
+				>
+				["at0102"] = <
+					text = <"MCT diet">
+					description = <"Medium-chain triglyceride diet.">
+				>
+				["at0103"] = <
+					text = <"Low glycaemic index therapy">
+					description = <"Low glycaemic index treatment.">
+				>
+				["at0104"] = <
+					text = <"Other">
+					description = <"Other dietary therapy.">
+				>
+				["at0110"] = <
+					text = <"Drug-resistant epilepsy">
+					description = <"Therapy for drug-resistant epilepsy.">
+				>
+				["at0111"] = <
+					text = <"Metabolic epilepsy">
+					description = <"Therapy for metabolic epilepsy.">
+				>
+				["at0112"] = <
+					text = <"Syndrome specific recommendation">
+					description = <"Therapy because of syndrome-specific recommendation.">
+				>
+				["at0113"] = <
+					text = <"Bridge to surgery">
+					description = <"Therapy as a bridge to surgery.">
+				>
+				["at0114"] = <
+					text = <"Other">
+					description = <"Other indication.">
+				>
+				["at0120"] = <
+					text = <"Seizure free">
+					description = <"Complete seizure freedom.">
+				>
+				["at0121"] = <
+					text = <"Major response">
+					description = <"Marked seizure reduction.">
+				>
+				["at0122"] = <
+					text = <"Partial response">
+					description = <"Partial seizure reduction.">
+				>
+				["at0123"] = <
+					text = <"No response">
+					description = <"No relevant response.">
+				>
+				["at0124"] = <
+					text = <"Worsening">
+					description = <"Worsening under therapy.">
+				>
+				["at0125"] = <
+					text = <"Unknown">
+					description = <"Response unknown.">
+				>
+				["at0130"] = <
+					text = <"High">
+					description = <"High adherence.">
+				>
+				["at0131"] = <
+					text = <"Moderate">
+					description = <"Moderate adherence.">
+				>
+				["at0132"] = <
+					text = <"Low">
+					description = <"Low adherence.">
+				>
+				["at0133"] = <
+					text = <"Unknown">
+					description = <"Adherence unknown.">
+				>
+				["at0140"] = <
+					text = <"Lack of efficacy">
+					description = <"Therapy stopped because of insufficient efficacy.">
+				>
+				["at0141"] = <
+					text = <"Adverse effects">
+					description = <"Therapy stopped because of adverse effects.">
+				>
+				["at0142"] = <
+					text = <"Poor adherence">
+					description = <"Therapy stopped because of poor adherence.">
+				>
+				["at0143"] = <
+					text = <"Planned stop">
+					description = <"Therapy ended as planned.">
+				>
+				["at0144"] = <
+					text = <"Still active">
+					description = <"Therapy is still active.">
+				>
+				["at0145"] = <
+					text = <"Other">
+					description = <"Other discontinuation reason.">
+				>
+			>
+		>
+	>
