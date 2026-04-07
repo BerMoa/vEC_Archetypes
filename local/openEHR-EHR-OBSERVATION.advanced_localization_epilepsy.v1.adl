@@ -1,0 +1,661 @@
+archetype (adl_version=1.4; uid=8915213b-98f5-46cb-ac02-018033657fae)
+	openEHR-EHR-OBSERVATION.advanced_localization_epilepsy.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Strukturierte Beobachtung fortgeschrittener Lokalisationsdiagnostik im epilepsiechirurgischen Kontext.">
+			use = <"Eine Instanz pro FDG-PET-, SPECT-, MEG- oder MSI-, fMRT- oder EEG-Source-Imaging-Studie.">
+			misuse = <"Nicht als Ersatz fuer publizierte generische Bildgebungs- oder Laborartefakte verwenden; diese sollen im Template gemeinsam genutzt werden.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Structured observation of advanced localization studies in presurgical epilepsy care.">
+			use = <"Use one instance per FDG PET, SPECT, MEG or MSI, functional MRI, or EEG source-imaging study.">
+			misuse = <"Do not use as a replacement for published generic imaging or laboratory artefacts; pair them in the template.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"84c8f2e029c05bce1e5b8575d6d566e5">
+		["build_uid"] = <"0d831ad0-4e26-3c0f-8252-b3de2bc96100">
+	>
+
+definition
+	OBSERVATION[at0000] matches {    -- Fortgeschrittene Lokalisationsdiagnostik Epilepsie
+		data matches {
+			HISTORY[at0001] matches {    -- Verlauf
+				events cardinality matches {1..1; unordered} matches {
+					POINT_EVENT[at0002] matches {    -- Lokalisationsereignis
+						data matches {
+							ITEM_TREE[at0003] matches {    -- Lokalisationsdaten
+								items cardinality matches {0..*; unordered} matches {
+									ELEMENT[at0010] occurrences matches {0..1} matches {    -- Lokalisationsmodalitaet
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0100,    -- FDG-PET interiktal
+													at0101,    -- FDG-PET iktal
+													at0102,    -- SPECT iktal
+													at0103,    -- SPECT interiktal
+													at0104,    -- SISCOM
+													at0105,    -- MEG oder MSI
+													at0106,    -- fMRT Sprache
+													at0107,    -- fMRT Motorik
+													at0108,    -- EEG-Source-Imaging
+													at0109]    -- Andere
+												}
+											}
+										}
+									}
+									ELEMENT[at0011] occurrences matches {0..1} matches {    -- Studiendatum
+										value matches {
+											DV_DATE matches {*}
+										}
+									}
+									ELEMENT[at0012] occurrences matches {0..1} matches {    -- Durchfuehrende Institution
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									ELEMENT[at0013] occurrences matches {0..1} matches {    -- Zielstellung
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0110,    -- Anfallslokalisation
+													at0111,    -- Sprachlateralisation
+													at0112,    -- Motorische Kartierung
+													at0113,    -- Netzwerkdefinition
+													at0114]    -- Operationsplanung
+												}
+											}
+										}
+									}
+									ELEMENT[at0014] occurrences matches {0..1} matches {    -- Lateralisierung des Ergebnisses
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0120,    -- Links
+													at0121,    -- Rechts
+													at0122,    -- Beidseitig
+													at0123,    -- Mittellinie
+													at0124,    -- Nicht lateralisiert
+													at0125]    -- Nicht zutreffend
+												}
+											}
+										}
+									}
+									ELEMENT[at0015] occurrences matches {0..*} matches {    -- Lokalisation des Ergebnisses
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0130,    -- Frontal
+													at0131,    -- Temporal
+													at0132,    -- Parietal
+													at0133,    -- Okzipital
+													at0134,    -- Insulaer
+													at0135,    -- Cingulaer
+													at0136,    -- Multilobaer
+													at0137,    -- Hemisphaerisch
+													at0138,    -- Diffus
+													at0139]    -- Nicht lokalisierend
+												}
+											}
+										}
+									}
+									ELEMENT[at0016] occurrences matches {0..1} matches {    -- Konkordanz mit Skalp-EEG
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0140,    -- Konkordant
+													at0141,    -- Teilweise konkordant
+													at0142,    -- Diskordant
+													at0143,    -- Unbestimmt
+													at0144]    -- Nicht beurteilt
+												}
+											}
+										}
+									}
+									ELEMENT[at0017] occurrences matches {0..1} matches {    -- Konkordanz mit MRT
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0140,    -- Konkordant
+													at0141,    -- Teilweise konkordant
+													at0142,    -- Diskordant
+													at0143,    -- Unbestimmt
+													at0144]    -- Nicht beurteilt
+												}
+											}
+										}
+									}
+									ELEMENT[at0018] occurrences matches {0..1} matches {    -- Konkordanz mit Semiologie
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0140,    -- Konkordant
+													at0141,    -- Teilweise konkordant
+													at0142,    -- Diskordant
+													at0143,    -- Unbestimmt
+													at0144]    -- Nicht beurteilt
+												}
+											}
+										}
+									}
+									ELEMENT[at0019] occurrences matches {0..1} matches {    -- Chirurgische Verwertbarkeit
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0150,    -- Lokalisiert und verwertbar
+													at0151,    -- Unterstuetzend, aber nicht allein lokalisierend
+													at0152,    -- Nicht beitragend
+													at0153]    -- Diskordant zur Operationsplanung
+												}
+											}
+										}
+									}
+									ELEMENT[at0020] occurrences matches {0..1} matches {    -- Zusammenfassung der Lokalisationsstudie
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									allow_archetype CLUSTER[at0900] occurrences matches {0..1} matches {    -- Provenienzslot
+										include
+											archetype_id/value matches {/openEHR-EHR-CLUSTER\.vec_extraction_provenance\.v[0-9]+/}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Fortgeschrittene Lokalisationsdiagnostik Epilepsie">
+					description = <"Beobachtung fortgeschrittener Lokalisationsdiagnostik im Epilepsiekontext.">
+				>
+				["at0001"] = <
+					text = <"Verlauf">
+					description = <"Historie fortgeschrittener Lokalisationsstudien.">
+				>
+				["at0002"] = <
+					text = <"Lokalisationsereignis">
+					description = <"Zeitpunktbezogenes Ereignis der Lokalisationsstudie.">
+				>
+				["at0003"] = <
+					text = <"Lokalisationsdaten">
+					description = <"Strukturierte Daten fortgeschrittener Lokalisationsdiagnostik.">
+				>
+				["at0010"] = <
+					text = <"Lokalisationsmodalitaet">
+					description = <"Art der fortgeschrittenen Lokalisationsstudie.">
+				>
+				["at0011"] = <
+					text = <"Studiendatum">
+					description = <"Datum der Lokalisationsstudie.">
+				>
+				["at0012"] = <
+					text = <"Durchfuehrende Institution">
+					description = <"Institution, die die Studie durchgefuehrt hat.">
+				>
+				["at0013"] = <
+					text = <"Zielstellung">
+					description = <"Klinische Hauptfrage der Studie.">
+				>
+				["at0014"] = <
+					text = <"Lateralisierung des Ergebnisses">
+					description = <"Lateralisierung des Lokalisationsbefunds.">
+				>
+				["at0015"] = <
+					text = <"Lokalisation des Ergebnisses">
+					description = <"Anatomische Lokalisation des Befunds.">
+				>
+				["at0016"] = <
+					text = <"Konkordanz mit Skalp-EEG">
+					description = <"Bewertung der Konkordanz mit Skalp-EEG-Befunden.">
+				>
+				["at0017"] = <
+					text = <"Konkordanz mit MRT">
+					description = <"Bewertung der Konkordanz mit MRT-Befunden.">
+				>
+				["at0018"] = <
+					text = <"Konkordanz mit Semiologie">
+					description = <"Bewertung der Konkordanz mit der klinischen Semiologie.">
+				>
+				["at0019"] = <
+					text = <"Chirurgische Verwertbarkeit">
+					description = <"Bewertung der chirurgischen Verwertbarkeit der Studie.">
+				>
+				["at0020"] = <
+					text = <"Zusammenfassung der Lokalisationsstudie">
+					description = <"Freitextzusammenfassung der Studie.">
+				>
+				["at0100"] = <
+					text = <"FDG-PET interiktal">
+					description = <"Interiktales FDG-PET.">
+				>
+				["at0101"] = <
+					text = <"FDG-PET iktal">
+					description = <"Iktales PET.">
+				>
+				["at0102"] = <
+					text = <"SPECT iktal">
+					description = <"Iktales SPECT.">
+				>
+				["at0103"] = <
+					text = <"SPECT interiktal">
+					description = <"Interiktales SPECT.">
+				>
+				["at0104"] = <
+					text = <"SISCOM">
+					description = <"Subtraktions-SPECT mit MRT-Koregistration.">
+				>
+				["at0105"] = <
+					text = <"MEG oder MSI">
+					description = <"Magnetenzephalographie oder magnetische Source-Imaging-Analyse.">
+				>
+				["at0106"] = <
+					text = <"fMRT Sprache">
+					description = <"Funktionelles MRT fuer Sprachlateralisation.">
+				>
+				["at0107"] = <
+					text = <"fMRT Motorik">
+					description = <"Funktionelles MRT fuer motorische Lokalisation.">
+				>
+				["at0108"] = <
+					text = <"EEG-Source-Imaging">
+					description = <"Elektrische Quelllokalisationsanalyse.">
+				>
+				["at0109"] = <
+					text = <"Andere">
+					description = <"Andere fortgeschrittene Lokalisationsmodalitaet.">
+				>
+				["at0110"] = <
+					text = <"Anfallslokalisation">
+					description = <"Ziel ist die Lokalisation der epileptogenen Zone.">
+				>
+				["at0111"] = <
+					text = <"Sprachlateralisation">
+					description = <"Ziel ist die Sprachlateralisation.">
+				>
+				["at0112"] = <
+					text = <"Motorische Kartierung">
+					description = <"Ziel ist die motorische Kartierung.">
+				>
+				["at0113"] = <
+					text = <"Netzwerkdefinition">
+					description = <"Ziel ist die Definition epileptischer Netzwerke.">
+				>
+				["at0114"] = <
+					text = <"Operationsplanung">
+					description = <"Ziel ist die Unterstuetzung der Operationsplanung.">
+				>
+				["at0120"] = <
+					text = <"Links">
+					description = <"Links lateralisiert.">
+				>
+				["at0121"] = <
+					text = <"Rechts">
+					description = <"Rechts lateralisiert.">
+				>
+				["at0122"] = <
+					text = <"Beidseitig">
+					description = <"Beidseitig lateralisiert.">
+				>
+				["at0123"] = <
+					text = <"Mittellinie">
+					description = <"Mittellinienbetont.">
+				>
+				["at0124"] = <
+					text = <"Nicht lateralisiert">
+					description = <"Nicht lateralisiert.">
+				>
+				["at0125"] = <
+					text = <"Nicht zutreffend">
+					description = <"Lateralisierung nicht zutreffend.">
+				>
+				["at0130"] = <
+					text = <"Frontal">
+					description = <"Frontale Lokalisation.">
+				>
+				["at0131"] = <
+					text = <"Temporal">
+					description = <"Temporale Lokalisation.">
+				>
+				["at0132"] = <
+					text = <"Parietal">
+					description = <"Parietale Lokalisation.">
+				>
+				["at0133"] = <
+					text = <"Okzipital">
+					description = <"Okzipitale Lokalisation.">
+				>
+				["at0134"] = <
+					text = <"Insulaer">
+					description = <"Insulaere Lokalisation.">
+				>
+				["at0135"] = <
+					text = <"Cingulaer">
+					description = <"Cingulaere Lokalisation.">
+				>
+				["at0136"] = <
+					text = <"Multilobaer">
+					description = <"Multilobaere Lokalisation.">
+				>
+				["at0137"] = <
+					text = <"Hemisphaerisch">
+					description = <"Hemisphaerische Lokalisation.">
+				>
+				["at0138"] = <
+					text = <"Diffus">
+					description = <"Diffuse Lokalisation.">
+				>
+				["at0139"] = <
+					text = <"Nicht lokalisierend">
+					description = <"Nicht lokalisierender Befund.">
+				>
+				["at0140"] = <
+					text = <"Konkordant">
+					description = <"Konkordant.">
+				>
+				["at0141"] = <
+					text = <"Teilweise konkordant">
+					description = <"Teilweise konkordant.">
+				>
+				["at0142"] = <
+					text = <"Diskordant">
+					description = <"Diskordant.">
+				>
+				["at0143"] = <
+					text = <"Unbestimmt">
+					description = <"Unbestimmt.">
+				>
+				["at0144"] = <
+					text = <"Nicht beurteilt">
+					description = <"Nicht beurteilt.">
+				>
+				["at0150"] = <
+					text = <"Lokalisiert und verwertbar">
+					description = <"Der Befund ist lokalisiert und chirurgisch verwertbar.">
+				>
+				["at0151"] = <
+					text = <"Unterstuetzend, aber nicht allein lokalisierend">
+					description = <"Der Befund stuetzt andere Hinweise, ist aber nicht allein lokalisierend.">
+				>
+				["at0152"] = <
+					text = <"Nicht beitragend">
+					description = <"Der Befund traegt nicht wesentlich zur Entscheidung bei.">
+				>
+				["at0153"] = <
+					text = <"Diskordant zur Operationsplanung">
+					description = <"Der Befund ist diskordant oder erschwert die Operationsplanung.">
+				>
+				["at0900"] = <
+					text = <"Provenienzslot">
+					description = <"Slot fuer den gemeinsamen vEC-Provenienzcluster.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Advanced localization epilepsy">
+					description = <"Observation of advanced localization studies in epilepsy care.">
+				>
+				["at0001"] = <
+					text = <"History">
+					description = <"History of advanced localization studies.">
+				>
+				["at0002"] = <
+					text = <"Localization event">
+					description = <"Point event for the localization study.">
+				>
+				["at0003"] = <
+					text = <"Localization data">
+					description = <"Structured data for advanced localization studies.">
+				>
+				["at0010"] = <
+					text = <"Localization modality">
+					description = <"Type of advanced localization study.">
+				>
+				["at0011"] = <
+					text = <"Study date">
+					description = <"Date of the localization study.">
+				>
+				["at0012"] = <
+					text = <"Performing institution">
+					description = <"Institution that performed the study.">
+				>
+				["at0013"] = <
+					text = <"Target question">
+					description = <"Main clinical question of the study.">
+				>
+				["at0014"] = <
+					text = <"Result lateralization">
+					description = <"Lateralization of the localization result.">
+				>
+				["at0015"] = <
+					text = <"Result localization">
+					description = <"Anatomical localization of the result.">
+				>
+				["at0016"] = <
+					text = <"Concordance with scalp EEG">
+					description = <"Assessment of concordance with scalp EEG findings.">
+				>
+				["at0017"] = <
+					text = <"Concordance with MRI">
+					description = <"Assessment of concordance with MRI findings.">
+				>
+				["at0018"] = <
+					text = <"Concordance with semiology">
+					description = <"Assessment of concordance with clinical semiology.">
+				>
+				["at0019"] = <
+					text = <"Surgical actionability">
+					description = <"Assessment of how actionable the study is for surgery planning.">
+				>
+				["at0020"] = <
+					text = <"Advanced localization summary">
+					description = <"Free-text summary of the study.">
+				>
+				["at0100"] = <
+					text = <"FDG PET interictal">
+					description = <"Interictal FDG PET.">
+				>
+				["at0101"] = <
+					text = <"FDG PET ictal">
+					description = <"Ictal PET.">
+				>
+				["at0102"] = <
+					text = <"SPECT ictal">
+					description = <"Ictal SPECT.">
+				>
+				["at0103"] = <
+					text = <"SPECT interictal">
+					description = <"Interictal SPECT.">
+				>
+				["at0104"] = <
+					text = <"SISCOM">
+					description = <"Subtraction SPECT coregistered to MRI.">
+				>
+				["at0105"] = <
+					text = <"MEG or MSI">
+					description = <"Magnetoencephalography or magnetic source imaging.">
+				>
+				["at0106"] = <
+					text = <"fMRI language">
+					description = <"Functional MRI for language lateralization.">
+				>
+				["at0107"] = <
+					text = <"fMRI motor">
+					description = <"Functional MRI for motor localization.">
+				>
+				["at0108"] = <
+					text = <"EEG source imaging">
+					description = <"Electrical source-imaging analysis.">
+				>
+				["at0109"] = <
+					text = <"Other">
+					description = <"Other advanced localization modality.">
+				>
+				["at0110"] = <
+					text = <"Seizure localization">
+					description = <"Target is localization of the epileptogenic zone.">
+				>
+				["at0111"] = <
+					text = <"Language lateralization">
+					description = <"Target is language lateralization.">
+				>
+				["at0112"] = <
+					text = <"Motor mapping">
+					description = <"Target is motor mapping.">
+				>
+				["at0113"] = <
+					text = <"Network definition">
+					description = <"Target is definition of epileptic networks.">
+				>
+				["at0114"] = <
+					text = <"Surgery planning">
+					description = <"Target is support for surgery planning.">
+				>
+				["at0120"] = <
+					text = <"Left">
+					description = <"Left lateralized.">
+				>
+				["at0121"] = <
+					text = <"Right">
+					description = <"Right lateralized.">
+				>
+				["at0122"] = <
+					text = <"Bilateral">
+					description = <"Bilaterally lateralized.">
+				>
+				["at0123"] = <
+					text = <"Midline">
+					description = <"Midline predominant.">
+				>
+				["at0124"] = <
+					text = <"Non lateralizing">
+					description = <"Non-lateralizing.">
+				>
+				["at0125"] = <
+					text = <"Not applicable">
+					description = <"Laterality not applicable.">
+				>
+				["at0130"] = <
+					text = <"Frontal">
+					description = <"Frontal localization.">
+				>
+				["at0131"] = <
+					text = <"Temporal">
+					description = <"Temporal localization.">
+				>
+				["at0132"] = <
+					text = <"Parietal">
+					description = <"Parietal localization.">
+				>
+				["at0133"] = <
+					text = <"Occipital">
+					description = <"Occipital localization.">
+				>
+				["at0134"] = <
+					text = <"Insular">
+					description = <"Insular localization.">
+				>
+				["at0135"] = <
+					text = <"Cingulate">
+					description = <"Cingulate localization.">
+				>
+				["at0136"] = <
+					text = <"Multilobar">
+					description = <"Multilobar localization.">
+				>
+				["at0137"] = <
+					text = <"Hemispheric">
+					description = <"Hemispheric localization.">
+				>
+				["at0138"] = <
+					text = <"Diffuse">
+					description = <"Diffuse localization.">
+				>
+				["at0139"] = <
+					text = <"Not localizing">
+					description = <"Not localizing.">
+				>
+				["at0140"] = <
+					text = <"Concordant">
+					description = <"Concordant.">
+				>
+				["at0141"] = <
+					text = <"Partially concordant">
+					description = <"Partially concordant.">
+				>
+				["at0142"] = <
+					text = <"Discordant">
+					description = <"Discordant.">
+				>
+				["at0143"] = <
+					text = <"Indeterminate">
+					description = <"Indeterminate.">
+				>
+				["at0144"] = <
+					text = <"Not assessed">
+					description = <"Not assessed.">
+				>
+				["at0150"] = <
+					text = <"Localizing and actionable">
+					description = <"Result is localizing and actionable for surgery planning.">
+				>
+				["at0151"] = <
+					text = <"Supportive but not independently localizing">
+					description = <"Result supports other evidence but is not independently localizing.">
+				>
+				["at0152"] = <
+					text = <"Non contributory">
+					description = <"Result does not materially contribute to decision-making.">
+				>
+				["at0153"] = <
+					text = <"Discordant for surgery planning">
+					description = <"Result is discordant or complicates surgery planning.">
+				>
+				["at0900"] = <
+					text = <"Provenance slot">
+					description = <"Slot for the shared vEC provenance cluster.">
+				>
+			>
+		>
+	>
