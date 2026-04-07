@@ -1,0 +1,576 @@
+archetype (adl_version=1.4; uid=8ac384af-3b91-4983-9783-da2c9823eaba)
+	openEHR-EHR-OBSERVATION.epilepsy_patient_reported_outcome.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Epilepsiespezifische patienten- und sorgeberechtigtenberichtete Outcomes ausserhalb echter PROMIS-Instrumente.">
+			use = <"Zur strukturierten Erfassung der in Domains.md empfohlenen Instrumentenbatterie mit PedsQL Generic Core, SDQ, NDDI-E fuer Transition oder Erwachsene, PROMIS Pediatric Kurzformen sowie governancegeprueften Platzhaltern fuer epilepsiespezifische Instrumente wie QOLCE-16 oder DISABKIDS Epilepsy. Echte vollstaendige PROMIS-Item-Banken koennen spaeter separat ueber OBSERVATION.promis.v0 modelliert werden.">
+			misuse = <"Nicht als Ersatz fuer die Originalfrageboegen validierter Instrumente oder fuer generische PROMIS-Banken verwenden.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Epilepsy-specific patient- and caregiver-reported outcomes outside true PROMIS instruments.">
+			use = <"Use for the Domains.md default instrument battery: PedsQL Generic Core, SDQ, NDDI-E for transition or adult use, PROMIS Pediatric short forms, and governance-reviewed placeholders for epilepsy-specific instruments such as QOLCE-16 or DISABKIDS Epilepsy. Full PROMIS item-bank capture can still be modeled separately using OBSERVATION.promis.v0 if that optional alpha dependency is adopted later.">
+			misuse = <"Do not use as a replacement for the original validated questionnaires or for generic PROMIS item banks.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"4ace85b90fb0ae8dfe9d34182ab59509">
+		["build_uid"] = <"2b57a2d7-b0a9-3ae3-8ef1-f674dc4cd68f">
+	>
+
+definition
+	OBSERVATION[at0000] matches {    -- Epilepsiespezifisches Patient-Reported Outcome
+		data matches {
+			HISTORY[at0001] matches {    -- Verlauf
+				events cardinality matches {1..1; unordered} matches {
+					POINT_EVENT[at0002] matches {    -- PROM-Ereignis
+						data matches {
+							ITEM_TREE[at0003] matches {    -- PROM-Daten
+								items cardinality matches {0..*; unordered} matches {
+									ELEMENT[at0010] occurrences matches {0..1} matches {    -- PROM-Bewertungsdatum
+										value matches {
+											DV_DATE matches {*}
+										}
+									}
+									ELEMENT[at0011] occurrences matches {0..1} matches {    -- PROM-Antwortende Person
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0100,    -- Sorgeberechtigte
+													at0101,    -- Patient selbst
+													at0102]    -- Klinische Stellvertretung
+												}
+											}
+										}
+									}
+									ELEMENT[at0012] occurrences matches {0..1} matches {    -- Schlafqualitaetsscore
+										value matches {
+											DV_QUANTITY matches {*}
+										}
+									}
+									ELEMENT[at0013] occurrences matches {0..1} matches {    -- Schlafunterbrechungshaeufigkeit
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0103,    -- Keine
+													at0104,    -- Selten
+													at0105,    -- Gelegentlich
+													at0106,    -- Haeufig
+													at0107]    -- Naechtlich
+												}
+											}
+										}
+									}
+									ELEMENT[at0014] occurrences matches {0..*} matches {    -- Stimmungs- und Verhaltenssorgen
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0108,    -- Irritabilitaet
+													at0109,    -- Aggression
+													at0110,    -- Stimmungsinstabilitaet
+													at0111,    -- Sozialer Rueckzug
+													at0112,    -- Selbstverletzendes Verhalten
+													at0113]    -- Keine
+												}
+											}
+										}
+									}
+									ELEMENT[at0015] occurrences matches {0..1} matches {    -- Schulleistungsveraenderung
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0114,    -- Verbessert
+													at0115,    -- Stabil
+													at0116,    -- Leichter Rueckgang
+													at0117,    -- Deutlicher Rueckgang
+													at0118]    -- Nicht zutreffend
+												}
+											}
+										}
+									}
+									ELEMENT[at0016] occurrences matches {0..1} matches {    -- Konzentrationsschwierigkeiten
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0017] occurrences matches {0..1} matches {    -- QOL-Instrument
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0119,    -- PedsQL Generic Core
+													at0120,    -- SDQ
+													at0121,    -- NDDI-E
+													at0122,    -- PROMIS Pediatric Kurzform
+													at0123,    -- QOLCE-16 Governance-Platzhalter
+													at0124,    -- DISABKIDS Epilepsy Module
+													at0130]    -- Anderes lokal freigegebenes Instrument
+												}
+											}
+										}
+									}
+									ELEMENT[at0018] occurrences matches {0..1} matches {    -- QOL-Gesamtscore
+										value matches {
+											DV_QUANTITY matches {*}
+										}
+									}
+									ELEMENT[at0019] occurrences matches {0..1} matches {    -- QOL-Scoredatum
+										value matches {
+											DV_DATE matches {*}
+										}
+									}
+									ELEMENT[at0020] occurrences matches {0..1} matches {    -- Beeintraechtigungsgrad durch Anfaelle
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0125,    -- Keine Auswirkung
+													at0126,    -- Leicht
+													at0127,    -- Moderat
+													at0128,    -- Schwer
+													at0129]    -- Sehr schwer
+												}
+											}
+										}
+									}
+									ELEMENT[at0021] occurrences matches {0..1} matches {    -- Aktivitaetseinschraenkungen vorhanden
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0022] occurrences matches {0..1} matches {    -- Fahrbeschraenkung relevant
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Epilepsiespezifisches Patient-Reported Outcome">
+					description = <"Patienten- oder sorgeberechtigtenberichtete Outcomes im Epilepsiekontext.">
+				>
+				["at0001"] = <
+					text = <"Verlauf">
+					description = <"Historie der PROM-Daten.">
+				>
+				["at0002"] = <
+					text = <"PROM-Ereignis">
+					description = <"Zeitpunktbezogenes PROM-Ereignis.">
+				>
+				["at0003"] = <
+					text = <"PROM-Daten">
+					description = <"Strukturierte PROM-Daten.">
+				>
+				["at0010"] = <
+					text = <"PROM-Bewertungsdatum">
+					description = <"Datum der PROM-Erhebung.">
+				>
+				["at0011"] = <
+					text = <"PROM-Antwortende Person">
+					description = <"Antwortende Person oder Stellvertretung.">
+				>
+				["at0012"] = <
+					text = <"Schlafqualitaetsscore">
+					description = <"Score fuer Schlafqualitaet.">
+				>
+				["at0013"] = <
+					text = <"Schlafunterbrechungshaeufigkeit">
+					description = <"Haeufigkeit schlafbezogener Unterbrechungen.">
+				>
+				["at0014"] = <
+					text = <"Stimmungs- und Verhaltenssorgen">
+					description = <"Berichtete Stimmungs- oder Verhaltensprobleme.">
+				>
+				["at0015"] = <
+					text = <"Schulleistungsveraenderung">
+					description = <"Veraenderung der Schulleistung.">
+				>
+				["at0016"] = <
+					text = <"Konzentrationsschwierigkeiten">
+					description = <"Kennzeichnet Konzentrationsschwierigkeiten.">
+				>
+				["at0017"] = <
+					text = <"QOL-Instrument">
+					description = <"Verwendetes Lebensqualitaetsinstrument.">
+				>
+				["at0018"] = <
+					text = <"QOL-Gesamtscore">
+					description = <"Gesamtscore des Instruments.">
+				>
+				["at0019"] = <
+					text = <"QOL-Scoredatum">
+					description = <"Datum des QOL-Scores.">
+				>
+				["at0020"] = <
+					text = <"Beeintraechtigungsgrad durch Anfaelle">
+					description = <"Schweregrad der Alltagsbeeintraechtigung durch Anfaelle.">
+				>
+				["at0021"] = <
+					text = <"Aktivitaetseinschraenkungen vorhanden">
+					description = <"Kennzeichnet Einschraenkungen bei Aktivitaeten.">
+				>
+				["at0022"] = <
+					text = <"Fahrbeschraenkung relevant">
+					description = <"Kennzeichnet relevante Fahrbeschraenkung.">
+				>
+				["at0100"] = <
+					text = <"Sorgeberechtigte">
+					description = <"Sorgeberechtigte Person antwortet.">
+				>
+				["at0101"] = <
+					text = <"Patient selbst">
+					description = <"Patient oder Patientin selbst berichtet.">
+				>
+				["at0102"] = <
+					text = <"Klinische Stellvertretung">
+					description = <"Klinische Stellvertretung berichtet.">
+				>
+				["at0103"] = <
+					text = <"Keine">
+					description = <"Keine Schlafunterbrechung.">
+				>
+				["at0104"] = <
+					text = <"Selten">
+					description = <"Seltene Schlafunterbrechung.">
+				>
+				["at0105"] = <
+					text = <"Gelegentlich">
+					description = <"Gelegentliche Schlafunterbrechung.">
+				>
+				["at0106"] = <
+					text = <"Haeufig">
+					description = <"Haeufige Schlafunterbrechung.">
+				>
+				["at0107"] = <
+					text = <"Naechtlich">
+					description = <"Naechtliche Schlafunterbrechung.">
+				>
+				["at0108"] = <
+					text = <"Irritabilitaet">
+					description = <"Irritabilitaet.">
+				>
+				["at0109"] = <
+					text = <"Aggression">
+					description = <"Aggression.">
+				>
+				["at0110"] = <
+					text = <"Stimmungsinstabilitaet">
+					description = <"Stimmungsinstabilitaet.">
+				>
+				["at0111"] = <
+					text = <"Sozialer Rueckzug">
+					description = <"Sozialer Rueckzug.">
+				>
+				["at0112"] = <
+					text = <"Selbstverletzendes Verhalten">
+					description = <"Selbstverletzendes Verhalten.">
+				>
+				["at0113"] = <
+					text = <"Keine">
+					description = <"Keine Verhaltenssorgen.">
+				>
+				["at0114"] = <
+					text = <"Verbessert">
+					description = <"Verbessert.">
+				>
+				["at0115"] = <
+					text = <"Stabil">
+					description = <"Stabil.">
+				>
+				["at0116"] = <
+					text = <"Leichter Rueckgang">
+					description = <"Leichter Rueckgang.">
+				>
+				["at0117"] = <
+					text = <"Deutlicher Rueckgang">
+					description = <"Deutlicher Rueckgang.">
+				>
+				["at0118"] = <
+					text = <"Nicht zutreffend">
+					description = <"Nicht zutreffend.">
+				>
+				["at0119"] = <
+					text = <"PedsQL Generic Core">
+					description = <"Generisches PedsQL-Kerninstrument.">
+				>
+				["at0120"] = <
+					text = <"SDQ">
+					description = <"Strengths and Difficulties Questionnaire.">
+				>
+				["at0121"] = <
+					text = <"NDDI-E">
+					description = <"Neurological Disorders Depression Inventory for Epilepsy.">
+				>
+				["at0122"] = <
+					text = <"PROMIS Pediatric Kurzform">
+					description = <"PROMIS Pediatric Kurzform, z. B. fuer Depression, Angst oder Schlaf.">
+				>
+				["at0123"] = <
+					text = <"QOLCE-16 Governance-Platzhalter">
+					description = <"Epilepsiespezifisches Instrument, das erst nach deutscher Validierungs- und Governanceentscheidung regelhaft freigeschaltet werden soll.">
+				>
+				["at0124"] = <
+					text = <"DISABKIDS Epilepsy Module">
+					description = <"European pediatric epilepsy quality-of-life module for governance review and potential German deployment.">
+				>
+				["at0130"] = <
+					text = <"Anderes lokal freigegebenes Instrument">
+					description = <"Anderes lokal freigegebenes oder lizenziertes Instrument.">
+				>
+				["at0125"] = <
+					text = <"Keine Auswirkung">
+					description = <"Keine Auswirkung.">
+				>
+				["at0126"] = <
+					text = <"Leicht">
+					description = <"Leicht.">
+				>
+				["at0127"] = <
+					text = <"Moderat">
+					description = <"Moderat.">
+				>
+				["at0128"] = <
+					text = <"Schwer">
+					description = <"Schwer.">
+				>
+				["at0129"] = <
+					text = <"Sehr schwer">
+					description = <"Sehr schwer.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Epilepsy patient reported outcome">
+					description = <"Patient- or caregiver-reported outcomes in epilepsy care.">
+				>
+				["at0001"] = <
+					text = <"History">
+					description = <"History of PROM data.">
+				>
+				["at0002"] = <
+					text = <"PROM event">
+					description = <"Point event for PROM data.">
+				>
+				["at0003"] = <
+					text = <"PROM data">
+					description = <"Structured PROM data.">
+				>
+				["at0010"] = <
+					text = <"PROM assessment date">
+					description = <"Date of PROM assessment.">
+				>
+				["at0011"] = <
+					text = <"PROM respondent">
+					description = <"Respondent or proxy.">
+				>
+				["at0012"] = <
+					text = <"Sleep quality score">
+					description = <"Score for sleep quality.">
+				>
+				["at0013"] = <
+					text = <"Sleep disruption frequency">
+					description = <"Frequency of sleep disruption.">
+				>
+				["at0014"] = <
+					text = <"Mood behavioral concerns">
+					description = <"Reported mood or behavioural concerns.">
+				>
+				["at0015"] = <
+					text = <"School performance change">
+					description = <"Change in school performance.">
+				>
+				["at0016"] = <
+					text = <"Concentration difficulties">
+					description = <"Indicates concentration difficulties.">
+				>
+				["at0017"] = <
+					text = <"QOL instrument used">
+					description = <"Quality-of-life instrument used.">
+				>
+				["at0018"] = <
+					text = <"QOL total score">
+					description = <"Total score of the instrument.">
+				>
+				["at0019"] = <
+					text = <"QOL score date">
+					description = <"Date of the QOL score.">
+				>
+				["at0020"] = <
+					text = <"Seizure impact severity">
+					description = <"Severity of daily-life impact due to seizures.">
+				>
+				["at0021"] = <
+					text = <"Activity restrictions present">
+					description = <"Indicates activity restrictions.">
+				>
+				["at0022"] = <
+					text = <"Driving restriction applicable">
+					description = <"Indicates that driving restriction is applicable.">
+				>
+				["at0100"] = <
+					text = <"Caregiver">
+					description = <"Caregiver respondent.">
+				>
+				["at0101"] = <
+					text = <"Patient self report">
+					description = <"Patient self report.">
+				>
+				["at0102"] = <
+					text = <"Clinician proxy">
+					description = <"Clinician proxy report.">
+				>
+				["at0103"] = <
+					text = <"None">
+					description = <"No sleep disruption.">
+				>
+				["at0104"] = <
+					text = <"Rare">
+					description = <"Rare sleep disruption.">
+				>
+				["at0105"] = <
+					text = <"Occasional">
+					description = <"Occasional sleep disruption.">
+				>
+				["at0106"] = <
+					text = <"Frequent">
+					description = <"Frequent sleep disruption.">
+				>
+				["at0107"] = <
+					text = <"Nightly">
+					description = <"Nightly sleep disruption.">
+				>
+				["at0108"] = <
+					text = <"Irritability">
+					description = <"Irritability.">
+				>
+				["at0109"] = <
+					text = <"Aggression">
+					description = <"Aggression.">
+				>
+				["at0110"] = <
+					text = <"Mood instability">
+					description = <"Mood instability.">
+				>
+				["at0111"] = <
+					text = <"Social withdrawal">
+					description = <"Social withdrawal.">
+				>
+				["at0112"] = <
+					text = <"Self injurious behaviour">
+					description = <"Self-injurious behaviour.">
+				>
+				["at0113"] = <
+					text = <"None">
+					description = <"No mood or behavioural concerns.">
+				>
+				["at0114"] = <
+					text = <"Improved">
+					description = <"Improved.">
+				>
+				["at0115"] = <
+					text = <"Stable">
+					description = <"Stable.">
+				>
+				["at0116"] = <
+					text = <"Mild decline">
+					description = <"Mild decline.">
+				>
+				["at0117"] = <
+					text = <"Significant decline">
+					description = <"Significant decline.">
+				>
+				["at0118"] = <
+					text = <"Not applicable">
+					description = <"Not applicable.">
+				>
+				["at0119"] = <
+					text = <"PedsQL Generic Core">
+					description = <"Generic PedsQL core instrument.">
+				>
+				["at0120"] = <
+					text = <"SDQ">
+					description = <"Strengths and Difficulties Questionnaire.">
+				>
+				["at0121"] = <
+					text = <"NDDI-E">
+					description = <"Neurological Disorders Depression Inventory for Epilepsy.">
+				>
+				["at0122"] = <
+					text = <"PROMIS Pediatric short form">
+					description = <"PROMIS Pediatric short form, for example depression, anxiety, or sleep.">
+				>
+				["at0123"] = <
+					text = <"QOLCE-16 governance placeholder">
+					description = <"Epilepsy-specific instrument kept as a governance-reviewed placeholder until German validation and implementation policy are settled.">
+				>
+				["at0124"] = <
+					text = <"DISABKIDS Epilepsy Module">
+					description = <"European pediatric epilepsy quality-of-life module for governance review and possible German deployment.">
+				>
+				["at0130"] = <
+					text = <"Other locally approved instrument">
+					description = <"Other locally approved or licensed instrument.">
+				>
+				["at0125"] = <
+					text = <"No impact">
+					description = <"No impact.">
+				>
+				["at0126"] = <
+					text = <"Mild">
+					description = <"Mild.">
+				>
+				["at0127"] = <
+					text = <"Moderate">
+					description = <"Moderate.">
+				>
+				["at0128"] = <
+					text = <"Severe">
+					description = <"Severe.">
+				>
+				["at0129"] = <
+					text = <"Very severe">
+					description = <"Very severe.">
+				>
+			>
+		>
+	>
