@@ -1,0 +1,420 @@
+archetype (adl_version=1.4; uid=a108ff21-6191-487a-b558-7a138fa6dbd3)
+	openEHR-EHR-EVALUATION.postoperative_outcome_epilepsy.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Laengsschnittbewertung des postoperativen Anfallsverlaufs und der klinischen Nachsorge nach epilepsiechirurgischen Eingriffen.">
+			use = <"Zur Dokumentation von Outcome-Klassifikation, Komplikationen und geplanter Nachsorge nach Operation oder Ablation.">
+			misuse = <"Nicht als Ersatz fuer den eigentlichen Operationsbericht oder das publizierte Prozedurartefakt verwenden.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Longitudinal evaluation of postoperative seizure outcome and follow-up after epilepsy procedures.">
+			use = <"Use for outcome classification, complications, and planned follow-up after surgery or ablation.">
+			misuse = <"Do not use as a replacement for the operative report or the published procedure artefact.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"881559d9bec00977d7b345127c40c05c">
+		["build_uid"] = <"b906d486-303b-3f6a-be80-7de155a4c5da">
+	>
+
+definition
+	EVALUATION[at0000] matches {    -- Postoperatives Outcome Epilepsie
+		data matches {
+			ITEM_TREE[at0001] matches {    -- Outcomedaten
+				items cardinality matches {0..*; unordered} matches {
+					ELEMENT[at0010] occurrences matches {0..1} matches {    -- Typ des epilepsiechirurgischen Eingriffs
+						value matches {
+							DV_CODED_TEXT matches {
+								defining_code matches {
+									[local::
+									at0100,    -- Laesionektomie
+									at0101,    -- Lobektomie
+									at0102,    -- Hemisphaerotomie
+									at0103,    -- Kallosotomie
+									at0104,    -- Laserablation
+									at0105,    -- Neuromodulationsimplantation
+									at0106]    -- Andere
+								}
+							}
+						}
+					}
+					ELEMENT[at0011] occurrences matches {0..1} matches {    -- Operationsdatum
+						value matches {
+							DV_DATE matches {*}
+						}
+					}
+					ELEMENT[at0012] occurrences matches {0..1} matches {    -- Outcome-Klassifikationssystem
+						value matches {
+							DV_CODED_TEXT matches {
+								defining_code matches {
+									[local::
+									at0110,    -- Engel
+									at0111,    -- ILAE postoperativ
+									at0112]    -- Andere
+								}
+							}
+						}
+					}
+					ELEMENT[at0013] occurrences matches {0..1} matches {    -- Outcome-Klassifikationswert
+						value matches {
+							DV_CODED_TEXT matches {
+								defining_code matches {
+									[local::
+									at0120,    -- Engel I
+									at0121,    -- Engel II
+									at0122,    -- Engel III
+									at0123,    -- Engel IV
+									at0124,    -- ILAE 1
+									at0125,    -- ILAE 2
+									at0126,    -- ILAE 3
+									at0127,    -- ILAE 4
+									at0128,    -- ILAE 5
+									at0129,    -- ILAE 6
+									at0130,    -- Nicht zutreffend
+									at0131]    -- Unbekannt
+								}
+							}
+						}
+					}
+					ELEMENT[at0014] occurrences matches {0..1} matches {    -- Zusammenfassung des Anfallsoutcomes
+						value matches {
+							DV_TEXT matches {*}
+						}
+					}
+					ELEMENT[at0015] occurrences matches {0..1} matches {    -- Neurologische Komplikation vorhanden
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0016] occurrences matches {0..1} matches {    -- Zusammenfassung postoperativer Komplikationen
+						value matches {
+							DV_TEXT matches {*}
+						}
+					}
+					ELEMENT[at0017] occurrences matches {0..1} matches {    -- ASM-Reduktion erwogen
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0018] occurrences matches {0..1} matches {    -- Reoperation erwogen
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0019] occurrences matches {0..1} matches {    -- Postoperativer Nachsorgeplan
+						value matches {
+							DV_TEXT matches {*}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Postoperatives Outcome Epilepsie">
+					description = <"Bewertung des postoperativen Verlaufs nach epilepsiechirurgischem Eingriff.">
+				>
+				["at0001"] = <
+					text = <"Outcomedaten">
+					description = <"Strukturierte Daten zum postoperativen Outcome.">
+				>
+				["at0010"] = <
+					text = <"Typ des epilepsiechirurgischen Eingriffs">
+					description = <"Art des durchgefuehrten Eingriffs.">
+				>
+				["at0011"] = <
+					text = <"Operationsdatum">
+					description = <"Datum des Eingriffs.">
+				>
+				["at0012"] = <
+					text = <"Outcome-Klassifikationssystem">
+					description = <"Verwendetes Klassifikationssystem.">
+				>
+				["at0013"] = <
+					text = <"Outcome-Klassifikationswert">
+					description = <"Konkreter Outcome-Klassifikationswert.">
+				>
+				["at0014"] = <
+					text = <"Zusammenfassung des Anfallsoutcomes">
+					description = <"Freitextzusammenfassung des postoperativen Anfallsverlaufs.">
+				>
+				["at0015"] = <
+					text = <"Neurologische Komplikation vorhanden">
+					description = <"Kennzeichnet neurologische Komplikationen.">
+				>
+				["at0016"] = <
+					text = <"Zusammenfassung postoperativer Komplikationen">
+					description = <"Freitext zu postoperativen Komplikationen.">
+				>
+				["at0017"] = <
+					text = <"ASM-Reduktion erwogen">
+					description = <"Kennzeichnet die Erwaegung einer ASM-Reduktion.">
+				>
+				["at0018"] = <
+					text = <"Reoperation erwogen">
+					description = <"Kennzeichnet die Erwaegung einer Reoperation.">
+				>
+				["at0019"] = <
+					text = <"Postoperativer Nachsorgeplan">
+					description = <"Freitext zum postoperativen Nachsorgeplan.">
+				>
+				["at0100"] = <
+					text = <"Laesionektomie">
+					description = <"Laesionektomie.">
+				>
+				["at0101"] = <
+					text = <"Lobektomie">
+					description = <"Lobektomie.">
+				>
+				["at0102"] = <
+					text = <"Hemisphaerotomie">
+					description = <"Hemisphaerotomie oder Hemisphaerektomie.">
+				>
+				["at0103"] = <
+					text = <"Kallosotomie">
+					description = <"Corpus-callosotomie.">
+				>
+				["at0104"] = <
+					text = <"Laserablation">
+					description = <"Laserinterstitielle thermische Therapie.">
+				>
+				["at0105"] = <
+					text = <"Neuromodulationsimplantation">
+					description = <"Implantation eines neuromodulatorischen Systems.">
+				>
+				["at0106"] = <
+					text = <"Andere">
+					description = <"Anderer Eingriff.">
+				>
+				["at0110"] = <
+					text = <"Engel">
+					description = <"Engel-Klassifikation.">
+				>
+				["at0111"] = <
+					text = <"ILAE postoperativ">
+					description = <"ILAE-Outcome-Klassifikation nach Operation.">
+				>
+				["at0112"] = <
+					text = <"Andere">
+					description = <"Anderes Klassifikationssystem.">
+				>
+				["at0120"] = <
+					text = <"Engel I">
+					description = <"Engel Klasse I.">
+				>
+				["at0121"] = <
+					text = <"Engel II">
+					description = <"Engel Klasse II.">
+				>
+				["at0122"] = <
+					text = <"Engel III">
+					description = <"Engel Klasse III.">
+				>
+				["at0123"] = <
+					text = <"Engel IV">
+					description = <"Engel Klasse IV.">
+				>
+				["at0124"] = <
+					text = <"ILAE 1">
+					description = <"ILAE Outcome 1.">
+				>
+				["at0125"] = <
+					text = <"ILAE 2">
+					description = <"ILAE Outcome 2.">
+				>
+				["at0126"] = <
+					text = <"ILAE 3">
+					description = <"ILAE Outcome 3.">
+				>
+				["at0127"] = <
+					text = <"ILAE 4">
+					description = <"ILAE Outcome 4.">
+				>
+				["at0128"] = <
+					text = <"ILAE 5">
+					description = <"ILAE Outcome 5.">
+				>
+				["at0129"] = <
+					text = <"ILAE 6">
+					description = <"ILAE Outcome 6.">
+				>
+				["at0130"] = <
+					text = <"Nicht zutreffend">
+					description = <"Klassifikationswert nicht zutreffend.">
+				>
+				["at0131"] = <
+					text = <"Unbekannt">
+					description = <"Klassifikationswert unbekannt.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Postoperative outcome epilepsy">
+					description = <"Evaluation of postoperative course after epilepsy procedures.">
+				>
+				["at0001"] = <
+					text = <"Outcome data">
+					description = <"Structured postoperative outcome data.">
+				>
+				["at0010"] = <
+					text = <"Epilepsy procedure type">
+					description = <"Type of procedure performed.">
+				>
+				["at0011"] = <
+					text = <"Surgery date">
+					description = <"Date of the procedure.">
+				>
+				["at0012"] = <
+					text = <"Outcome classification system">
+					description = <"Classification system used.">
+				>
+				["at0013"] = <
+					text = <"Outcome classification value">
+					description = <"Specific outcome-classification value.">
+				>
+				["at0014"] = <
+					text = <"Seizure outcome summary">
+					description = <"Free-text summary of postoperative seizure course.">
+				>
+				["at0015"] = <
+					text = <"Neurological complication present">
+					description = <"Indicates neurological complications.">
+				>
+				["at0016"] = <
+					text = <"Postoperative complication summary">
+					description = <"Free text about postoperative complications.">
+				>
+				["at0017"] = <
+					text = <"Antiseizure medication wean considered">
+					description = <"Indicates consideration of ASM reduction.">
+				>
+				["at0018"] = <
+					text = <"Reoperation considered">
+					description = <"Indicates consideration of reoperation.">
+				>
+				["at0019"] = <
+					text = <"Postoperative follow-up plan">
+					description = <"Free-text postoperative follow-up plan.">
+				>
+				["at0100"] = <
+					text = <"Lesionectomy">
+					description = <"Lesionectomy.">
+				>
+				["at0101"] = <
+					text = <"Lobectomy">
+					description = <"Lobectomy.">
+				>
+				["at0102"] = <
+					text = <"Hemispherotomy">
+					description = <"Hemispherotomy or hemispherectomy.">
+				>
+				["at0103"] = <
+					text = <"Callosotomy">
+					description = <"Corpus callosotomy.">
+				>
+				["at0104"] = <
+					text = <"Laser ablation">
+					description = <"Laser interstitial thermal therapy.">
+				>
+				["at0105"] = <
+					text = <"Neuromodulation implantation">
+					description = <"Implantation of a neuromodulation system.">
+				>
+				["at0106"] = <
+					text = <"Other">
+					description = <"Other procedure.">
+				>
+				["at0110"] = <
+					text = <"Engel">
+					description = <"Engel classification.">
+				>
+				["at0111"] = <
+					text = <"ILAE postoperative">
+					description = <"ILAE postoperative outcome classification.">
+				>
+				["at0112"] = <
+					text = <"Other">
+					description = <"Other classification system.">
+				>
+				["at0120"] = <
+					text = <"Engel I">
+					description = <"Engel class I.">
+				>
+				["at0121"] = <
+					text = <"Engel II">
+					description = <"Engel class II.">
+				>
+				["at0122"] = <
+					text = <"Engel III">
+					description = <"Engel class III.">
+				>
+				["at0123"] = <
+					text = <"Engel IV">
+					description = <"Engel class IV.">
+				>
+				["at0124"] = <
+					text = <"ILAE 1">
+					description = <"ILAE outcome 1.">
+				>
+				["at0125"] = <
+					text = <"ILAE 2">
+					description = <"ILAE outcome 2.">
+				>
+				["at0126"] = <
+					text = <"ILAE 3">
+					description = <"ILAE outcome 3.">
+				>
+				["at0127"] = <
+					text = <"ILAE 4">
+					description = <"ILAE outcome 4.">
+				>
+				["at0128"] = <
+					text = <"ILAE 5">
+					description = <"ILAE outcome 5.">
+				>
+				["at0129"] = <
+					text = <"ILAE 6">
+					description = <"ILAE outcome 6.">
+				>
+				["at0130"] = <
+					text = <"Not applicable">
+					description = <"Classification value not applicable.">
+				>
+				["at0131"] = <
+					text = <"Unknown">
+					description = <"Classification value unknown.">
+				>
+			>
+		>
+	>
