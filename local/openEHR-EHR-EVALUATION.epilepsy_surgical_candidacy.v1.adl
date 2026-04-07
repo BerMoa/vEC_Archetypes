@@ -1,0 +1,344 @@
+archetype (adl_version=1.4; uid=0a663465-ac99-45dd-8ace-99ed708501ec)
+	openEHR-EHR-EVALUATION.epilepsy_surgical_candidacy.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Bewertung der epilepsiechirurgischen Eignung und des weiteren praechirurgischen Vorgehens.">
+			use = <"Zur strukturierten Dokumentation von Kandidatur, noch benoetigter Zusatzdiagnostik und naechsten Schritten im Board oder Fallkonferenzprozess.">
+			misuse = <"Nicht als Operationsbericht oder als Ersatz fuer publizierte Prozedurartefakte verwenden.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Evaluation of epilepsy-surgery candidacy and the remaining presurgical pathway.">
+			use = <"Use for structured documentation of candidacy, additional workup needs, and next steps in conference or board review.">
+			misuse = <"Do not use as an operative report or as a replacement for published procedure artefacts.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"f7efe54271b236028eaf4c3091f0c78b">
+		["build_uid"] = <"ee3a2cb4-5b49-3cf9-a03e-afe0748fcc3a">
+	>
+
+definition
+	EVALUATION[at0000] matches {    -- Epilepsiechirurgische Kandidatur
+		data matches {
+			ITEM_TREE[at0001] matches {    -- Kandidaturdaten
+				items cardinality matches {0..*; unordered} matches {
+					ELEMENT[at0010] occurrences matches {0..1} matches {    -- Stadium der praechirurgischen Abklaerung
+						value matches {
+							DV_CODED_TEXT matches {
+								defining_code matches {
+									[local::
+									at0100,    -- Nicht begonnen
+									at0101,    -- Laufend
+									at0102,    -- Abgeschlossen
+									at0103]    -- Zurueckgestellt
+								}
+							}
+						}
+					}
+					ELEMENT[at0011] occurrences matches {0..1} matches {    -- Epilepsiechirurgischer Kandidat
+						value matches {
+							DV_CODED_TEXT matches {
+								defining_code matches {
+									[local::
+									at0110,    -- Kandidat
+									at0111,    -- Potenzieller Kandidat
+									at0112,    -- Kein Kandidat
+									at0113]    -- Unbestimmt
+								}
+							}
+						}
+					}
+					ELEMENT[at0012] occurrences matches {0..1} matches {    -- Begruendung der Kandidatur
+						value matches {
+							DV_TEXT matches {*}
+						}
+					}
+					ELEMENT[at0013] occurrences matches {0..1} matches {    -- Resektive Option erwogen
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0014] occurrences matches {0..1} matches {    -- Neuromodulation erwogen
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0015] occurrences matches {0..*} matches {    -- Zusaetzliche Abklaerung erforderlich
+						value matches {
+							DV_CODED_TEXT matches {
+								defining_code matches {
+									[local::
+									at0120,    -- Hochaufloesendes MRT
+									at0121,    -- Verlaengertes Video-EEG
+									at0122,    -- Funktionelle Bildgebung
+									at0123,    -- Invasives EEG
+									at0124,    -- Neuropsychologie
+									at0125,    -- Genetische Neubewertung
+									at0126]    -- Psychiatrische Bewertung
+								}
+							}
+						}
+					}
+					ELEMENT[at0016] occurrences matches {0..1} matches {    -- In Fallkonferenz vorgestellt
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0017] occurrences matches {0..1} matches {    -- Datum der Fallkonferenz
+						value matches {
+							DV_DATE matches {*}
+						}
+					}
+					ELEMENT[at0018] occurrences matches {0..1} matches {    -- Geplanter naechster Schritt
+						value matches {
+							DV_TEXT matches {*}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Epilepsiechirurgische Kandidatur">
+					description = <"Bewertung der epilepsiechirurgischen Kandidatur.">
+				>
+				["at0001"] = <
+					text = <"Kandidaturdaten">
+					description = <"Strukturierte Daten zur epilepsiechirurgischen Kandidatur.">
+				>
+				["at0010"] = <
+					text = <"Stadium der praechirurgischen Abklaerung">
+					description = <"Aktuelles Stadium der praechirurgischen Abklaerung.">
+				>
+				["at0011"] = <
+					text = <"Epilepsiechirurgischer Kandidat">
+					description = <"Bewertung der Kandidatur.">
+				>
+				["at0012"] = <
+					text = <"Begruendung der Kandidatur">
+					description = <"Freitext zur Begruendung der Kandidatur oder Nichtkandidatur.">
+				>
+				["at0013"] = <
+					text = <"Resektive Option erwogen">
+					description = <"Kennzeichnet eine erwogene resektive Option.">
+				>
+				["at0014"] = <
+					text = <"Neuromodulation erwogen">
+					description = <"Kennzeichnet eine erwogene Neuromodulationsoption.">
+				>
+				["at0015"] = <
+					text = <"Zusaetzliche Abklaerung erforderlich">
+					description = <"Noch benoetigte Zusatzdiagnostik oder Zusatzbewertung.">
+				>
+				["at0016"] = <
+					text = <"In Fallkonferenz vorgestellt">
+					description = <"Kennzeichnet eine Vorstellung in Fallkonferenz oder Board.">
+				>
+				["at0017"] = <
+					text = <"Datum der Fallkonferenz">
+					description = <"Datum der letzten Fallkonferenz.">
+				>
+				["at0018"] = <
+					text = <"Geplanter naechster Schritt">
+					description = <"Freitext zum naechsten Schritt.">
+				>
+				["at0100"] = <
+					text = <"Nicht begonnen">
+					description = <"Praechirurgische Abklaerung nicht begonnen.">
+				>
+				["at0101"] = <
+					text = <"Laufend">
+					description = <"Praechirurgische Abklaerung laeuft.">
+				>
+				["at0102"] = <
+					text = <"Abgeschlossen">
+					description = <"Praechirurgische Abklaerung abgeschlossen.">
+				>
+				["at0103"] = <
+					text = <"Zurueckgestellt">
+					description = <"Praechirurgische Abklaerung zurueckgestellt.">
+				>
+				["at0110"] = <
+					text = <"Kandidat">
+					description = <"Geeigneter chirurgischer Kandidat.">
+				>
+				["at0111"] = <
+					text = <"Potenzieller Kandidat">
+					description = <"Potenzieller chirurgischer Kandidat.">
+				>
+				["at0112"] = <
+					text = <"Kein Kandidat">
+					description = <"Derzeit kein chirurgischer Kandidat.">
+				>
+				["at0113"] = <
+					text = <"Unbestimmt">
+					description = <"Kandidatur noch unbestimmt.">
+				>
+				["at0120"] = <
+					text = <"Hochaufloesendes MRT">
+					description = <"Zusatzbedarf hochaufloesendes MRT.">
+				>
+				["at0121"] = <
+					text = <"Verlaengertes Video-EEG">
+					description = <"Zusatzbedarf verlaengertes Video-EEG.">
+				>
+				["at0122"] = <
+					text = <"Funktionelle Bildgebung">
+					description = <"Zusatzbedarf funktionelle Bildgebung.">
+				>
+				["at0123"] = <
+					text = <"Invasives EEG">
+					description = <"Zusatzbedarf invasives EEG.">
+				>
+				["at0124"] = <
+					text = <"Neuropsychologie">
+					description = <"Zusatzbedarf neuropsychologische Bewertung.">
+				>
+				["at0125"] = <
+					text = <"Genetische Neubewertung">
+					description = <"Zusatzbedarf genetische Neubewertung.">
+				>
+				["at0126"] = <
+					text = <"Psychiatrische Bewertung">
+					description = <"Zusatzbedarf psychiatrische Bewertung.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Epilepsy surgical candidacy">
+					description = <"Evaluation of epilepsy surgical candidacy.">
+				>
+				["at0001"] = <
+					text = <"Candidacy data">
+					description = <"Structured epilepsy surgical-candidacy data.">
+				>
+				["at0010"] = <
+					text = <"Presurgical evaluation stage">
+					description = <"Current stage of presurgical evaluation.">
+				>
+				["at0011"] = <
+					text = <"Epilepsy surgery candidate">
+					description = <"Assessment of candidacy.">
+				>
+				["at0012"] = <
+					text = <"Candidate reasoning summary">
+					description = <"Free-text justification of candidacy or non-candidacy.">
+				>
+				["at0013"] = <
+					text = <"Resective option considered">
+					description = <"Indicates that a resective option was considered.">
+				>
+				["at0014"] = <
+					text = <"Neuromodulation option considered">
+					description = <"Indicates that a neuromodulation option was considered.">
+				>
+				["at0015"] = <
+					text = <"Additional workup needed">
+					description = <"Additional diagnostic or review steps still needed.">
+				>
+				["at0016"] = <
+					text = <"Case conference presented">
+					description = <"Indicates presentation in a case conference or board.">
+				>
+				["at0017"] = <
+					text = <"Case conference date">
+					description = <"Date of the most recent case conference.">
+				>
+				["at0018"] = <
+					text = <"Planned next step">
+					description = <"Free-text next step.">
+				>
+				["at0100"] = <
+					text = <"Not started">
+					description = <"Presurgical workup not started.">
+				>
+				["at0101"] = <
+					text = <"Underway">
+					description = <"Presurgical workup underway.">
+				>
+				["at0102"] = <
+					text = <"Completed">
+					description = <"Presurgical workup completed.">
+				>
+				["at0103"] = <
+					text = <"Deferred">
+					description = <"Presurgical workup deferred.">
+				>
+				["at0110"] = <
+					text = <"Candidate">
+					description = <"Suitable surgical candidate.">
+				>
+				["at0111"] = <
+					text = <"Potential candidate">
+					description = <"Potential surgical candidate.">
+				>
+				["at0112"] = <
+					text = <"Not candidate">
+					description = <"Currently not a surgical candidate.">
+				>
+				["at0113"] = <
+					text = <"Indeterminate">
+					description = <"Candidacy remains indeterminate.">
+				>
+				["at0120"] = <
+					text = <"High resolution MRI">
+					description = <"Additional high-resolution MRI needed.">
+				>
+				["at0121"] = <
+					text = <"Prolonged video EEG">
+					description = <"Additional prolonged video EEG needed.">
+				>
+				["at0122"] = <
+					text = <"Functional imaging">
+					description = <"Additional functional imaging needed.">
+				>
+				["at0123"] = <
+					text = <"Invasive EEG">
+					description = <"Additional invasive EEG needed.">
+				>
+				["at0124"] = <
+					text = <"Neuropsychology">
+					description = <"Additional neuropsychology assessment needed.">
+				>
+				["at0125"] = <
+					text = <"Genetic review">
+					description = <"Additional genetic review needed.">
+				>
+				["at0126"] = <
+					text = <"Psychiatric review">
+					description = <"Additional psychiatric review needed.">
+				>
+			>
+		>
+	>
