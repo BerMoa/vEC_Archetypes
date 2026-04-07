@@ -1,0 +1,347 @@
+archetype (adl_version=1.4; uid=2afd1b8c-27bd-439c-85a3-95c1db27d6d0)
+	openEHR-EHR-OBSERVATION.seizure_burden.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Zeitbezogene Beobachtung der Anfallslast, Notfallmedikation und Status-epilepticus-Historie.">
+			use = <"Eine Instanz pro Person und Zeitintervall fuer Frequenz, anfallsfreie Intervalle, Cluster, Notfallmedikation und Notfallinanspruchnahme.">
+			misuse = <"Nicht fuer die Klassifikation einzelner Anfallsphaenotypen verwenden; dafuer OBSERVATION.seizure_type_profile.v1 nutzen.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Time-bound observation of seizure burden, rescue medication use, and status epilepticus history.">
+			use = <"Use one instance per person and review interval for frequency, seizure-free intervals, clustering, rescue medication, and emergency use.">
+			misuse = <"Do not use for seizure phenotype classification; use OBSERVATION.seizure_type_profile.v1 for that purpose.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"f9b6883b2b65729bd2f1abf606fb40d8">
+		["build_uid"] = <"53f1dc32-91c3-3881-b79f-a02d0d642a78">
+	>
+
+definition
+	OBSERVATION[at0000] matches {    -- Anfallslast
+		data matches {
+			HISTORY[at0001] matches {    -- Verlauf
+				events cardinality matches {1..1; unordered} matches {
+					POINT_EVENT[at0002] matches {    -- Anfallslast-Ereignis
+						data matches {
+							ITEM_TREE[at0003] matches {    -- Anfallslastdaten
+								items cardinality matches {0..*; unordered} matches {
+									ELEMENT[at0010] occurrences matches {0..1} matches {    -- Aktuelle Anfallsfrequenz
+										value matches {
+											DV_QUANTITY matches {*}
+										}
+									}
+									ELEMENT[at0011] occurrences matches {0..1} matches {    -- Frequenzeinheit
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0100,    -- Pro Tag
+													at0101,    -- Pro Woche
+													at0102,    -- Pro Monat
+													at0103,    -- Pro Jahr
+													at0104]    -- Anfallsfrei
+												}
+											}
+										}
+									}
+									ELEMENT[at0012] occurrences matches {0..1} matches {    -- Anfallsfrei seit
+										value matches {
+											DV_DATE matches {*}
+										}
+									}
+									ELEMENT[at0013] occurrences matches {0..1} matches {    -- Laengste anfallsfreie Phase in Monaten
+										value matches {
+											DV_QUANTITY matches {*}
+										}
+									}
+									ELEMENT[at0014] occurrences matches {0..1} matches {    -- Cluster-Muster
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0015] occurrences matches {0..1} matches {    -- Typische Anfallsdauer Sekunden
+										value matches {
+											DV_QUANTITY matches {*}
+										}
+									}
+									ELEMENT[at0016] occurrences matches {0..1} matches {    -- Verlaengerte Anfaelle jemals
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0017] occurrences matches {0..1} matches {    -- Status epilepticus jemals
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0018] occurrences matches {0..1} matches {    -- Status-epilepticus-Anzahl
+										value matches {
+											DV_COUNT matches {*}
+										}
+									}
+									ELEMENT[at0019] occurrences matches {0..1} matches {    -- Letztes Status-epilepticus-Datum
+										value matches {
+											DV_DATE matches {*}
+										}
+									}
+									ELEMENT[at0020] occurrences matches {0..1} matches {    -- Notfallmedikation verordnet
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0021] occurrences matches {0..1} matches {    -- Name der Notfallmedikation
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									ELEMENT[at0022] occurrences matches {0..1} matches {    -- Notfallmedikation in 12 Monaten genutzt
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0023] occurrences matches {0..1} matches {    -- Notfallhospitalisierungen in 12 Monaten
+										value matches {
+											DV_COUNT matches {*}
+										}
+									}
+									allow_archetype CLUSTER[at0900] occurrences matches {0..1} matches {    -- Provenienzslot
+										include
+											archetype_id/value matches {/openEHR-EHR-CLUSTER\.vec_extraction_provenance\.v[0-9]+/}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Anfallslast">
+					description = <"Beobachtung der zeitbezogenen Anfallslast.">
+				>
+				["at0001"] = <
+					text = <"Verlauf">
+					description = <"Historie der Anfallslast.">
+				>
+				["at0002"] = <
+					text = <"Anfallslast-Ereignis">
+					description = <"Zeitpunktbezogenes Ereignis fuer die Anfallslast.">
+				>
+				["at0003"] = <
+					text = <"Anfallslastdaten">
+					description = <"Strukturierte Anfallslastdaten.">
+				>
+				["at0010"] = <
+					text = <"Aktuelle Anfallsfrequenz">
+					description = <"Aktuelle Anfallsfrequenz fuer das betrachtete Intervall.">
+				>
+				["at0011"] = <
+					text = <"Frequenzeinheit">
+					description = <"Einheit der Anfallsfrequenz.">
+				>
+				["at0012"] = <
+					text = <"Anfallsfrei seit">
+					description = <"Datum seit bestehender Anfallsfreiheit.">
+				>
+				["at0013"] = <
+					text = <"Laengste anfallsfreie Phase in Monaten">
+					description = <"Laengster dokumentierter anfallsfreier Zeitraum.">
+				>
+				["at0014"] = <
+					text = <"Cluster-Muster">
+					description = <"Kennzeichnet ein Cluster-Muster.">
+				>
+				["at0015"] = <
+					text = <"Typische Anfallsdauer Sekunden">
+					description = <"Typische Anfallsdauer in Sekunden.">
+				>
+				["at0016"] = <
+					text = <"Verlaengerte Anfaelle jemals">
+					description = <"Kennzeichnet Anfaelle laenger als fuenf Minuten.">
+				>
+				["at0017"] = <
+					text = <"Status epilepticus jemals">
+					description = <"Kennzeichnet jemals dokumentierten Status epilepticus.">
+				>
+				["at0018"] = <
+					text = <"Status-epilepticus-Anzahl">
+					description = <"Anzahl dokumentierter Status-epilepticus-Episoden.">
+				>
+				["at0019"] = <
+					text = <"Letztes Status-epilepticus-Datum">
+					description = <"Datum der letzten Status-epilepticus-Episode.">
+				>
+				["at0020"] = <
+					text = <"Notfallmedikation verordnet">
+					description = <"Kennzeichnet eine verordnete Notfallmedikation.">
+				>
+				["at0021"] = <
+					text = <"Name der Notfallmedikation">
+					description = <"Freitext zum Namen der Notfallmedikation.">
+				>
+				["at0022"] = <
+					text = <"Notfallmedikation in 12 Monaten genutzt">
+					description = <"Kennzeichnet Nutzung einer Notfallmedikation in den letzten 12 Monaten.">
+				>
+				["at0023"] = <
+					text = <"Notfallhospitalisierungen in 12 Monaten">
+					description = <"Anzahl epilepsiebezogener Notfallhospitalisierungen in 12 Monaten.">
+				>
+				["at0100"] = <
+					text = <"Pro Tag">
+					description = <"Frequenz pro Tag.">
+				>
+				["at0101"] = <
+					text = <"Pro Woche">
+					description = <"Frequenz pro Woche.">
+				>
+				["at0102"] = <
+					text = <"Pro Monat">
+					description = <"Frequenz pro Monat.">
+				>
+				["at0103"] = <
+					text = <"Pro Jahr">
+					description = <"Frequenz pro Jahr.">
+				>
+				["at0104"] = <
+					text = <"Anfallsfrei">
+					description = <"Anfallsfreiheit.">
+				>
+				["at0900"] = <
+					text = <"Provenienzslot">
+					description = <"Slot fuer den gemeinsamen vEC-Provenienzcluster.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Seizure burden">
+					description = <"Observation of time-bound seizure burden.">
+				>
+				["at0001"] = <
+					text = <"History">
+					description = <"History of seizure burden.">
+				>
+				["at0002"] = <
+					text = <"Seizure burden event">
+					description = <"Point event for seizure burden.">
+				>
+				["at0003"] = <
+					text = <"Seizure burden data">
+					description = <"Structured seizure burden data.">
+				>
+				["at0010"] = <
+					text = <"Seizure frequency current">
+					description = <"Current seizure frequency for the review interval.">
+				>
+				["at0011"] = <
+					text = <"Seizure frequency unit">
+					description = <"Unit of seizure frequency.">
+				>
+				["at0012"] = <
+					text = <"Seizure free since date">
+					description = <"Date since seizure freedom.">
+				>
+				["at0013"] = <
+					text = <"Longest seizure free period months">
+					description = <"Longest documented seizure-free period.">
+				>
+				["at0014"] = <
+					text = <"Seizure cluster pattern">
+					description = <"Indicates cluster pattern.">
+				>
+				["at0015"] = <
+					text = <"Typical seizure duration seconds">
+					description = <"Typical seizure duration in seconds.">
+				>
+				["at0016"] = <
+					text = <"Prolonged seizures ever">
+					description = <"Indicates seizures lasting longer than five minutes.">
+				>
+				["at0017"] = <
+					text = <"Status epilepticus ever">
+					description = <"Indicates any documented status epilepticus.">
+				>
+				["at0018"] = <
+					text = <"Status epilepticus count">
+					description = <"Number of documented status epilepticus episodes.">
+				>
+				["at0019"] = <
+					text = <"Status epilepticus last date">
+					description = <"Date of the last status epilepticus episode.">
+				>
+				["at0020"] = <
+					text = <"Emergency medication prescribed">
+					description = <"Indicates prescribed rescue medication.">
+				>
+				["at0021"] = <
+					text = <"Emergency medication name">
+					description = <"Free-text rescue medication name.">
+				>
+				["at0022"] = <
+					text = <"Rescue medication used 12 months">
+					description = <"Indicates rescue medication use in the past 12 months.">
+				>
+				["at0023"] = <
+					text = <"Emergency hospitalizations 12 months">
+					description = <"Number of epilepsy-related emergency hospitalizations in 12 months.">
+				>
+				["at0100"] = <
+					text = <"Per day">
+					description = <"Frequency per day.">
+				>
+				["at0101"] = <
+					text = <"Per week">
+					description = <"Frequency per week.">
+				>
+				["at0102"] = <
+					text = <"Per month">
+					description = <"Frequency per month.">
+				>
+				["at0103"] = <
+					text = <"Per year">
+					description = <"Frequency per year.">
+				>
+				["at0104"] = <
+					text = <"Seizure free">
+					description = <"Seizure free.">
+				>
+				["at0900"] = <
+					text = <"Provenance slot">
+					description = <"Slot for the shared vEC provenance cluster.">
+				>
+			>
+		>
+	>
