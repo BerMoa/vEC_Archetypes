@@ -1,0 +1,278 @@
+archetype (adl_version=1.4; uid=dfcd066c-3c8a-47fe-8f0d-07f85d74f468)
+	openEHR-EHR-OBSERVATION.caregiver_epilepsy_context.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Epilepsiespezifische Sorgeberechtigten- und Versorgungskontextfaktoren, die nach oeffentlicher CKM-Wiederverwendung uebrig bleiben.">
+			use = <"Zur Dokumentation von Anfallskalender, Distanz zur Einrichtung, epilepsiebedingter Erwerbsreduktion, Kinderkrankengeld-Relevanz, Notfallplan und schulischer Information.">
+			misuse = <"Nicht fuer generische Sprach-, Wohn-, Berufs- oder Bildungsgrunddaten verwenden; dafuer publizierte CKM-Artefakte nutzen.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Epilepsy-specific caregiver and access context that remains after public CKM reuse.">
+			use = <"Use for seizure diary handling, care distance, epilepsy-related employment reduction, child-sickness-benefit relevance, emergency plans, and school communication.">
+			misuse = <"Do not use for generic language, housing, occupation, or education baseline data when published CKM artefacts are available.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"a029ac0ffb67c94e7db6e1e025cc5c9b">
+		["build_uid"] = <"9b1ab348-08db-37e8-8ab0-8adf747968ac">
+	>
+
+definition
+	OBSERVATION[at0000] matches {    -- Epilepsiespezifischer Sorgeberechtigtenkontext
+		data matches {
+			HISTORY[at0001] matches {    -- Verlauf
+				events cardinality matches {1..1; unordered} matches {
+					POINT_EVENT[at0002] matches {    -- Kontextereignis
+						data matches {
+							ITEM_TREE[at0003] matches {    -- Kontextdaten
+								items cardinality matches {0..*; unordered} matches {
+									ELEMENT[at0010] occurrences matches {0..1} matches {    -- Anfallskalender vorhanden
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0011] occurrences matches {0..1} matches {    -- Anfallskalender-Typ
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0100,    -- Papier
+													at0101,    -- Smartphone-App
+													at0102]    -- Keiner
+												}
+											}
+										}
+									}
+									ELEMENT[at0012] occurrences matches {0..1} matches {    -- Name der Anfallskalender-App
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									ELEMENT[at0013] occurrences matches {0..1} matches {    -- Distanz zur Einrichtung km
+										value matches {
+											DV_QUANTITY matches {*}
+										}
+									}
+									ELEMENT[at0014] occurrences matches {0..1} matches {    -- Elterliche Erwerbsarbeit reduziert
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0015] occurrences matches {0..1} matches {    -- Angst bei Betreuungsperson vorhanden
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0016] occurrences matches {0..1} matches {    -- Depressionsscreening bei Betreuungsperson
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0017] occurrences matches {0..1} matches {    -- Notfallplan vorhanden
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0018] occurrences matches {0..1} matches {    -- Schule ueber Epilepsie informiert
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0019] occurrences matches {0..1} matches {    -- Kinderkrankengeld relevant
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0020] occurrences matches {0..1} matches {    -- Kinderkrankengeld-Notiz
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Epilepsiespezifischer Sorgeberechtigtenkontext">
+					description = <"Epilepsiespezifischer Sorgeberechtigtenkontext jenseits publizierter Sozialartefakte.">
+				>
+				["at0001"] = <
+					text = <"Verlauf">
+					description = <"Historie des Sorgeberechtigtenkontexts.">
+				>
+				["at0002"] = <
+					text = <"Kontextereignis">
+					description = <"Zeitpunktbezogenes Kontextereignis.">
+				>
+				["at0003"] = <
+					text = <"Kontextdaten">
+					description = <"Strukturierte Kontextdaten.">
+				>
+				["at0010"] = <
+					text = <"Anfallskalender vorhanden">
+					description = <"Kennzeichnet einen vorhandenen Anfallskalender.">
+				>
+				["at0011"] = <
+					text = <"Anfallskalender-Typ">
+					description = <"Form des Anfallskalenders.">
+				>
+				["at0012"] = <
+					text = <"Name der Anfallskalender-App">
+					description = <"Name der verwendeten App.">
+				>
+				["at0013"] = <
+					text = <"Distanz zur Einrichtung km">
+					description = <"Entfernung zur behandelnden Einrichtung in Kilometern.">
+				>
+				["at0014"] = <
+					text = <"Elterliche Erwerbsarbeit reduziert">
+					description = <"Kennzeichnet reduzierte Erwerbsarbeit wegen Epilepsie.">
+				>
+				["at0015"] = <
+					text = <"Angst bei Betreuungsperson vorhanden">
+					description = <"Kennzeichnet berichtete Angstbelastung.">
+				>
+				["at0016"] = <
+					text = <"Depressionsscreening bei Betreuungsperson">
+					description = <"Kennzeichnet ein Depressionsscreening.">
+				>
+				["at0017"] = <
+					text = <"Notfallplan vorhanden">
+					description = <"Kennzeichnet einen vorhandenen Anfallsnotfallplan.">
+				>
+				["at0018"] = <
+					text = <"Schule ueber Epilepsie informiert">
+					description = <"Kennzeichnet, ob Schule oder Kita informiert wurde.">
+				>
+				["at0019"] = <
+					text = <"Kinderkrankengeld relevant">
+					description = <"Kennzeichnet eine potenzielle Relevanz von Kinderkrankengeld oder vergleichbarer Freistellung.">
+				>
+				["at0020"] = <
+					text = <"Kinderkrankengeld-Notiz">
+					description = <"Freitext zu Kinderkrankengeld, Freistellung oder logistischer Belastung.">
+				>
+				["at0100"] = <
+					text = <"Papier">
+					description = <"Papierbasierter Anfallskalender.">
+				>
+				["at0101"] = <
+					text = <"Smartphone-App">
+					description = <"Smartphone-App-basierter Anfallskalender.">
+				>
+				["at0102"] = <
+					text = <"Keiner">
+					description = <"Kein Anfallskalender.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Caregiver epilepsy context">
+					description = <"Epilepsy-specific caregiver context beyond published social artefacts.">
+				>
+				["at0001"] = <
+					text = <"History">
+					description = <"History of caregiver context.">
+				>
+				["at0002"] = <
+					text = <"Context event">
+					description = <"Point event for caregiver context.">
+				>
+				["at0003"] = <
+					text = <"Context data">
+					description = <"Structured context data.">
+				>
+				["at0010"] = <
+					text = <"Has seizure diary">
+					description = <"Indicates availability of a seizure diary.">
+				>
+				["at0011"] = <
+					text = <"Seizure diary type">
+					description = <"Type of seizure diary.">
+				>
+				["at0012"] = <
+					text = <"Seizure diary app name">
+					description = <"Name of the seizure diary application.">
+				>
+				["at0013"] = <
+					text = <"Care facility distance km">
+					description = <"Distance to the treating facility in kilometres.">
+				>
+				["at0014"] = <
+					text = <"Parental employment reduced">
+					description = <"Indicates reduced parental employment because of epilepsy care.">
+				>
+				["at0015"] = <
+					text = <"Caregiver anxiety present">
+					description = <"Indicates caregiver-reported anxiety.">
+				>
+				["at0016"] = <
+					text = <"Caregiver depression screened">
+					description = <"Indicates depression screening in the caregiver.">
+				>
+				["at0017"] = <
+					text = <"Emergency plan in place">
+					description = <"Indicates that a seizure emergency plan exists.">
+				>
+				["at0018"] = <
+					text = <"School informed about epilepsy">
+					description = <"Indicates that school or daycare has been informed.">
+				>
+				["at0019"] = <
+					text = <"Child sickness benefit relevant">
+					description = <"Indicates potential relevance of child sickness benefit or comparable leave support.">
+				>
+				["at0020"] = <
+					text = <"Child sickness benefit note">
+					description = <"Free text about child sickness benefit, leave support, or logistic burden.">
+				>
+				["at0100"] = <
+					text = <"Paper">
+					description = <"Paper-based seizure diary.">
+				>
+				["at0101"] = <
+					text = <"Smartphone app">
+					description = <"Smartphone app seizure diary.">
+				>
+				["at0102"] = <
+					text = <"None">
+					description = <"No seizure diary.">
+				>
+			>
+		>
+	>
