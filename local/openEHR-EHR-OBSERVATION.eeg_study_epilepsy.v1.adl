@@ -1,0 +1,1316 @@
+archetype (adl_version=1.4; uid=c1cd8e5f-6bde-4ae4-a445-3d8262d46825)
+	openEHR-EHR-OBSERVATION.eeg_study_epilepsy.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Dokumentation einer EEG-Studie mit SCORE-orientierten Bloecken fuer technische Adaequanz, Hintergrund, Aktivierungsprozeduren, epileptiforme und nicht-epileptiforme Merkmale.">
+			use = <"Eine Instanz pro EEG-Studie fuer vEC-CDSS und klinische Verlaufsbeurteilung. Die Struktur orientiert sich an SCORE mit Recording conditions, Hintergrund, Aktivierungsantworten, Schlaftransienten sowie epileptiformen und nicht-epileptiformen Auffaelligkeiten.">
+			misuse = <"Nicht als minutengenaue Rohsignalbeschreibung oder als Ersatz fuer das Vollprotokoll verwenden.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Document one EEG study with SCORE-oriented blocks for technical adequacy, background, activation procedures, epileptiform, and non-epileptiform findings.">
+			use = <"Use one instance per EEG study for vEC CDSS logic and longitudinal clinical review. The structure follows SCORE-style reporting blocks for recording conditions, background, activation responses, sleep transients, and epileptiform and non-epileptiform abnormalities.">
+			misuse = <"Do not use as a raw signal log or a replacement for the full EEG report.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"7f7142143bc278eec9fab2a293688c1e">
+		["build_uid"] = <"70c18b68-5b4c-3b84-91e7-0183150ab57e">
+	>
+
+definition
+	OBSERVATION[at0000] matches {    -- Epilepsie-EEG-Studie
+		data matches {
+			HISTORY[at0001] matches {    -- Verlauf
+				events cardinality matches {1..1; unordered} matches {
+					POINT_EVENT[at0002] matches {    -- EEG-Ereignis
+						data matches {
+							ITEM_TREE[at0003] matches {    -- EEG-Daten
+								items cardinality matches {0..*; unordered} matches {
+									ELEMENT[at0010] occurrences matches {0..1} matches {    -- EEG durchgefuehrt
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0011] occurrences matches {0..1} matches {    -- EEG-Datum
+										value matches {
+											DV_DATE matches {*}
+										}
+									}
+									ELEMENT[at0012] occurrences matches {0..1} matches {    -- EEG-Institution
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									ELEMENT[at0013] occurrences matches {0..1} matches {    -- EEG-Typ
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0100,    -- Routine wach
+													at0101,    -- Schlafdepriviert
+													at0102,    -- Ambulant 24 Stunden
+													at0103,    -- Langzeit-Video
+													at0104,    -- Kontinuierliches Monitoring
+													at0105,    -- Neonatal
+													at0106]    -- Intraoperativ
+												}
+											}
+										}
+									}
+									ELEMENT[at0014] occurrences matches {0..1} matches {    -- Aufzeichnungsdauer Minuten
+										value matches {
+											DV_QUANTITY matches {*}
+										}
+									}
+									ELEMENT[at0015] occurrences matches {0..1} matches {    -- Schlaf erfasst
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0016] occurrences matches {0..1} matches {    -- Schlafstadium erfasst
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0107,    -- Nur NREM
+													at0108,    -- Nur REM
+													at0109,    -- NREM und REM
+													at0110,    -- Voller Zyklus
+													at0111]    -- Keiner
+												}
+											}
+										}
+									}
+									ELEMENT[at0017] occurrences matches {0..1} matches {    -- Hyperventilation durchgefuehrt
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0018] occurrences matches {0..1} matches {    -- Hyperventilation Minuten
+										value matches {
+											DV_QUANTITY matches {*}
+										}
+									}
+									ELEMENT[at0019] occurrences matches {0..1} matches {    -- Photostimulation durchgefuehrt
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0020] occurrences matches {0..1} matches {    -- Elektrodenanzahl
+										value matches {
+											DV_COUNT matches {*}
+										}
+									}
+									ELEMENT[at0021] occurrences matches {0..1} matches {    -- Montagestandard
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0112,    -- Standard 10-20
+													at0113,    -- Reduziert
+													at0114,    -- Neonatal modifiziert
+													at0115]    -- Nicht dokumentiert
+												}
+											}
+										}
+									}
+									ELEMENT[at0022] occurrences matches {0..1} matches {    -- Hintergrundfrequenz
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0116,    -- Delta 0-4 Hz
+													at0117,    -- Theta 4-8 Hz
+													at0118,    -- Alpha 8-13 Hz
+													at0119,    -- Beta 13-30 Hz
+													at0120]    -- Gemischt
+												}
+											}
+										}
+									}
+									ELEMENT[at0023] occurrences matches {0..1} matches {    -- Hintergrundbewertung
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0121,    -- Altersgerecht normal
+													at0122,    -- Fuer Alter verlangsamt
+													at0123,    -- Desorganisiert
+													at0124,    -- Burst-Suppression
+													at0125,    -- Supprimiert
+													at0126,    -- Elektrozerebrale Stille
+													at0127]    -- Nicht beurteilt
+												}
+											}
+										}
+									}
+									ELEMENT[at0024] occurrences matches {0..1} matches {    -- Hintergrundsymmetrie
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0128,    -- Symmetrisch
+													at0129,    -- Asymmetrisch links
+													at0130,    -- Asymmetrisch rechts
+													at0131]    -- Nicht beurteilt
+												}
+											}
+										}
+									}
+									ELEMENT[at0025] occurrences matches {0..1} matches {    -- Epileptiforme Aktivitaet vorhanden
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0026] occurrences matches {0..*} matches {    -- Epileptiformes Muster
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0132,    -- Spike-wave-Komplex
+													at0133,    -- Polyspike-wave
+													at0134,    -- Sharp wave
+													at0135,    -- Hypsarrhythmie
+													at0136,    -- CSWS
+													at0137,    -- Burst-Suppression-Muster
+													at0138,    -- Photoparoxysmale Antwort
+													at0139,    -- ETP
+													at0140,    -- Fokale sharp waves
+													at0141]    -- Keine
+												}
+											}
+										}
+									}
+									ELEMENT[at0027] occurrences matches {0..1} matches {    -- Epileptiforme Lateralisierung
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0142,    -- Links
+													at0143,    -- Rechts
+													at0144,    -- Bilateralsynchron
+													at0145,    -- Bilateralsunabhaengig
+													at0146,    -- Generalisiert
+													at0147]    -- Keine
+												}
+											}
+										}
+									}
+									ELEMENT[at0028] occurrences matches {0..*} matches {    -- Epileptiforme Lokalisation
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0148,    -- Frontal
+													at0149,    -- Temporal
+													at0150,    -- Parietal
+													at0151,    -- Okzipital
+													at0152,    -- Centrotemporal
+													at0153,    -- Multilobaer
+													at0154,    -- Generalisiert
+													at0155]    -- Nicht zutreffend
+												}
+											}
+										}
+									}
+									ELEMENT[at0029] occurrences matches {0..1} matches {    -- Epileptiforme Frequenz pro Stunde
+										value matches {
+											DV_QUANTITY matches {*}
+										}
+									}
+									ELEMENT[at0030] occurrences matches {0..1} matches {    -- Anfall im EEG erfasst
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0031] occurrences matches {0..1} matches {    -- Erfasster Anfallstyp
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									ELEMENT[at0032] occurrences matches {0..1} matches {    -- SCORE-Adequanz gesamt
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0156,    -- Gruen
+													at0157,    -- Gelb
+													at0158]    -- Rot
+												}
+											}
+										}
+									}
+									ELEMENT[at0033] occurrences matches {0..1} matches {    -- EEG-Adequanzflags
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									ELEMENT[at0034] occurrences matches {0..1} matches {    -- Hintergrundreaktivitaet
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0159,    -- Vorhanden
+													at0160,    -- Reduziert
+													at0161,    -- Fehlend
+													at0162]    -- Nicht beurteilt
+												}
+											}
+										}
+									}
+									ELEMENT[at0035] occurrences matches {0..1} matches {    -- Nicht-epileptiforme Auffaelligkeit vorhanden
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0036] occurrences matches {0..*} matches {    -- Nicht-epileptiforme Auffaelligkeitstypen
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0163,    -- Fokale Verlangsamung
+													at0164,    -- Generalisierte Verlangsamung
+													at0165,    -- Abschwaechung
+													at0166,    -- Diskontinuierlicher Hintergrund
+													at0167,    -- Asymmetrische Schlafspindeln
+													at0168,    -- Breach-Rhythmus
+													at0169,    -- Keine
+													at0170]    -- Andere
+												}
+											}
+										}
+									}
+									ELEMENT[at0037] occurrences matches {0..1} matches {    -- Schlaftransienten vorhanden
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0038] occurrences matches {0..*} matches {    -- Schlaftransiententyp
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0171,    -- Vertex-Wellen
+													at0172,    -- Schlafspindeln
+													at0173,    -- K-Komplexe
+													at0174,    -- Keine
+													at0175]    -- Andere
+												}
+											}
+										}
+									}
+									ELEMENT[at0039] occurrences matches {0..*} matches {    -- Aktivierungsantwort
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0176,    -- Photic driving
+													at0177,    -- Photoparoxysmale Antwort
+													at0178,    -- Hyperventilationsverlangsamung
+													at0179,    -- Hyperventilation aktiviert epileptiforme Entladungen
+													at0180,    -- Keine
+													at0181]    -- Nicht beurteilt
+												}
+											}
+										}
+									}
+									allow_archetype CLUSTER[at0900] occurrences matches {0..1} matches {    -- Provenienzslot
+										include
+											archetype_id/value matches {/openEHR-EHR-CLUSTER\.vec_extraction_provenance\.v[0-9]+/}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	terminologies_available = <"SNOMED-CT", ...>
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Epilepsie-EEG-Studie">
+					description = <"Beobachtung einer EEG-Studie im Epilepsiekontext.">
+				>
+				["at0001"] = <
+					text = <"Verlauf">
+					description = <"Historie der EEG-Studie.">
+				>
+				["at0002"] = <
+					text = <"EEG-Ereignis">
+					description = <"Zeitpunktbezogenes EEG-Ereignis.">
+				>
+				["at0003"] = <
+					text = <"EEG-Daten">
+					description = <"Strukturierte EEG-Daten.">
+				>
+				["at0010"] = <
+					text = <"EEG durchgefuehrt">
+					description = <"Kennzeichnet, ob ein EEG durchgefuehrt wurde.">
+				>
+				["at0011"] = <
+					text = <"EEG-Datum">
+					description = <"Datum der EEG-Studie.">
+				>
+				["at0012"] = <
+					text = <"EEG-Institution">
+					description = <"Durchfuehrende Institution.">
+				>
+				["at0013"] = <
+					text = <"EEG-Typ">
+					description = <"Art der EEG-Studie.">
+				>
+				["at0014"] = <
+					text = <"Aufzeichnungsdauer Minuten">
+					description = <"Dauer der EEG-Aufzeichnung in Minuten.">
+				>
+				["at0015"] = <
+					text = <"Schlaf erfasst">
+					description = <"Kennzeichnet erfassten Schlaf.">
+				>
+				["at0016"] = <
+					text = <"Schlafstadium erfasst">
+					description = <"Erfasstes Schlafstadium.">
+				>
+				["at0017"] = <
+					text = <"Hyperventilation durchgefuehrt">
+					description = <"Kennzeichnet eine Hyperventilationsphase.">
+				>
+				["at0018"] = <
+					text = <"Hyperventilation Minuten">
+					description = <"Dauer der Hyperventilation in Minuten.">
+				>
+				["at0019"] = <
+					text = <"Photostimulation durchgefuehrt">
+					description = <"Kennzeichnet eine photische Stimulation.">
+				>
+				["at0020"] = <
+					text = <"Elektrodenanzahl">
+					description = <"Anzahl verwendeter Elektroden.">
+				>
+				["at0021"] = <
+					text = <"Montagestandard">
+					description = <"Verwendeter Montagetyp.">
+				>
+				["at0022"] = <
+					text = <"Hintergrundfrequenz">
+					description = <"Dominante Hintergrundfrequenz.">
+				>
+				["at0023"] = <
+					text = <"Hintergrundbewertung">
+					description = <"Qualitative Hintergrundbewertung.">
+				>
+				["at0024"] = <
+					text = <"Hintergrundsymmetrie">
+					description = <"Bewertung der Hintergrundsymmetrie.">
+				>
+				["at0025"] = <
+					text = <"Epileptiforme Aktivitaet vorhanden">
+					description = <"Kennzeichnet epileptiforme Aktivitaet.">
+				>
+				["at0026"] = <
+					text = <"Epileptiformes Muster">
+					description = <"Art des epileptiformen Musters.">
+				>
+				["at0027"] = <
+					text = <"Epileptiforme Lateralisierung">
+					description = <"Lateralisierung epileptiformer Aktivitaet.">
+				>
+				["at0028"] = <
+					text = <"Epileptiforme Lokalisation">
+					description = <"Lokalisation epileptiformer Aktivitaet.">
+				>
+				["at0029"] = <
+					text = <"Epileptiforme Frequenz pro Stunde">
+					description = <"Ungefaehre Frequenz pro Stunde.">
+				>
+				["at0030"] = <
+					text = <"Anfall im EEG erfasst">
+					description = <"Kennzeichnet einen im EEG erfassten Anfall.">
+				>
+				["at0031"] = <
+					text = <"Erfasster Anfallstyp">
+					description = <"Freitext zum waehrend der Ableitung beobachteten Anfallstyp.">
+				>
+				["at0032"] = <
+					text = <"SCORE-Adequanz gesamt">
+					description = <"Gesamte EEG-Adequanzbewertung.">
+				>
+				["at0033"] = <
+					text = <"EEG-Adequanzflags">
+					description = <"Kommagetrennte Liste ausgeloester EEG-Regeln.">
+				>
+				["at0034"] = <
+					text = <"Hintergrundreaktivitaet">
+					description = <"Reaktivitaet des Hintergrunds auf Stimulation oder Zustandwechsel.">
+				>
+				["at0035"] = <
+					text = <"Nicht-epileptiforme Auffaelligkeit vorhanden">
+					description = <"Kennzeichnet nicht-epileptiforme Auffaelligkeiten.">
+				>
+				["at0036"] = <
+					text = <"Nicht-epileptiforme Auffaelligkeitstypen">
+					description = <"Typen nicht-epileptiformer Auffaelligkeiten.">
+				>
+				["at0037"] = <
+					text = <"Schlaftransienten vorhanden">
+					description = <"Kennzeichnet dokumentierte Schlaftransienten.">
+				>
+				["at0038"] = <
+					text = <"Schlaftransiententyp">
+					description = <"Typ dokumentierter Schlaftransienten.">
+				>
+				["at0039"] = <
+					text = <"Aktivierungsantwort">
+					description = <"Antwort auf Aktivierungsprozeduren wie Photik oder Hyperventilation.">
+				>
+				["at0100"] = <
+					text = <"Routine wach">
+					description = <"Routine-EEG im Wachzustand.">
+				>
+				["at0101"] = <
+					text = <"Schlafdepriviert">
+					description = <"Schlafdepriviertes EEG.">
+				>
+				["at0102"] = <
+					text = <"Ambulant 24 Stunden">
+					description = <"Ambulantes 24h-EEG.">
+				>
+				["at0103"] = <
+					text = <"Langzeit-Video">
+					description = <"Langzeit-Video-EEG.">
+				>
+				["at0104"] = <
+					text = <"Kontinuierliches Monitoring">
+					description = <"Kontinuierliches EEG-Monitoring.">
+				>
+				["at0105"] = <
+					text = <"Neonatal">
+					description = <"Neonatales EEG.">
+				>
+				["at0106"] = <
+					text = <"Intraoperativ">
+					description = <"Intraoperatives EEG.">
+				>
+				["at0107"] = <
+					text = <"Nur NREM">
+					description = <"Nur NREM-Schlaf erfasst.">
+				>
+				["at0108"] = <
+					text = <"Nur REM">
+					description = <"Nur REM-Schlaf erfasst.">
+				>
+				["at0109"] = <
+					text = <"NREM und REM">
+					description = <"NREM- und REM-Schlaf erfasst.">
+				>
+				["at0110"] = <
+					text = <"Voller Zyklus">
+					description = <"Voller Schlafzyklus erfasst.">
+				>
+				["at0111"] = <
+					text = <"Keiner">
+					description = <"Kein Schlafstadium erfasst.">
+				>
+				["at0112"] = <
+					text = <"Standard 10-20">
+					description = <"Standard-10-20-Montage.">
+				>
+				["at0113"] = <
+					text = <"Reduziert">
+					description = <"Reduzierte Montage.">
+				>
+				["at0114"] = <
+					text = <"Neonatal modifiziert">
+					description = <"Neonatal modifizierte Montage.">
+				>
+				["at0115"] = <
+					text = <"Nicht dokumentiert">
+					description = <"Montage nicht dokumentiert.">
+				>
+				["at0116"] = <
+					text = <"Delta 0-4 Hz">
+					description = <"Delta-Hintergrund.">
+				>
+				["at0117"] = <
+					text = <"Theta 4-8 Hz">
+					description = <"Theta-Hintergrund.">
+				>
+				["at0118"] = <
+					text = <"Alpha 8-13 Hz">
+					description = <"Alpha-Hintergrund.">
+				>
+				["at0119"] = <
+					text = <"Beta 13-30 Hz">
+					description = <"Beta-Hintergrund.">
+				>
+				["at0120"] = <
+					text = <"Gemischt">
+					description = <"Gemischter Hintergrund.">
+				>
+				["at0121"] = <
+					text = <"Altersgerecht normal">
+					description = <"Altersgerechter Hintergrund.">
+				>
+				["at0122"] = <
+					text = <"Fuer Alter verlangsamt">
+					description = <"Fuer das Alter verlangsamt.">
+				>
+				["at0123"] = <
+					text = <"Desorganisiert">
+					description = <"Desorganisierter Hintergrund.">
+				>
+				["at0124"] = <
+					text = <"Burst-Suppression">
+					description = <"Burst-Suppression-Muster.">
+				>
+				["at0125"] = <
+					text = <"Supprimiert">
+					description = <"Supprimierter Hintergrund.">
+				>
+				["at0126"] = <
+					text = <"Elektrozerebrale Stille">
+					description = <"Elektrozerebrale Stille.">
+				>
+				["at0127"] = <
+					text = <"Nicht beurteilt">
+					description = <"Nicht beurteilt.">
+				>
+				["at0128"] = <
+					text = <"Symmetrisch">
+					description = <"Symmetrisch.">
+				>
+				["at0129"] = <
+					text = <"Asymmetrisch links">
+					description = <"Linksbetonte Asymmetrie.">
+				>
+				["at0130"] = <
+					text = <"Asymmetrisch rechts">
+					description = <"Rechtsbetonte Asymmetrie.">
+				>
+				["at0131"] = <
+					text = <"Nicht beurteilt">
+					description = <"Symmetrie nicht beurteilt.">
+				>
+				["at0132"] = <
+					text = <"Spike-wave-Komplex">
+					description = <"Spike-wave-Komplex.">
+				>
+				["at0133"] = <
+					text = <"Polyspike-wave">
+					description = <"Polyspike-wave-Muster.">
+				>
+				["at0134"] = <
+					text = <"Sharp wave">
+					description = <"Sharp-wave-Muster.">
+				>
+				["at0135"] = <
+					text = <"Hypsarrhythmie">
+					description = <"Hypsarrhythmie.">
+				>
+				["at0136"] = <
+					text = <"CSWS">
+					description = <"Continuous spike-wave during sleep.">
+				>
+				["at0137"] = <
+					text = <"Burst-Suppression-Muster">
+					description = <"Burst-Suppression als epileptiformes Muster.">
+				>
+				["at0138"] = <
+					text = <"Photoparoxysmale Antwort">
+					description = <"Photoparoxysmale Antwort.">
+				>
+				["at0139"] = <
+					text = <"ETP">
+					description = <"Epileptiforme Transienten.">
+				>
+				["at0140"] = <
+					text = <"Fokale sharp waves">
+					description = <"Fokale sharp waves.">
+				>
+				["at0141"] = <
+					text = <"Keine">
+					description = <"Keine epileptiformen Muster.">
+				>
+				["at0142"] = <
+					text = <"Links">
+					description = <"Linksbetont.">
+				>
+				["at0143"] = <
+					text = <"Rechts">
+					description = <"Rechtsbetont.">
+				>
+				["at0144"] = <
+					text = <"Bilateralsynchron">
+					description = <"Bilateralsynchron.">
+				>
+				["at0145"] = <
+					text = <"Bilateralsunabhaengig">
+					description = <"Bilateralsunabhaengig.">
+				>
+				["at0146"] = <
+					text = <"Generalisiert">
+					description = <"Generalisiert.">
+				>
+				["at0147"] = <
+					text = <"Keine">
+					description = <"Keine Lateralisierung.">
+				>
+				["at0148"] = <
+					text = <"Frontal">
+					description = <"Frontale Lokalisation.">
+				>
+				["at0149"] = <
+					text = <"Temporal">
+					description = <"Temporale Lokalisation.">
+				>
+				["at0150"] = <
+					text = <"Parietal">
+					description = <"Parietale Lokalisation.">
+				>
+				["at0151"] = <
+					text = <"Okzipital">
+					description = <"Okzipitale Lokalisation.">
+				>
+				["at0152"] = <
+					text = <"Centrotemporal">
+					description = <"Centrotemporale Lokalisation.">
+				>
+				["at0153"] = <
+					text = <"Multilobaer">
+					description = <"Multilobaere Lokalisation.">
+				>
+				["at0154"] = <
+					text = <"Generalisiert">
+					description = <"Generalisierte Lokalisation.">
+				>
+				["at0155"] = <
+					text = <"Nicht zutreffend">
+					description = <"Lokalisation nicht zutreffend.">
+				>
+				["at0156"] = <
+					text = <"Gruen">
+					description = <"Adaequat.">
+				>
+				["at0157"] = <
+					text = <"Gelb">
+					description = <"Teilweise adaequat.">
+				>
+				["at0158"] = <
+					text = <"Rot">
+					description = <"Inadaequat.">
+				>
+				["at0159"] = <
+					text = <"Vorhanden">
+					description = <"Reaktivitaet vorhanden.">
+				>
+				["at0160"] = <
+					text = <"Reduziert">
+					description = <"Reaktivitaet reduziert.">
+				>
+				["at0161"] = <
+					text = <"Fehlend">
+					description = <"Reaktivitaet fehlt.">
+				>
+				["at0162"] = <
+					text = <"Nicht beurteilt">
+					description = <"Reaktivitaet nicht beurteilt.">
+				>
+				["at0163"] = <
+					text = <"Fokale Verlangsamung">
+					description = <"Fokale Verlangsamung.">
+				>
+				["at0164"] = <
+					text = <"Generalisierte Verlangsamung">
+					description = <"Generalisierte Verlangsamung.">
+				>
+				["at0165"] = <
+					text = <"Abschwaechung">
+					description = <"Fokale oder diffuse Abschwaechung.">
+				>
+				["at0166"] = <
+					text = <"Diskontinuierlicher Hintergrund">
+					description = <"Diskontinuierlicher Hintergrund.">
+				>
+				["at0167"] = <
+					text = <"Asymmetrische Schlafspindeln">
+					description = <"Asymmetrische Schlafspindeln.">
+				>
+				["at0168"] = <
+					text = <"Breach-Rhythmus">
+					description = <"Breach-Rhythmus.">
+				>
+				["at0169"] = <
+					text = <"Keine">
+					description = <"Keine nicht-epileptiforme Auffaelligkeit.">
+				>
+				["at0170"] = <
+					text = <"Andere">
+					description = <"Andere nicht-epileptiforme Auffaelligkeit.">
+				>
+				["at0171"] = <
+					text = <"Vertex-Wellen">
+					description = <"Vertex-Wellen.">
+				>
+				["at0172"] = <
+					text = <"Schlafspindeln">
+					description = <"Schlafspindeln.">
+				>
+				["at0173"] = <
+					text = <"K-Komplexe">
+					description = <"K-Komplexe.">
+				>
+				["at0174"] = <
+					text = <"Keine">
+					description = <"Keine Schlaftransienten dokumentiert.">
+				>
+				["at0175"] = <
+					text = <"Andere">
+					description = <"Andere Schlaftransienten.">
+				>
+				["at0176"] = <
+					text = <"Photic driving">
+					description = <"Normale photische Driving-Reaktion.">
+				>
+				["at0177"] = <
+					text = <"Photoparoxysmale Antwort">
+					description = <"Photoparoxysmale Antwort auf photische Stimulation.">
+				>
+				["at0178"] = <
+					text = <"Hyperventilationsverlangsamung">
+					description = <"Verlangsamung unter Hyperventilation.">
+				>
+				["at0179"] = <
+					text = <"Hyperventilation aktiviert epileptiforme Entladungen">
+					description = <"Hyperventilation aktiviert epileptiforme Entladungen.">
+				>
+				["at0180"] = <
+					text = <"Keine">
+					description = <"Keine relevante Aktivierungsantwort.">
+				>
+				["at0181"] = <
+					text = <"Nicht beurteilt">
+					description = <"Aktivierungsantwort nicht beurteilt.">
+				>
+				["at0900"] = <
+					text = <"Provenienzslot">
+					description = <"Slot fuer den gemeinsamen vEC-Provenienzcluster.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Epilepsy EEG study">
+					description = <"Observation of one EEG study in the epilepsy context.">
+				>
+				["at0001"] = <
+					text = <"History">
+					description = <"History of the EEG study.">
+				>
+				["at0002"] = <
+					text = <"EEG event">
+					description = <"Point event for the EEG study.">
+				>
+				["at0003"] = <
+					text = <"EEG data">
+					description = <"Structured EEG data.">
+				>
+				["at0010"] = <
+					text = <"EEG performed">
+					description = <"Indicates whether EEG was performed.">
+				>
+				["at0011"] = <
+					text = <"EEG date">
+					description = <"Date of the EEG study.">
+				>
+				["at0012"] = <
+					text = <"EEG performing institution">
+					description = <"Institution that performed the EEG study.">
+				>
+				["at0013"] = <
+					text = <"EEG type">
+					description = <"Type of EEG study.">
+				>
+				["at0014"] = <
+					text = <"Recording duration minutes">
+					description = <"Recording duration in minutes.">
+				>
+				["at0015"] = <
+					text = <"Sleep captured">
+					description = <"Indicates whether sleep was captured.">
+				>
+				["at0016"] = <
+					text = <"Sleep stage captured">
+					description = <"Captured sleep stage.">
+				>
+				["at0017"] = <
+					text = <"Hyperventilation performed">
+					description = <"Indicates whether hyperventilation was performed.">
+				>
+				["at0018"] = <
+					text = <"Hyperventilation duration minutes">
+					description = <"Hyperventilation duration in minutes.">
+				>
+				["at0019"] = <
+					text = <"Photic stimulation performed">
+					description = <"Indicates whether photic stimulation was performed.">
+				>
+				["at0020"] = <
+					text = <"Electrode count">
+					description = <"Number of electrodes used.">
+				>
+				["at0021"] = <
+					text = <"Montage standard">
+					description = <"Montage type used.">
+				>
+				["at0022"] = <
+					text = <"Background activity frequency">
+					description = <"Dominant background frequency.">
+				>
+				["at0023"] = <
+					text = <"Background activity assessment">
+					description = <"Qualitative background assessment.">
+				>
+				["at0024"] = <
+					text = <"Background activity symmetry">
+					description = <"Background symmetry assessment.">
+				>
+				["at0025"] = <
+					text = <"Epileptiform activity present">
+					description = <"Indicates epileptiform activity.">
+				>
+				["at0026"] = <
+					text = <"Epileptiform pattern">
+					description = <"Type of epileptiform pattern.">
+				>
+				["at0027"] = <
+					text = <"Epileptiform lateralization">
+					description = <"Lateralization of epileptiform activity.">
+				>
+				["at0028"] = <
+					text = <"Epileptiform localization">
+					description = <"Localization of epileptiform activity.">
+				>
+				["at0029"] = <
+					text = <"Epileptiform frequency per hour">
+					description = <"Approximate frequency per hour.">
+				>
+				["at0030"] = <
+					text = <"Seizure captured on EEG">
+					description = <"Indicates that a seizure was captured during recording.">
+				>
+				["at0031"] = <
+					text = <"Seizure type captured">
+					description = <"Free text for the seizure type observed during recording.">
+				>
+				["at0032"] = <
+					text = <"Score adequacy overall">
+					description = <"Overall EEG adequacy rating.">
+				>
+				["at0033"] = <
+					text = <"EEG adequacy flags">
+					description = <"Comma-separated list of triggered EEG adequacy rules.">
+				>
+				["at0034"] = <
+					text = <"Background reactivity">
+					description = <"Reactivity of the EEG background to stimulation or state change.">
+				>
+				["at0035"] = <
+					text = <"Non-epileptiform abnormality present">
+					description = <"Indicates non-epileptiform abnormalities.">
+				>
+				["at0036"] = <
+					text = <"Non-epileptiform abnormality type">
+					description = <"Types of non-epileptiform abnormalities.">
+				>
+				["at0037"] = <
+					text = <"Sleep transients present">
+					description = <"Indicates documented sleep transients.">
+				>
+				["at0038"] = <
+					text = <"Sleep transient type">
+					description = <"Type of documented sleep transient.">
+				>
+				["at0039"] = <
+					text = <"Activation response">
+					description = <"Response to activation procedures such as photic stimulation or hyperventilation.">
+				>
+				["at0100"] = <
+					text = <"Routine awake">
+					description = <"Routine awake EEG.">
+				>
+				["at0101"] = <
+					text = <"Sleep deprived">
+					description = <"Sleep-deprived EEG.">
+				>
+				["at0102"] = <
+					text = <"Ambulatory 24h">
+					description = <"Ambulatory 24-hour EEG.">
+				>
+				["at0103"] = <
+					text = <"Long term video">
+					description = <"Long-term video EEG.">
+				>
+				["at0104"] = <
+					text = <"Continuous monitoring">
+					description = <"Continuous EEG monitoring.">
+				>
+				["at0105"] = <
+					text = <"Neonatal">
+					description = <"Neonatal EEG.">
+				>
+				["at0106"] = <
+					text = <"Intraoperative">
+					description = <"Intraoperative EEG.">
+				>
+				["at0107"] = <
+					text = <"NREM only">
+					description = <"Only NREM sleep captured.">
+				>
+				["at0108"] = <
+					text = <"REM only">
+					description = <"Only REM sleep captured.">
+				>
+				["at0109"] = <
+					text = <"NREM and REM">
+					description = <"NREM and REM sleep captured.">
+				>
+				["at0110"] = <
+					text = <"Full cycle">
+					description = <"Full sleep cycle captured.">
+				>
+				["at0111"] = <
+					text = <"None">
+					description = <"No sleep stage captured.">
+				>
+				["at0112"] = <
+					text = <"Standard 10 20">
+					description = <"Standard 10-20 montage.">
+				>
+				["at0113"] = <
+					text = <"Reduced">
+					description = <"Reduced montage.">
+				>
+				["at0114"] = <
+					text = <"Neonatal modified">
+					description = <"Modified neonatal montage.">
+				>
+				["at0115"] = <
+					text = <"Not documented">
+					description = <"Montage not documented.">
+				>
+				["at0116"] = <
+					text = <"Delta 0 4 Hz">
+					description = <"Delta background.">
+				>
+				["at0117"] = <
+					text = <"Theta 4 8 Hz">
+					description = <"Theta background.">
+				>
+				["at0118"] = <
+					text = <"Alpha 8 13 Hz">
+					description = <"Alpha background.">
+				>
+				["at0119"] = <
+					text = <"Beta 13 30 Hz">
+					description = <"Beta background.">
+				>
+				["at0120"] = <
+					text = <"Mixed">
+					description = <"Mixed background.">
+				>
+				["at0121"] = <
+					text = <"Normal for age">
+					description = <"Normal for age.">
+				>
+				["at0122"] = <
+					text = <"Slow for age">
+					description = <"Slow for age.">
+				>
+				["at0123"] = <
+					text = <"Disorganized">
+					description = <"Disorganized background.">
+				>
+				["at0124"] = <
+					text = <"Burst suppression">
+					description = <"Burst suppression background.">
+				>
+				["at0125"] = <
+					text = <"Suppressed">
+					description = <"Suppressed background.">
+				>
+				["at0126"] = <
+					text = <"Electrocerebral silence">
+					description = <"Electrocerebral silence.">
+				>
+				["at0127"] = <
+					text = <"Not assessed">
+					description = <"Not assessed.">
+				>
+				["at0128"] = <
+					text = <"Symmetric">
+					description = <"Symmetric background.">
+				>
+				["at0129"] = <
+					text = <"Asymmetric left">
+					description = <"Left asymmetry.">
+				>
+				["at0130"] = <
+					text = <"Asymmetric right">
+					description = <"Right asymmetry.">
+				>
+				["at0131"] = <
+					text = <"Not assessed">
+					description = <"Symmetry not assessed.">
+				>
+				["at0132"] = <
+					text = <"Spike wave complex">
+					description = <"Spike-wave complex.">
+				>
+				["at0133"] = <
+					text = <"Polyspike wave">
+					description = <"Polyspike-wave pattern.">
+				>
+				["at0134"] = <
+					text = <"Sharp wave">
+					description = <"Sharp-wave pattern.">
+				>
+				["at0135"] = <
+					text = <"Hypsarrhythmia">
+					description = <"Hypsarrhythmia.">
+				>
+				["at0136"] = <
+					text = <"CSWS">
+					description = <"Continuous spike-wave during sleep.">
+				>
+				["at0137"] = <
+					text = <"Burst suppression pattern">
+					description = <"Burst-suppression pattern as epileptiform finding.">
+				>
+				["at0138"] = <
+					text = <"Photoparoxysmal response">
+					description = <"Photoparoxysmal response.">
+				>
+				["at0139"] = <
+					text = <"ETP">
+					description = <"Epileptiform transients.">
+				>
+				["at0140"] = <
+					text = <"Focal sharp waves">
+					description = <"Focal sharp waves.">
+				>
+				["at0141"] = <
+					text = <"None">
+					description = <"No epileptiform pattern.">
+				>
+				["at0142"] = <
+					text = <"Left">
+					description = <"Left-sided.">
+				>
+				["at0143"] = <
+					text = <"Right">
+					description = <"Right-sided.">
+				>
+				["at0144"] = <
+					text = <"Bilateral synchronous">
+					description = <"Bilaterally synchronous.">
+				>
+				["at0145"] = <
+					text = <"Bilateral independent">
+					description = <"Bilaterally independent.">
+				>
+				["at0146"] = <
+					text = <"Generalized">
+					description = <"Generalized.">
+				>
+				["at0147"] = <
+					text = <"None">
+					description = <"No lateralization.">
+				>
+				["at0148"] = <
+					text = <"Frontal">
+					description = <"Frontal localization.">
+				>
+				["at0149"] = <
+					text = <"Temporal">
+					description = <"Temporal localization.">
+				>
+				["at0150"] = <
+					text = <"Parietal">
+					description = <"Parietal localization.">
+				>
+				["at0151"] = <
+					text = <"Occipital">
+					description = <"Occipital localization.">
+				>
+				["at0152"] = <
+					text = <"Centrotemporal">
+					description = <"Centrotemporal localization.">
+				>
+				["at0153"] = <
+					text = <"Multilobar">
+					description = <"Multilobar localization.">
+				>
+				["at0154"] = <
+					text = <"Generalized">
+					description = <"Generalized localization.">
+				>
+				["at0155"] = <
+					text = <"Not applicable">
+					description = <"Localization not applicable.">
+				>
+				["at0156"] = <
+					text = <"Green">
+					description = <"Adequate.">
+				>
+				["at0157"] = <
+					text = <"Yellow">
+					description = <"Partially adequate.">
+				>
+				["at0158"] = <
+					text = <"Red">
+					description = <"Inadequate.">
+				>
+				["at0159"] = <
+					text = <"Present">
+					description = <"Reactivity present.">
+				>
+				["at0160"] = <
+					text = <"Reduced">
+					description = <"Reactivity reduced.">
+				>
+				["at0161"] = <
+					text = <"Absent">
+					description = <"Reactivity absent.">
+				>
+				["at0162"] = <
+					text = <"Not assessed">
+					description = <"Reactivity not assessed.">
+				>
+				["at0163"] = <
+					text = <"Focal slowing">
+					description = <"Focal slowing.">
+				>
+				["at0164"] = <
+					text = <"Generalized slowing">
+					description = <"Generalized slowing.">
+				>
+				["at0165"] = <
+					text = <"Attenuation">
+					description = <"Focal or diffuse attenuation.">
+				>
+				["at0166"] = <
+					text = <"Discontinuous background">
+					description = <"Discontinuous background.">
+				>
+				["at0167"] = <
+					text = <"Asymmetric sleep spindles">
+					description = <"Asymmetric sleep spindles.">
+				>
+				["at0168"] = <
+					text = <"Breach rhythm">
+					description = <"Breach rhythm.">
+				>
+				["at0169"] = <
+					text = <"None">
+					description = <"No non-epileptiform abnormality.">
+				>
+				["at0170"] = <
+					text = <"Other">
+					description = <"Other non-epileptiform abnormality.">
+				>
+				["at0171"] = <
+					text = <"Vertex waves">
+					description = <"Vertex waves.">
+				>
+				["at0172"] = <
+					text = <"Sleep spindles">
+					description = <"Sleep spindles.">
+				>
+				["at0173"] = <
+					text = <"K complexes">
+					description = <"K complexes.">
+				>
+				["at0174"] = <
+					text = <"None">
+					description = <"No sleep transients documented.">
+				>
+				["at0175"] = <
+					text = <"Other">
+					description = <"Other sleep transient.">
+				>
+				["at0176"] = <
+					text = <"Photic driving">
+					description = <"Normal photic driving response.">
+				>
+				["at0177"] = <
+					text = <"Photoparoxysmal response">
+					description = <"Photoparoxysmal response to photic stimulation.">
+				>
+				["at0178"] = <
+					text = <"Hyperventilation slowing">
+					description = <"Slowing during hyperventilation.">
+				>
+				["at0179"] = <
+					text = <"Hyperventilation activates epileptiform discharges">
+					description = <"Hyperventilation activates epileptiform discharges.">
+				>
+				["at0180"] = <
+					text = <"None">
+					description = <"No relevant activation response.">
+				>
+				["at0181"] = <
+					text = <"Not assessed">
+					description = <"Activation response not assessed.">
+				>
+				["at0900"] = <
+					text = <"Provenance slot">
+					description = <"Slot for the shared vEC provenance cluster.">
+				>
+			>
+		>
+	>
+	term_bindings = <
+		["SNOMED-CT"] = <
+			items = <
+				["at0116"] = <[SNOMED-CT::23036000]>
+				["at0117"] = <[SNOMED-CT::251661001]>
+				["at0118"] = <[SNOMED-CT::276337001]>
+				["at0124"] = <[SNOMED-CT::246520003]>
+				["at0132"] = <[SNOMED-CT::307970007]>
+				["at0135"] = <[SNOMED-CT::16128001]>
+				["at0148"] = <[SNOMED-CT::83251001]>
+				["at0149"] = <[SNOMED-CT::81745001]>
+				["at0151"] = <[SNOMED-CT::31065004]>
+			>
+		>
+	>
