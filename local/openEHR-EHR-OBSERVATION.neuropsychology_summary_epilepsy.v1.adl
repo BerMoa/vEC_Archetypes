@@ -1,0 +1,428 @@
+archetype (adl_version=1.4; uid=32b8ebf0-9904-4720-9045-1d791d667080)
+	openEHR-EHR-OBSERVATION.neuropsychology_summary_epilepsy.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Zusammenfassung neuropsychologischer Kernbefunde im Epilepsiekontext, insbesondere fuer die praechirurgische Bewertung.">
+			use = <"Eine Instanz pro neuropsychologischer Bewertung oder Berichtszusammenfassung.">
+			misuse = <"Nicht als Ersatz fuer vollstaendige Testprotokolle oder formale Diagnosen verwenden; Diagnosen gehoeren in problem_diagnosis.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Summary of key neuropsychology findings in epilepsy care, especially for presurgical review.">
+			use = <"Use one instance per neuropsychology assessment or report summary.">
+			misuse = <"Do not use as a replacement for full test batteries or formal diagnoses; diagnoses belong in problem_diagnosis.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"ec3a4f1f5eb5432d0949058415c85ed5">
+		["build_uid"] = <"2a1b18f3-582f-3374-bc4b-a54e8216b7f2">
+	>
+
+definition
+	OBSERVATION[at0000] matches {    -- Neuropsychologische Zusammenfassung Epilepsie
+		data matches {
+			HISTORY[at0001] matches {    -- Verlauf
+				events cardinality matches {1..1; unordered} matches {
+					POINT_EVENT[at0002] matches {    -- Bewertungsereignis
+						data matches {
+							ITEM_TREE[at0003] matches {    -- Neuropsychologische Daten
+								items cardinality matches {0..*; unordered} matches {
+									ELEMENT[at0010] occurrences matches {0..1} matches {    -- Bewertungsdatum
+										value matches {
+											DV_DATE matches {*}
+										}
+									}
+									ELEMENT[at0011] occurrences matches {0..1} matches {    -- Institution oder Fachbereich
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									ELEMENT[at0012] occurrences matches {0..1} matches {    -- Globales kognitives Profil
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0100,    -- Durchschnittlich oder besser
+													at0101,    -- Grenzwertig
+													at0102,    -- Leichte Beeintraechtigung
+													at0103,    -- Mittlere Beeintraechtigung
+													at0104,    -- Schwere Beeintraechtigung
+													at0105]    -- Ungleichmaessiges Profil
+												}
+											}
+										}
+									}
+									ELEMENT[at0013] occurrences matches {0..1} matches {    -- Verbales Gedaechtnis beeintraechtigt
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0014] occurrences matches {0..1} matches {    -- Visuelles Gedaechtnis beeintraechtigt
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0015] occurrences matches {0..1} matches {    -- Sprache beeintraechtigt
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0016] occurrences matches {0..1} matches {    -- Exekutivfunktionen beeintraechtigt
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0017] occurrences matches {0..1} matches {    -- Aufmerksamkeit beeintraechtigt
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0018] occurrences matches {0..1} matches {    -- Lateralisierendes Muster
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0110,    -- Links temporal
+													at0111,    -- Rechts temporal
+													at0112,    -- Frontal dysexekutiv
+													at0113,    -- Nicht lateralisiert
+													at0114]    -- Multifokal oder diffus
+												}
+											}
+										}
+									}
+									ELEMENT[at0019] occurrences matches {0..*} matches {    -- Psychiatrische Warnzeichen
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0120,    -- Depression
+													at0121,    -- Angst
+													at0122,    -- Suizidalitaet
+													at0123,    -- Verhaltensdysregulation
+													at0124]    -- Keine
+												}
+											}
+										}
+									}
+									ELEMENT[at0020] occurrences matches {0..1} matches {    -- Chirurgische Risikobedenken
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									ELEMENT[at0021] occurrences matches {0..1} matches {    -- Neuropsychologische Zusammenfassung
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									allow_archetype CLUSTER[at0900] occurrences matches {0..1} matches {    -- Provenienzslot
+										include
+											archetype_id/value matches {/openEHR-EHR-CLUSTER\.vec_extraction_provenance\.v[0-9]+/}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Neuropsychologische Zusammenfassung Epilepsie">
+					description = <"Beobachtung neuropsychologischer Kernbefunde im Epilepsiekontext.">
+				>
+				["at0001"] = <
+					text = <"Verlauf">
+					description = <"Historie der neuropsychologischen Bewertung.">
+				>
+				["at0002"] = <
+					text = <"Bewertungsereignis">
+					description = <"Zeitpunktbezogenes neuropsychologisches Ereignis.">
+				>
+				["at0003"] = <
+					text = <"Neuropsychologische Daten">
+					description = <"Strukturierte neuropsychologische Daten.">
+				>
+				["at0010"] = <
+					text = <"Bewertungsdatum">
+					description = <"Datum der neuropsychologischen Bewertung.">
+				>
+				["at0011"] = <
+					text = <"Institution oder Fachbereich">
+					description = <"Durchfuehrende Institution oder Fachbereich.">
+				>
+				["at0012"] = <
+					text = <"Globales kognitives Profil">
+					description = <"Globale neuropsychologische Einordnung.">
+				>
+				["at0013"] = <
+					text = <"Verbales Gedaechtnis beeintraechtigt">
+					description = <"Kennzeichnet eine Beeintraechtigung des verbalen Gedaechtnisses.">
+				>
+				["at0014"] = <
+					text = <"Visuelles Gedaechtnis beeintraechtigt">
+					description = <"Kennzeichnet eine Beeintraechtigung des visuellen Gedaechtnisses.">
+				>
+				["at0015"] = <
+					text = <"Sprache beeintraechtigt">
+					description = <"Kennzeichnet eine Sprachbeeintraechtigung.">
+				>
+				["at0016"] = <
+					text = <"Exekutivfunktionen beeintraechtigt">
+					description = <"Kennzeichnet eine Beeintraechtigung exekutiver Funktionen.">
+				>
+				["at0017"] = <
+					text = <"Aufmerksamkeit beeintraechtigt">
+					description = <"Kennzeichnet eine Aufmerksamkeitsbeeintraechtigung.">
+				>
+				["at0018"] = <
+					text = <"Lateralisierendes Muster">
+					description = <"Lateralisierendes neuropsychologisches Muster.">
+				>
+				["at0019"] = <
+					text = <"Psychiatrische Warnzeichen">
+					description = <"Psychiatrische Warnzeichen oder Begleitmerkmale.">
+				>
+				["at0020"] = <
+					text = <"Chirurgische Risikobedenken">
+					description = <"Freitext zu neuropsychologischen Operationsrisiken.">
+				>
+				["at0021"] = <
+					text = <"Neuropsychologische Zusammenfassung">
+					description = <"Freitextzusammenfassung der neuropsychologischen Bewertung.">
+				>
+				["at0100"] = <
+					text = <"Durchschnittlich oder besser">
+					description = <"Durchschnittliches oder besseres Profil.">
+				>
+				["at0101"] = <
+					text = <"Grenzwertig">
+					description = <"Grenzwertiges Profil.">
+				>
+				["at0102"] = <
+					text = <"Leichte Beeintraechtigung">
+					description = <"Leichte Beeintraechtigung.">
+				>
+				["at0103"] = <
+					text = <"Mittlere Beeintraechtigung">
+					description = <"Mittlere Beeintraechtigung.">
+				>
+				["at0104"] = <
+					text = <"Schwere Beeintraechtigung">
+					description = <"Schwere Beeintraechtigung.">
+				>
+				["at0105"] = <
+					text = <"Ungleichmaessiges Profil">
+					description = <"Uneinheitliches oder lateralisierendes Profil.">
+				>
+				["at0110"] = <
+					text = <"Links temporal">
+					description = <"Links temporales Muster.">
+				>
+				["at0111"] = <
+					text = <"Rechts temporal">
+					description = <"Rechts temporales Muster.">
+				>
+				["at0112"] = <
+					text = <"Frontal dysexekutiv">
+					description = <"Frontales dysexekutives Muster.">
+				>
+				["at0113"] = <
+					text = <"Nicht lateralisiert">
+					description = <"Nicht lateralisiert.">
+				>
+				["at0114"] = <
+					text = <"Multifokal oder diffus">
+					description = <"Multifokales oder diffuses Muster.">
+				>
+				["at0120"] = <
+					text = <"Depression">
+					description = <"Depressive Symptome.">
+				>
+				["at0121"] = <
+					text = <"Angst">
+					description = <"Angstsymptome.">
+				>
+				["at0122"] = <
+					text = <"Suizidalitaet">
+					description = <"Suizidale Warnzeichen.">
+				>
+				["at0123"] = <
+					text = <"Verhaltensdysregulation">
+					description = <"Verhaltensdysregulation.">
+				>
+				["at0124"] = <
+					text = <"Keine">
+					description = <"Keine psychiatrischen Warnzeichen.">
+				>
+				["at0900"] = <
+					text = <"Provenienzslot">
+					description = <"Slot fuer den gemeinsamen vEC-Provenienzcluster.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Neuropsychology summary epilepsy">
+					description = <"Observation of key neuropsychology findings in epilepsy care.">
+				>
+				["at0001"] = <
+					text = <"History">
+					description = <"History of neuropsychology assessment.">
+				>
+				["at0002"] = <
+					text = <"Assessment event">
+					description = <"Point event for neuropsychology assessment.">
+				>
+				["at0003"] = <
+					text = <"Neuropsychology data">
+					description = <"Structured neuropsychology data.">
+				>
+				["at0010"] = <
+					text = <"Assessment date">
+					description = <"Date of neuropsychology assessment.">
+				>
+				["at0011"] = <
+					text = <"Assessor institution">
+					description = <"Performing institution or team.">
+				>
+				["at0012"] = <
+					text = <"Global cognitive profile">
+					description = <"Overall neuropsychology profile.">
+				>
+				["at0013"] = <
+					text = <"Verbal memory impairment">
+					description = <"Indicates verbal-memory impairment.">
+				>
+				["at0014"] = <
+					text = <"Visual memory impairment">
+					description = <"Indicates visual-memory impairment.">
+				>
+				["at0015"] = <
+					text = <"Language impairment">
+					description = <"Indicates language impairment.">
+				>
+				["at0016"] = <
+					text = <"Executive impairment">
+					description = <"Indicates executive impairment.">
+				>
+				["at0017"] = <
+					text = <"Attention impairment">
+					description = <"Indicates attention impairment.">
+				>
+				["at0018"] = <
+					text = <"Lateralizing pattern">
+					description = <"Lateralizing neuropsychology pattern.">
+				>
+				["at0019"] = <
+					text = <"Psychiatric red flags">
+					description = <"Psychiatric red flags or co-features.">
+				>
+				["at0020"] = <
+					text = <"Surgical risk concern">
+					description = <"Free-text neuropsychology concern for surgery.">
+				>
+				["at0021"] = <
+					text = <"Neuropsychology summary">
+					description = <"Free-text summary of neuropsychology findings.">
+				>
+				["at0100"] = <
+					text = <"Average or better">
+					description = <"Average or better profile.">
+				>
+				["at0101"] = <
+					text = <"Borderline">
+					description = <"Borderline profile.">
+				>
+				["at0102"] = <
+					text = <"Mild impairment">
+					description = <"Mild impairment.">
+				>
+				["at0103"] = <
+					text = <"Moderate impairment">
+					description = <"Moderate impairment.">
+				>
+				["at0104"] = <
+					text = <"Severe impairment">
+					description = <"Severe impairment.">
+				>
+				["at0105"] = <
+					text = <"Uneven profile">
+					description = <"Uneven or strongly lateralizing profile.">
+				>
+				["at0110"] = <
+					text = <"Left temporal">
+					description = <"Left-temporal pattern.">
+				>
+				["at0111"] = <
+					text = <"Right temporal">
+					description = <"Right-temporal pattern.">
+				>
+				["at0112"] = <
+					text = <"Frontal dysexecutive">
+					description = <"Frontal dysexecutive pattern.">
+				>
+				["at0113"] = <
+					text = <"Non lateralizing">
+					description = <"Non-lateralizing.">
+				>
+				["at0114"] = <
+					text = <"Multifocal or diffuse">
+					description = <"Multifocal or diffuse pattern.">
+				>
+				["at0120"] = <
+					text = <"Depression">
+					description = <"Depressive symptoms.">
+				>
+				["at0121"] = <
+					text = <"Anxiety">
+					description = <"Anxiety symptoms.">
+				>
+				["at0122"] = <
+					text = <"Suicidality">
+					description = <"Suicidal red flags.">
+				>
+				["at0123"] = <
+					text = <"Behavioral dysregulation">
+					description = <"Behavioral dysregulation.">
+				>
+				["at0124"] = <
+					text = <"None">
+					description = <"No psychiatric red flags.">
+				>
+				["at0900"] = <
+					text = <"Provenance slot">
+					description = <"Slot for the shared vEC provenance cluster.">
+				>
+			>
+		>
+	>
