@@ -1,0 +1,332 @@
+archetype (adl_version=1.4; uid=6dbe5575-2580-40ac-b75c-e79c17872fe9)
+	openEHR-EHR-OBSERVATION.neuropathology_epilepsy.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Strukturierte neuropathologische Beobachtung nach epilepsiechirurgischen Eingriffen.">
+			use = <"Eine Instanz pro pathologischem Ergebnis mit kategorialer Diagnose und integrierter klinikopathologischer Bewertung.">
+			misuse = <"Nicht als Ersatz fuer einen vollstaendigen histopathologischen Laborbericht verwenden.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Structured neuropathology observation after epilepsy surgery.">
+			use = <"Use one instance per pathology result with categorical diagnosis and integrated clinicopathologic interpretation.">
+			misuse = <"Do not use as a replacement for a full histopathology laboratory report.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"8eed49432567f6b7bbdb33a41bf38c21">
+		["build_uid"] = <"90c6cdc0-07df-3764-be04-5875232f1e65">
+	>
+
+definition
+	OBSERVATION[at0000] matches {    -- Neuropathologie Epilepsie
+		data matches {
+			HISTORY[at0001] matches {    -- Verlauf
+				events cardinality matches {1..1; unordered} matches {
+					POINT_EVENT[at0002] matches {    -- Pathologieereignis
+						data matches {
+							ITEM_TREE[at0003] matches {    -- Pathologiedaten
+								items cardinality matches {0..*; unordered} matches {
+									ELEMENT[at0010] occurrences matches {0..1} matches {    -- Probenentnahmedatum
+										value matches {
+											DV_DATE matches {*}
+										}
+									}
+									ELEMENT[at0011] occurrences matches {0..1} matches {    -- Pathologiekategorie
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0100,    -- Fokale kortikale Dysplasie
+													at0101,    -- Hippokampussklerose
+													at0102,    -- Glioneuronaler Tumor
+													at0103,    -- Niedriggradiger epilepsieassoziierter Tumor
+													at0104,    -- Gefaessmissbildung
+													at0105,    -- Gliose
+													at0106,    -- Tuber
+													at0107,    -- Kein spezifischer pathologischer Befund
+													at0108]    -- Andere
+												}
+											}
+										}
+									}
+									ELEMENT[at0012] occurrences matches {0..1} matches {    -- Pathologische Detailklassifikation
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									ELEMENT[at0013] occurrences matches {0..1} matches {    -- Kommentar zum Resektionsrand
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									ELEMENT[at0014] occurrences matches {0..1} matches {    -- Klinikopathologische Konkordanz
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0110,    -- Konkordant
+													at0111,    -- Teilweise konkordant
+													at0112,    -- Diskordant
+													at0113]    -- Unbestimmt
+												}
+											}
+										}
+									}
+									ELEMENT[at0015] occurrences matches {0..1} matches {    -- Zusammenfassung molekularer Marker
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									ELEMENT[at0016] occurrences matches {0..1} matches {    -- Neuropathologische Zusammenfassung
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									allow_archetype CLUSTER[at0900] occurrences matches {0..1} matches {    -- Provenienzslot
+										include
+											archetype_id/value matches {/openEHR-EHR-CLUSTER\.vec_extraction_provenance\.v[0-9]+/}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Neuropathologie Epilepsie">
+					description = <"Beobachtung neuropathologischer Befunde im Epilepsiekontext.">
+				>
+				["at0001"] = <
+					text = <"Verlauf">
+					description = <"Historie neuropathologischer Befunde.">
+				>
+				["at0002"] = <
+					text = <"Pathologieereignis">
+					description = <"Zeitpunktbezogenes Ereignis des pathologischen Ergebnisses.">
+				>
+				["at0003"] = <
+					text = <"Pathologiedaten">
+					description = <"Strukturierte neuropathologische Daten.">
+				>
+				["at0010"] = <
+					text = <"Probenentnahmedatum">
+					description = <"Datum der Probenentnahme oder Resektion.">
+				>
+				["at0011"] = <
+					text = <"Pathologiekategorie">
+					description = <"Kategorie der neuropathologischen Hauptdiagnose.">
+				>
+				["at0012"] = <
+					text = <"Pathologische Detailklassifikation">
+					description = <"Freitext oder formale Detailklassifikation.">
+				>
+				["at0013"] = <
+					text = <"Kommentar zum Resektionsrand">
+					description = <"Kommentar zu Randbeurteilung oder Vollstaendigkeit.">
+				>
+				["at0014"] = <
+					text = <"Klinikopathologische Konkordanz">
+					description = <"Bewertung der Uebereinstimmung mit klinischer Hypothese.">
+				>
+				["at0015"] = <
+					text = <"Zusammenfassung molekularer Marker">
+					description = <"Freitext zu molekularen oder immunhistochemischen Markern.">
+				>
+				["at0016"] = <
+					text = <"Neuropathologische Zusammenfassung">
+					description = <"Freitextzusammenfassung des Befunds.">
+				>
+				["at0100"] = <
+					text = <"Fokale kortikale Dysplasie">
+					description = <"Fokale kortikale Dysplasie.">
+				>
+				["at0101"] = <
+					text = <"Hippokampussklerose">
+					description = <"Hippokampussklerose.">
+				>
+				["at0102"] = <
+					text = <"Glioneuronaler Tumor">
+					description = <"Glioneuronaler Tumor.">
+				>
+				["at0103"] = <
+					text = <"Niedriggradiger epilepsieassoziierter Tumor">
+					description = <"Niedriggradiger epilepsieassoziierter Tumor.">
+				>
+				["at0104"] = <
+					text = <"Gefaessmissbildung">
+					description = <"Vaskulaere Missbildung.">
+				>
+				["at0105"] = <
+					text = <"Gliose">
+					description = <"Gliose.">
+				>
+				["at0106"] = <
+					text = <"Tuber">
+					description = <"Kortikaler Tuber.">
+				>
+				["at0107"] = <
+					text = <"Kein spezifischer pathologischer Befund">
+					description = <"Kein spezifischer pathologischer Befund.">
+				>
+				["at0108"] = <
+					text = <"Andere">
+					description = <"Andere Pathologiekategorie.">
+				>
+				["at0110"] = <
+					text = <"Konkordant">
+					description = <"Konkordant zur klinischen Hypothese.">
+				>
+				["at0111"] = <
+					text = <"Teilweise konkordant">
+					description = <"Teilweise konkordant zur klinischen Hypothese.">
+				>
+				["at0112"] = <
+					text = <"Diskordant">
+					description = <"Diskordant zur klinischen Hypothese.">
+				>
+				["at0113"] = <
+					text = <"Unbestimmt">
+					description = <"Konkordanz unbestimmt.">
+				>
+				["at0900"] = <
+					text = <"Provenienzslot">
+					description = <"Slot fuer den gemeinsamen vEC-Provenienzcluster.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Neuropathology epilepsy">
+					description = <"Observation of neuropathology findings in epilepsy care.">
+				>
+				["at0001"] = <
+					text = <"History">
+					description = <"History of neuropathology findings.">
+				>
+				["at0002"] = <
+					text = <"Pathology event">
+					description = <"Point event for the pathology result.">
+				>
+				["at0003"] = <
+					text = <"Pathology data">
+					description = <"Structured neuropathology data.">
+				>
+				["at0010"] = <
+					text = <"Specimen date">
+					description = <"Date of specimen collection or resection.">
+				>
+				["at0011"] = <
+					text = <"Pathology diagnosis category">
+					description = <"Category of the main neuropathology diagnosis.">
+				>
+				["at0012"] = <
+					text = <"Pathology classification detail">
+					description = <"Free text or formal detail classification.">
+				>
+				["at0013"] = <
+					text = <"Resection margin comment">
+					description = <"Comment about margins or completeness.">
+				>
+				["at0014"] = <
+					text = <"Integrated clinicopathologic concordance">
+					description = <"Assessment of concordance with the clinical hypothesis.">
+				>
+				["at0015"] = <
+					text = <"Molecular marker summary">
+					description = <"Free-text molecular or immunohistochemical marker summary.">
+				>
+				["at0016"] = <
+					text = <"Neuropathology summary">
+					description = <"Free-text summary of the finding.">
+				>
+				["at0100"] = <
+					text = <"Focal cortical dysplasia">
+					description = <"Focal cortical dysplasia.">
+				>
+				["at0101"] = <
+					text = <"Hippocampal sclerosis">
+					description = <"Hippocampal sclerosis.">
+				>
+				["at0102"] = <
+					text = <"Glioneuronal tumour">
+					description = <"Glioneuronal tumour.">
+				>
+				["at0103"] = <
+					text = <"Low-grade epilepsy-associated tumour">
+					description = <"Low-grade epilepsy-associated tumour.">
+				>
+				["at0104"] = <
+					text = <"Vascular malformation">
+					description = <"Vascular malformation.">
+				>
+				["at0105"] = <
+					text = <"Gliosis">
+					description = <"Gliosis.">
+				>
+				["at0106"] = <
+					text = <"Tuber">
+					description = <"Cortical tuber.">
+				>
+				["at0107"] = <
+					text = <"No specific pathology">
+					description = <"No specific pathology finding.">
+				>
+				["at0108"] = <
+					text = <"Other">
+					description = <"Other pathology category.">
+				>
+				["at0110"] = <
+					text = <"Concordant">
+					description = <"Concordant with the clinical hypothesis.">
+				>
+				["at0111"] = <
+					text = <"Partially concordant">
+					description = <"Partially concordant with the clinical hypothesis.">
+				>
+				["at0112"] = <
+					text = <"Discordant">
+					description = <"Discordant with the clinical hypothesis.">
+				>
+				["at0113"] = <
+					text = <"Indeterminate">
+					description = <"Concordance indeterminate.">
+				>
+				["at0900"] = <
+					text = <"Provenance slot">
+					description = <"Slot for the shared vEC provenance cluster.">
+				>
+			>
+		>
+	>
