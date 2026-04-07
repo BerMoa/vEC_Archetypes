@@ -1,0 +1,460 @@
+archetype (adl_version=1.4; uid=f2f564d9-364f-44d4-843c-19183a24e7a2)
+	openEHR-EHR-OBSERVATION.invasive_eeg_epilepsy.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Strukturierte Beobachtung invasiver EEG-Diagnostik im epilepsiechirurgischen Kontext.">
+			use = <"Eine Instanz pro invasiver EEG-Untersuchung wie SEEG, Subduralableitung oder intraoperativem ECoG.">
+			misuse = <"Nicht fuer nichtinvasive EEG-Studien verwenden; dafuer OBSERVATION.eeg_study_epilepsy.v1 nutzen.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Structured observation of invasive EEG studies in presurgical epilepsy care.">
+			use = <"Use one instance per invasive EEG study such as SEEG, subdural recordings, or intraoperative ECoG.">
+			misuse = <"Do not use for non-invasive EEG studies; use OBSERVATION.eeg_study_epilepsy.v1 for that purpose.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"087b27b25dfe58d2fcb2b5b7947bc9ea">
+		["build_uid"] = <"122d81a7-d609-3e2d-a0de-2f3c0ef0471a">
+	>
+
+definition
+	OBSERVATION[at0000] matches {    -- Invasives EEG Epilepsie
+		data matches {
+			HISTORY[at0001] matches {    -- Verlauf
+				events cardinality matches {1..1; unordered} matches {
+					POINT_EVENT[at0002] matches {    -- Invasives EEG-Ereignis
+						data matches {
+							ITEM_TREE[at0003] matches {    -- Invasives EEG-Daten
+								items cardinality matches {0..*; unordered} matches {
+									ELEMENT[at0010] occurrences matches {0..1} matches {    -- Typ des invasiven EEG
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0100,    -- Subdurale Grids oder Strips
+													at0101,    -- SEEG
+													at0102,    -- Nur Tiefenelektroden
+													at0103,    -- Hybrid
+													at0104,    -- Intraoperatives ECoG
+													at0105]    -- Andere
+												}
+											}
+										}
+									}
+									ELEMENT[at0011] occurrences matches {0..1} matches {    -- Studiendatum
+										value matches {
+											DV_DATE matches {*}
+										}
+									}
+									ELEMENT[at0012] occurrences matches {0..1} matches {    -- Durchfuehrende Institution
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									ELEMENT[at0013] occurrences matches {0..1} matches {    -- Zusammenfassung der Implantationsziele
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									ELEMENT[at0014] occurrences matches {0..1} matches {    -- Anfall erfasst
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0015] occurrences matches {0..1} matches {    -- Anfallsanzahl erfasst
+										value matches {
+											DV_COUNT matches {*}
+										}
+									}
+									ELEMENT[at0016] occurrences matches {0..1} matches {    -- Lateralisierung des Anfallsbeginns
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0110,    -- Links
+													at0111,    -- Rechts
+													at0112,    -- Beidseitig
+													at0113,    -- Mittellinie
+													at0114,    -- Nicht lateralisiert
+													at0115]    -- Unbestimmt
+												}
+											}
+										}
+									}
+									ELEMENT[at0017] occurrences matches {0..*} matches {    -- Lokalisation des Anfallsbeginns
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0120,    -- Frontal
+													at0121,    -- Temporal
+													at0122,    -- Parietal
+													at0123,    -- Okzipital
+													at0124,    -- Insulaer
+													at0125,    -- Cingulaer
+													at0126,    -- Multilobaer
+													at0127,    -- Hemisphaerisch
+													at0128]    -- Tiefe Struktur
+												}
+											}
+										}
+									}
+									ELEMENT[at0018] occurrences matches {0..1} matches {    -- Stimulationsmapping durchgefuehrt
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0019] occurrences matches {0..1} matches {    -- Ueberlappung mit eloquentem Kortex
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0020] occurrences matches {0..1} matches {    -- Zusammenfassung invasives EEG
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									allow_archetype CLUSTER[at0900] occurrences matches {0..1} matches {    -- Provenienzslot
+										include
+											archetype_id/value matches {/openEHR-EHR-CLUSTER\.vec_extraction_provenance\.v[0-9]+/}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Invasives EEG Epilepsie">
+					description = <"Beobachtung invasiver EEG-Diagnostik im Epilepsiekontext.">
+				>
+				["at0001"] = <
+					text = <"Verlauf">
+					description = <"Historie der invasiven EEG-Untersuchung.">
+				>
+				["at0002"] = <
+					text = <"Invasives EEG-Ereignis">
+					description = <"Zeitpunktbezogenes Ereignis der invasiven EEG-Untersuchung.">
+				>
+				["at0003"] = <
+					text = <"Invasives EEG-Daten">
+					description = <"Strukturierte Daten der invasiven EEG-Untersuchung.">
+				>
+				["at0010"] = <
+					text = <"Typ des invasiven EEG">
+					description = <"Art der invasiven EEG-Ableitung.">
+				>
+				["at0011"] = <
+					text = <"Studiendatum">
+					description = <"Datum der invasiven EEG-Untersuchung.">
+				>
+				["at0012"] = <
+					text = <"Durchfuehrende Institution">
+					description = <"Durchfuehrende Institution.">
+				>
+				["at0013"] = <
+					text = <"Zusammenfassung der Implantationsziele">
+					description = <"Freitext zu implantierten Regionen oder Elektrodenzielen.">
+				>
+				["at0014"] = <
+					text = <"Anfall erfasst">
+					description = <"Kennzeichnet erfasste Anfaelle.">
+				>
+				["at0015"] = <
+					text = <"Anfallsanzahl erfasst">
+					description = <"Anzahl erfasster Anfaelle.">
+				>
+				["at0016"] = <
+					text = <"Lateralisierung des Anfallsbeginns">
+					description = <"Lateralisierung des Anfallsbeginns.">
+				>
+				["at0017"] = <
+					text = <"Lokalisation des Anfallsbeginns">
+					description = <"Lokalisation des Anfallsbeginns.">
+				>
+				["at0018"] = <
+					text = <"Stimulationsmapping durchgefuehrt">
+					description = <"Kennzeichnet ein funktionelles Stimulationsmapping.">
+				>
+				["at0019"] = <
+					text = <"Ueberlappung mit eloquentem Kortex">
+					description = <"Kennzeichnet Ueberlappung mit eloquentem Kortex.">
+				>
+				["at0020"] = <
+					text = <"Zusammenfassung invasives EEG">
+					description = <"Freitextzusammenfassung der invasiven EEG-Studie.">
+				>
+				["at0100"] = <
+					text = <"Subdurale Grids oder Strips">
+					description = <"Subdurale Grid- oder Strip-Ableitung.">
+				>
+				["at0101"] = <
+					text = <"SEEG">
+					description = <"Stereo-EEG.">
+				>
+				["at0102"] = <
+					text = <"Nur Tiefenelektroden">
+					description = <"Ableitung nur mit Tiefenelektroden.">
+				>
+				["at0103"] = <
+					text = <"Hybrid">
+					description = <"Kombinierte invasive EEG-Konfiguration.">
+				>
+				["at0104"] = <
+					text = <"Intraoperatives ECoG">
+					description = <"Intraoperatives Elektrokortikogramm.">
+				>
+				["at0105"] = <
+					text = <"Andere">
+					description = <"Andere invasive EEG-Strategie.">
+				>
+				["at0110"] = <
+					text = <"Links">
+					description = <"Links lateralisiert.">
+				>
+				["at0111"] = <
+					text = <"Rechts">
+					description = <"Rechts lateralisiert.">
+				>
+				["at0112"] = <
+					text = <"Beidseitig">
+					description = <"Beidseitig.">
+				>
+				["at0113"] = <
+					text = <"Mittellinie">
+					description = <"Mittelliniennah.">
+				>
+				["at0114"] = <
+					text = <"Nicht lateralisiert">
+					description = <"Nicht lateralisiert.">
+				>
+				["at0115"] = <
+					text = <"Unbestimmt">
+					description = <"Lateralisierung unbestimmt.">
+				>
+				["at0120"] = <
+					text = <"Frontal">
+					description = <"Frontale Lokalisation.">
+				>
+				["at0121"] = <
+					text = <"Temporal">
+					description = <"Temporale Lokalisation.">
+				>
+				["at0122"] = <
+					text = <"Parietal">
+					description = <"Parietale Lokalisation.">
+				>
+				["at0123"] = <
+					text = <"Okzipital">
+					description = <"Okzipitale Lokalisation.">
+				>
+				["at0124"] = <
+					text = <"Insulaer">
+					description = <"Insulaere Lokalisation.">
+				>
+				["at0125"] = <
+					text = <"Cingulaer">
+					description = <"Cingulaere Lokalisation.">
+				>
+				["at0126"] = <
+					text = <"Multilobaer">
+					description = <"Multilobaere Lokalisation.">
+				>
+				["at0127"] = <
+					text = <"Hemisphaerisch">
+					description = <"Hemisphaerische Lokalisation.">
+				>
+				["at0128"] = <
+					text = <"Tiefe Struktur">
+					description = <"Tiefe Struktur oder subkortikale Lokalisation.">
+				>
+				["at0900"] = <
+					text = <"Provenienzslot">
+					description = <"Slot fuer den gemeinsamen vEC-Provenienzcluster.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Invasive EEG epilepsy">
+					description = <"Observation of invasive EEG studies in epilepsy care.">
+				>
+				["at0001"] = <
+					text = <"History">
+					description = <"History of the invasive EEG study.">
+				>
+				["at0002"] = <
+					text = <"Invasive EEG event">
+					description = <"Point event for the invasive EEG study.">
+				>
+				["at0003"] = <
+					text = <"Invasive EEG data">
+					description = <"Structured data for the invasive EEG study.">
+				>
+				["at0010"] = <
+					text = <"Invasive EEG type">
+					description = <"Type of invasive EEG study.">
+				>
+				["at0011"] = <
+					text = <"Study date">
+					description = <"Date of the invasive EEG study.">
+				>
+				["at0012"] = <
+					text = <"Performing institution">
+					description = <"Institution that performed the study.">
+				>
+				["at0013"] = <
+					text = <"Implantation target summary">
+					description = <"Free-text summary of implanted regions or electrode targets.">
+				>
+				["at0014"] = <
+					text = <"Seizure captured">
+					description = <"Indicates captured seizures.">
+				>
+				["at0015"] = <
+					text = <"Seizure count captured">
+					description = <"Number of captured seizures.">
+				>
+				["at0016"] = <
+					text = <"Seizure onset lateralization">
+					description = <"Lateralization of seizure onset.">
+				>
+				["at0017"] = <
+					text = <"Seizure onset localization">
+					description = <"Localization of seizure onset.">
+				>
+				["at0018"] = <
+					text = <"Stimulation mapping performed">
+					description = <"Indicates functional stimulation mapping.">
+				>
+				["at0019"] = <
+					text = <"Eloquent cortex overlap">
+					description = <"Indicates overlap with eloquent cortex.">
+				>
+				["at0020"] = <
+					text = <"Invasive EEG summary">
+					description = <"Free-text summary of the invasive EEG study.">
+				>
+				["at0100"] = <
+					text = <"Subdural grids or strips">
+					description = <"Subdural grid or strip recording.">
+				>
+				["at0101"] = <
+					text = <"SEEG">
+					description = <"Stereo EEG.">
+				>
+				["at0102"] = <
+					text = <"Depth only">
+					description = <"Depth-electrode-only recording.">
+				>
+				["at0103"] = <
+					text = <"Hybrid">
+					description = <"Combined invasive EEG configuration.">
+				>
+				["at0104"] = <
+					text = <"Intraoperative ECoG">
+					description = <"Intraoperative electrocorticography.">
+				>
+				["at0105"] = <
+					text = <"Other">
+					description = <"Other invasive EEG strategy.">
+				>
+				["at0110"] = <
+					text = <"Left">
+					description = <"Left lateralized.">
+				>
+				["at0111"] = <
+					text = <"Right">
+					description = <"Right lateralized.">
+				>
+				["at0112"] = <
+					text = <"Bilateral">
+					description = <"Bilateral.">
+				>
+				["at0113"] = <
+					text = <"Midline">
+					description = <"Midline-related.">
+				>
+				["at0114"] = <
+					text = <"Non lateralizing">
+					description = <"Non-lateralizing.">
+				>
+				["at0115"] = <
+					text = <"Indeterminate">
+					description = <"Lateralization indeterminate.">
+				>
+				["at0120"] = <
+					text = <"Frontal">
+					description = <"Frontal localization.">
+				>
+				["at0121"] = <
+					text = <"Temporal">
+					description = <"Temporal localization.">
+				>
+				["at0122"] = <
+					text = <"Parietal">
+					description = <"Parietal localization.">
+				>
+				["at0123"] = <
+					text = <"Occipital">
+					description = <"Occipital localization.">
+				>
+				["at0124"] = <
+					text = <"Insular">
+					description = <"Insular localization.">
+				>
+				["at0125"] = <
+					text = <"Cingulate">
+					description = <"Cingulate localization.">
+				>
+				["at0126"] = <
+					text = <"Multilobar">
+					description = <"Multilobar localization.">
+				>
+				["at0127"] = <
+					text = <"Hemispheric">
+					description = <"Hemispheric localization.">
+				>
+				["at0128"] = <
+					text = <"Deep structure">
+					description = <"Deep-structure or subcortical localization.">
+				>
+				["at0900"] = <
+					text = <"Provenance slot">
+					description = <"Slot for the shared vEC provenance cluster.">
+				>
+			>
+		>
+	>
