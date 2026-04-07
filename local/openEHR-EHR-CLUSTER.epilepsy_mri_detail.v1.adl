@@ -1,0 +1,697 @@
+archetype (adl_version=1.4; uid=8da8aa24-e462-4e53-8be1-d5783d1874dc)
+	openEHR-EHR-CLUSTER.epilepsy_mri_detail.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Epilepsiespezifischer MRT-Detailcluster als Ergaenzung zu publizierten Bildgebungsartefakten mit HARNESS-Adequanz, Kernsequenzen und Laesionssemantik.">
+			use = <"Als begleitender Cluster in Templates mit imaging_exam_result und imaging_exam fuer epilepsiespezifische MRT-Details verwenden. Neben Laesionssemantik werden HARNESS-Kernsequenzen, Zusatzsequenzen, Timing zur Erstdiagnose und Post-Processing-Metadaten erfasst.">
+			misuse = <"Nicht als eigenstaendigen Ersatz fuer publizierte Bildgebungsbeobachtungen oder generische Radiologieartefakte verwenden.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Epilepsy-specific MRI detail cluster that complements published imaging artefacts with HARNESS adequacy, core sequences, and lesion semantics.">
+			use = <"Use as a companion cluster inside templates that already use imaging_exam_result and imaging_exam. Besides lesion semantics, capture HARNESS core sequences, additional sequences, timing relative to first diagnosis, and post-processing metadata.">
+			misuse = <"Do not use as a standalone replacement for published imaging observations or generic radiology artefacts.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"11f830149382e2e859962c13ac741d2a">
+		["build_uid"] = <"eb684a7c-8bc7-3bf2-9c27-370a197ad2fc">
+	>
+
+definition
+	CLUSTER[at0000] matches {    -- Epilepsie-MRT-Detail
+		items cardinality matches {0..*; unordered} matches {
+			ELEMENT[at0010] occurrences matches {0..1} matches {    -- MRT-Feldstaerke
+				value matches {
+					DV_CODED_TEXT matches {
+						defining_code matches {
+							[local::
+							at0100,    -- 1.5T
+							at0101,    -- 3T
+							at0102,    -- 7T
+							at0103]    -- Unbekannt
+						}
+					}
+				}
+			}
+			ELEMENT[at0011] occurrences matches {0..1} matches {    -- Epilepsieprotokoll genutzt
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0012] occurrences matches {0..1} matches {    -- HARNESS adaequat
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0013] occurrences matches {0..1} matches {    -- HARNESS-Adequanzrating
+				value matches {
+					DV_CODED_TEXT matches {
+						defining_code matches {
+							[local::
+							at0104,    -- Gruen
+							at0105,    -- Gelb
+							at0106]    -- Rot
+						}
+					}
+				}
+			}
+			ELEMENT[at0014] occurrences matches {0..1} matches {    -- Nachverarbeitung durchgefuehrt
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0015] occurrences matches {0..1} matches {    -- Laesion vorhanden
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0016] occurrences matches {0..*} matches {    -- Laesionstyp
+				value matches {
+					DV_CODED_TEXT matches {
+						defining_code matches {
+							[local::
+							at0107,    -- Fokale kortikale Dysplasie
+							at0108,    -- Hippokampussklerose
+							at0109,    -- Tuberose-Sklerose-Komplex
+							at0110,    -- Polymikrogyrie
+							at0111,    -- Periventrikulaere nodulaere Heterotopie
+							at0112,    -- Lissenzephalie
+							at0113,    -- Schizenzephalie
+							at0114,    -- Kortikaler Tuber
+							at0115,    -- Subependymaler Knoten
+							at0116,    -- Laesion der weissen Substanz
+							at0117,    -- Niedriggradiger Tumor
+							at0118,    -- Hochgradiger Tumor
+							at0119,    -- Vaskulaere Malformation
+							at0120,    -- Kavernom
+							at0121,    -- Gliosis
+							at0122,    -- Posttraumatisch
+							at0123,    -- Metabolisches Signal
+							at0124,    -- Normal
+							at0125]    -- Andere
+						}
+					}
+				}
+			}
+			ELEMENT[at0017] occurrences matches {0..1} matches {    -- Laesionslateralisierung
+				value matches {
+					DV_CODED_TEXT matches {
+						defining_code matches {
+							[local::
+							at0126,    -- Links
+							at0127,    -- Rechts
+							at0128,    -- Beidseitig
+							at0129]    -- Nicht zutreffend
+						}
+					}
+				}
+			}
+			ELEMENT[at0018] occurrences matches {0..*} matches {    -- Laesionslappen
+				value matches {
+					DV_CODED_TEXT matches {
+						defining_code matches {
+							[local::
+							at0130,    -- Frontal
+							at0131,    -- Temporal
+							at0132,    -- Parietal
+							at0133,    -- Okzipital
+							at0134,    -- Insulaer
+							at0135,    -- Gyrus cinguli
+							at0136,    -- Kleinhirn
+							at0137,    -- Hirnstamm
+							at0138,    -- Basalganglien
+							at0139,    -- Multilobaer
+							at0140]    -- Nicht zutreffend
+						}
+					}
+				}
+			}
+			ELEMENT[at0019] occurrences matches {0..1} matches {    -- Spezifische Laesionsregion
+				value matches {
+					DV_TEXT matches {*}
+				}
+			}
+			ELEMENT[at0020] occurrences matches {0..1} matches {    -- MRT-Freitextzusammenfassung
+				value matches {
+					DV_TEXT matches {*}
+				}
+			}
+			ELEMENT[at0021] occurrences matches {0..1} matches {    -- 3D T1 akquiriert
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0022] occurrences matches {0..1} matches {    -- 3D FLAIR akquiriert
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0023] occurrences matches {0..1} matches {    -- Hochaufloesendes koronales T2 akquiriert
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0024] occurrences matches {0..1} matches {    -- Zusatzsequenzen oder Protokollnotiz
+				value matches {
+					DV_TEXT matches {*}
+				}
+			}
+			ELEMENT[at0025] occurrences matches {0..1} matches {    -- Nah an Erstdiagnose durchgefuehrt
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0026] occurrences matches {0..1} matches {    -- Post-Processing-Methode
+				value matches {
+					DV_TEXT matches {*}
+				}
+			}
+		}
+	}
+
+ontology
+	terminologies_available = <"SNOMED-CT", ...>
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Epilepsie-MRT-Detail">
+					description = <"Cluster fuer epilepsiespezifische MRT-Details.">
+				>
+				["at0010"] = <
+					text = <"MRT-Feldstaerke">
+					description = <"Feldstaerke des MRT-Systems.">
+				>
+				["at0011"] = <
+					text = <"Epilepsieprotokoll genutzt">
+					description = <"Kennzeichnet ein dediziertes Epilepsieprotokoll.">
+				>
+				["at0012"] = <
+					text = <"HARNESS adaequat">
+					description = <"Boolean fuer die HARNESS-Adequanz.">
+				>
+				["at0013"] = <
+					text = <"HARNESS-Adequanzrating">
+					description = <"Ampelrating der HARNESS-Adequanz.">
+				>
+				["at0014"] = <
+					text = <"Nachverarbeitung durchgefuehrt">
+					description = <"Kennzeichnet Post-Processing wie VBM oder Surface Reconstruction.">
+				>
+				["at0015"] = <
+					text = <"Laesion vorhanden">
+					description = <"Kennzeichnet eine strukturelle Laesion.">
+				>
+				["at0016"] = <
+					text = <"Laesionstyp">
+					description = <"Art der dokumentierten Laesion.">
+				>
+				["at0017"] = <
+					text = <"Laesionslateralisierung">
+					description = <"Lateralisierung der Laesion.">
+				>
+				["at0018"] = <
+					text = <"Laesionslappen">
+					description = <"Betroffene Region oder Lappen.">
+				>
+				["at0019"] = <
+					text = <"Spezifische Laesionsregion">
+					description = <"Freitext fuer spezifische Region.">
+				>
+				["at0020"] = <
+					text = <"MRT-Freitextzusammenfassung">
+					description = <"Freitext der radiologischen Zusammenfassung.">
+				>
+				["at0021"] = <
+					text = <"3D T1 akquiriert">
+					description = <"Kennzeichnet die Akquisition einer 3D-T1-Kernsequenz.">
+				>
+				["at0022"] = <
+					text = <"3D FLAIR akquiriert">
+					description = <"Kennzeichnet die Akquisition einer 3D-FLAIR-Kernsequenz.">
+				>
+				["at0023"] = <
+					text = <"Hochaufloesendes koronales T2 akquiriert">
+					description = <"Kennzeichnet die Akquisition eines hochaufloesenden koronalen T2.">
+				>
+				["at0024"] = <
+					text = <"Zusatzsequenzen oder Protokollnotiz">
+					description = <"Freitext zu Zusatzsequenzen oder szenariospezifischen Protokollerweiterungen.">
+				>
+				["at0025"] = <
+					text = <"Nah an Erstdiagnose durchgefuehrt">
+					description = <"Kennzeichnet eine MRT zeitnah zur Erstdiagnose oder initialen Workup-Phase.">
+				>
+				["at0026"] = <
+					text = <"Post-Processing-Methode">
+					description = <"Freitext zu Post-Processing-Methode oder Pipeline.">
+				>
+				["at0100"] = <
+					text = <"1.5T">
+					description = <"1.5 Tesla.">
+				>
+				["at0101"] = <
+					text = <"3T">
+					description = <"3 Tesla.">
+				>
+				["at0102"] = <
+					text = <"7T">
+					description = <"7 Tesla.">
+				>
+				["at0103"] = <
+					text = <"Unbekannt">
+					description = <"Feldstaerke unbekannt.">
+				>
+				["at0104"] = <
+					text = <"Gruen">
+					description = <"Adaequat.">
+				>
+				["at0105"] = <
+					text = <"Gelb">
+					description = <"Teilweise adaequat.">
+				>
+				["at0106"] = <
+					text = <"Rot">
+					description = <"Inadaequat.">
+				>
+				["at0107"] = <
+					text = <"Fokale kortikale Dysplasie">
+					description = <"Fokale kortikale Dysplasie.">
+				>
+				["at0108"] = <
+					text = <"Hippokampussklerose">
+					description = <"Hippokampussklerose.">
+				>
+				["at0109"] = <
+					text = <"Tuberose-Sklerose-Komplex">
+					description = <"Tuberose-Sklerose-Komplex.">
+				>
+				["at0110"] = <
+					text = <"Polymikrogyrie">
+					description = <"Polymikrogyrie.">
+				>
+				["at0111"] = <
+					text = <"Periventrikulaere nodulaere Heterotopie">
+					description = <"Periventrikulaere nodulaere Heterotopie.">
+				>
+				["at0112"] = <
+					text = <"Lissenzephalie">
+					description = <"Lissenzephalie.">
+				>
+				["at0113"] = <
+					text = <"Schizenzephalie">
+					description = <"Schizenzephalie.">
+				>
+				["at0114"] = <
+					text = <"Kortikaler Tuber">
+					description = <"Kortikaler Tuber.">
+				>
+				["at0115"] = <
+					text = <"Subependymaler Knoten">
+					description = <"Subependymaler Knoten.">
+				>
+				["at0116"] = <
+					text = <"Laesion der weissen Substanz">
+					description = <"Laesion der weissen Substanz.">
+				>
+				["at0117"] = <
+					text = <"Niedriggradiger Tumor">
+					description = <"Niedriggradiger Tumor.">
+				>
+				["at0118"] = <
+					text = <"Hochgradiger Tumor">
+					description = <"Hochgradiger Tumor.">
+				>
+				["at0119"] = <
+					text = <"Vaskulaere Malformation">
+					description = <"Vaskulaere Malformation.">
+				>
+				["at0120"] = <
+					text = <"Kavernom">
+					description = <"Kavernom.">
+				>
+				["at0121"] = <
+					text = <"Gliosis">
+					description = <"Gliosis.">
+				>
+				["at0122"] = <
+					text = <"Posttraumatisch">
+					description = <"Posttraumatische Veraenderung.">
+				>
+				["at0123"] = <
+					text = <"Metabolisches Signal">
+					description = <"Metabolische Signalveraenderung.">
+				>
+				["at0124"] = <
+					text = <"Normal">
+					description = <"Normaler Befund.">
+				>
+				["at0125"] = <
+					text = <"Andere">
+					description = <"Andere Laesion.">
+				>
+				["at0126"] = <
+					text = <"Links">
+					description = <"Linksseitig.">
+				>
+				["at0127"] = <
+					text = <"Rechts">
+					description = <"Rechtsseitig.">
+				>
+				["at0128"] = <
+					text = <"Beidseitig">
+					description = <"Bilaterale Beteiligung.">
+				>
+				["at0129"] = <
+					text = <"Nicht zutreffend">
+					description = <"Lateralisierung nicht zutreffend.">
+				>
+				["at0130"] = <
+					text = <"Frontal">
+					description = <"Frontallappen.">
+				>
+				["at0131"] = <
+					text = <"Temporal">
+					description = <"Temporallappen.">
+				>
+				["at0132"] = <
+					text = <"Parietal">
+					description = <"Parietallappen.">
+				>
+				["at0133"] = <
+					text = <"Okzipital">
+					description = <"Okzipitallappen.">
+				>
+				["at0134"] = <
+					text = <"Insulaer">
+					description = <"Insula.">
+				>
+				["at0135"] = <
+					text = <"Gyrus cinguli">
+					description = <"Cingulaere Region.">
+				>
+				["at0136"] = <
+					text = <"Kleinhirn">
+					description = <"Kleinhirn.">
+				>
+				["at0137"] = <
+					text = <"Hirnstamm">
+					description = <"Hirnstamm.">
+				>
+				["at0138"] = <
+					text = <"Basalganglien">
+					description = <"Basalganglien.">
+				>
+				["at0139"] = <
+					text = <"Multilobaer">
+					description = <"Multilobaere Beteiligung.">
+				>
+				["at0140"] = <
+					text = <"Nicht zutreffend">
+					description = <"Lappenlokalisation nicht zutreffend.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Epilepsy MRI detail">
+					description = <"Cluster for epilepsy-specific MRI detail.">
+				>
+				["at0010"] = <
+					text = <"MRI field strength">
+					description = <"Field strength of the MRI system.">
+				>
+				["at0011"] = <
+					text = <"Epilepsy protocol used">
+					description = <"Indicates a dedicated epilepsy MRI protocol.">
+				>
+				["at0012"] = <
+					text = <"HARNESS adequate">
+					description = <"Boolean flag for HARNESS adequacy.">
+				>
+				["at0013"] = <
+					text = <"HARNESS adequacy rating">
+					description = <"Traffic-light rating of HARNESS adequacy.">
+				>
+				["at0014"] = <
+					text = <"Post processing performed">
+					description = <"Indicates post-processing such as VBM or surface reconstruction.">
+				>
+				["at0015"] = <
+					text = <"Lesion present">
+					description = <"Indicates a structural lesion.">
+				>
+				["at0016"] = <
+					text = <"Lesion type">
+					description = <"Type of documented lesion.">
+				>
+				["at0017"] = <
+					text = <"Lesion laterality">
+					description = <"Laterality of the lesion.">
+				>
+				["at0018"] = <
+					text = <"Lesion lobe">
+					description = <"Affected lobe or region.">
+				>
+				["at0019"] = <
+					text = <"Lesion specific region">
+					description = <"Free text for a specific region.">
+				>
+				["at0020"] = <
+					text = <"MRI free text summary">
+					description = <"Free-text radiology summary.">
+				>
+				["at0021"] = <
+					text = <"3D T1 acquired">
+					description = <"Indicates acquisition of the 3D T1 core sequence.">
+				>
+				["at0022"] = <
+					text = <"3D FLAIR acquired">
+					description = <"Indicates acquisition of the 3D FLAIR core sequence.">
+				>
+				["at0023"] = <
+					text = <"High-resolution coronal T2 acquired">
+					description = <"Indicates acquisition of the high-resolution coronal T2 core sequence.">
+				>
+				["at0024"] = <
+					text = <"Additional sequence note">
+					description = <"Free text for additional sequences or scenario-specific protocol extensions.">
+				>
+				["at0025"] = <
+					text = <"Performed near initial diagnosis">
+					description = <"Indicates an MRI performed near the initial diagnosis or early workup window.">
+				>
+				["at0026"] = <
+					text = <"Post processing method">
+					description = <"Free text describing the post-processing method or pipeline.">
+				>
+				["at0100"] = <
+					text = <"1.5T">
+					description = <"1.5 Tesla.">
+				>
+				["at0101"] = <
+					text = <"3T">
+					description = <"3 Tesla.">
+				>
+				["at0102"] = <
+					text = <"7T">
+					description = <"7 Tesla.">
+				>
+				["at0103"] = <
+					text = <"Unknown">
+					description = <"Field strength unknown.">
+				>
+				["at0104"] = <
+					text = <"Green">
+					description = <"Adequate.">
+				>
+				["at0105"] = <
+					text = <"Yellow">
+					description = <"Partially adequate.">
+				>
+				["at0106"] = <
+					text = <"Red">
+					description = <"Inadequate.">
+				>
+				["at0107"] = <
+					text = <"Focal cortical dysplasia">
+					description = <"Focal cortical dysplasia.">
+				>
+				["at0108"] = <
+					text = <"Hippocampal sclerosis">
+					description = <"Hippocampal sclerosis.">
+				>
+				["at0109"] = <
+					text = <"Tuberous sclerosis complex">
+					description = <"Tuberous sclerosis complex.">
+				>
+				["at0110"] = <
+					text = <"Polymicrogyria">
+					description = <"Polymicrogyria.">
+				>
+				["at0111"] = <
+					text = <"Periventricular nodular heterotopia">
+					description = <"Periventricular nodular heterotopia.">
+				>
+				["at0112"] = <
+					text = <"Lissencephaly">
+					description = <"Lissencephaly.">
+				>
+				["at0113"] = <
+					text = <"Schizencephaly">
+					description = <"Schizencephaly.">
+				>
+				["at0114"] = <
+					text = <"Cortical tuber">
+					description = <"Cortical tuber.">
+				>
+				["at0115"] = <
+					text = <"Subependymal nodule">
+					description = <"Subependymal nodule.">
+				>
+				["at0116"] = <
+					text = <"White matter lesion">
+					description = <"White matter lesion.">
+				>
+				["at0117"] = <
+					text = <"Low grade tumour">
+					description = <"Low-grade tumour.">
+				>
+				["at0118"] = <
+					text = <"High grade tumour">
+					description = <"High-grade tumour.">
+				>
+				["at0119"] = <
+					text = <"Vascular malformation">
+					description = <"Vascular malformation.">
+				>
+				["at0120"] = <
+					text = <"Cavernoma">
+					description = <"Cavernoma.">
+				>
+				["at0121"] = <
+					text = <"Gliosis">
+					description = <"Gliosis.">
+				>
+				["at0122"] = <
+					text = <"Post traumatic">
+					description = <"Post-traumatic change.">
+				>
+				["at0123"] = <
+					text = <"Metabolic signal">
+					description = <"Metabolic signal change.">
+				>
+				["at0124"] = <
+					text = <"Normal">
+					description = <"Normal study.">
+				>
+				["at0125"] = <
+					text = <"Other">
+					description = <"Other lesion.">
+				>
+				["at0126"] = <
+					text = <"Left">
+					description = <"Left-sided.">
+				>
+				["at0127"] = <
+					text = <"Right">
+					description = <"Right-sided.">
+				>
+				["at0128"] = <
+					text = <"Bilateral">
+					description = <"Bilateral involvement.">
+				>
+				["at0129"] = <
+					text = <"Not applicable">
+					description = <"Laterality not applicable.">
+				>
+				["at0130"] = <
+					text = <"Frontal">
+					description = <"Frontal lobe.">
+				>
+				["at0131"] = <
+					text = <"Temporal">
+					description = <"Temporal lobe.">
+				>
+				["at0132"] = <
+					text = <"Parietal">
+					description = <"Parietal lobe.">
+				>
+				["at0133"] = <
+					text = <"Occipital">
+					description = <"Occipital lobe.">
+				>
+				["at0134"] = <
+					text = <"Insular">
+					description = <"Insular region.">
+				>
+				["at0135"] = <
+					text = <"Cingulate">
+					description = <"Cingulate region.">
+				>
+				["at0136"] = <
+					text = <"Cerebellum">
+					description = <"Cerebellum.">
+				>
+				["at0137"] = <
+					text = <"Brainstem">
+					description = <"Brainstem.">
+				>
+				["at0138"] = <
+					text = <"Basal ganglia">
+					description = <"Basal ganglia.">
+				>
+				["at0139"] = <
+					text = <"Multilobar">
+					description = <"Multilobar involvement.">
+				>
+				["at0140"] = <
+					text = <"Not applicable">
+					description = <"Lobar localization not applicable.">
+				>
+			>
+		>
+	>
+	term_bindings = <
+		["SNOMED-CT"] = <
+			items = <
+				["at0107"] = <[SNOMED-CT::413709006]>
+				["at0108"] = <[SNOMED-CT::79690004]>
+				["at0109"] = <[SNOMED-CT::7199000]>
+				["at0110"] = <[SNOMED-CT::253938001]>
+				["at0112"] = <[SNOMED-CT::204070008]>
+				["at0126"] = <[SNOMED-CT::7771000]>
+				["at0127"] = <[SNOMED-CT::24028007]>
+				["at0128"] = <[SNOMED-CT::51440002]>
+				["at0130"] = <[SNOMED-CT::83251001]>
+				["at0131"] = <[SNOMED-CT::81745001]>
+				["at0132"] = <[SNOMED-CT::16630005]>
+				["at0133"] = <[SNOMED-CT::31065004]>
+			>
+		>
+	>
