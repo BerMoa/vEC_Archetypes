@@ -1,0 +1,357 @@
+archetype (adl_version=1.4; uid=942ef0d2-e8ab-4a76-a8cc-db58e0d19130)
+	openEHR-EHR-EVALUATION.epilepsy_family_history.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Epilepsiespezifische Familienanamnese als Ergaenzung zu publizierten Family-History-Artefakten.">
+			use = <"Zur strukturierten Erfassung epilepsiespezifischer Familienmuster, genetischer Hinweise und Konsanguinitaet inklusive Grad- oder Freitextangabe.">
+			misuse = <"Nicht fuer die allgemeine Stammbaumanamnese oder nicht-epilepsiespezifische Familienerkrankungen verwenden; dafuer publizierte Family-History-Artefakte bevorzugen.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Epilepsy-specific family-history evaluation that complements published family-history artefacts.">
+			use = <"Use for epilepsy-specific familial patterns, gene confirmation in relatives, and consanguinity context including degree or free-text detail.">
+			misuse = <"Do not use for generic pedigree capture or non-epilepsy family conditions; prefer published family-history artefacts for that scope.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"72454071f464c5cddade35738877dd85">
+		["build_uid"] = <"8dfa9625-5595-3f08-9a5c-74754ed2ff60">
+	>
+
+definition
+	EVALUATION[at0000] matches {    -- Epilepsiespezifische Familienanamnese
+		data matches {
+			ITEM_TREE[at0001] matches {    -- Familiendaten
+				items cardinality matches {0..*; unordered} matches {
+					ELEMENT[at0010] occurrences matches {0..1} matches {    -- Familienanamnese Epilepsie
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0011] occurrences matches {0..1} matches {    -- Familienanamnese Fieberkraempfe
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0012] occurrences matches {0..*} matches {    -- Betroffene Verwandte
+						value matches {
+							DV_CODED_TEXT matches {
+								defining_code matches {
+									[local::
+									at0100,    -- Mutter
+									at0101,    -- Vater
+									at0102,    -- Geschwister
+									at0103,    -- Grosseltern muetterlicherseits
+									at0104,    -- Grosseltern vaeterlicherseits
+									at0105,    -- Onkel oder Tanten muetterlicherseits
+									at0106,    -- Onkel oder Tanten vaeterlicherseits
+									at0107,    -- Halbgeschwister
+									at0108]    -- Andere
+								}
+							}
+						}
+					}
+					ELEMENT[at0013] occurrences matches {0..1} matches {    -- Syndromname in der Familie
+						value matches {
+							DV_TEXT matches {*}
+						}
+					}
+					ELEMENT[at0014] occurrences matches {0..1} matches {    -- Genetischer Befund in der Familie bestaetigt
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0015] occurrences matches {0..1} matches {    -- Genname in der Familie
+						value matches {
+							DV_TEXT matches {*}
+						}
+					}
+					ELEMENT[at0016] occurrences matches {0..1} matches {    -- Konsanguinitaet
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0017] occurrences matches {0..1} matches {    -- Pedigree dokumentiert
+						value matches {
+							DV_BOOLEAN matches {*}
+						}
+					}
+					ELEMENT[at0018] occurrences matches {0..1} matches {    -- Pedigree-Notiz
+						value matches {
+							DV_TEXT matches {*}
+						}
+					}
+					ELEMENT[at0019] occurrences matches {0..1} matches {    -- Grad der Konsanguinitaet
+						value matches {
+							DV_CODED_TEXT matches {
+								defining_code matches {
+									[local::
+									at0109,    -- Erstgradig verwandt
+									at0110,    -- Zweitgradig verwandt
+									at0111,    -- Weiter entfernt verwandt
+									at0112,    -- Unbekannt
+									at0113]    -- Nicht dokumentiert
+								}
+							}
+						}
+					}
+					ELEMENT[at0020] occurrences matches {0..1} matches {    -- Konsanguinitaetsdetail
+						value matches {
+							DV_TEXT matches {*}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Epilepsiespezifische Familienanamnese">
+					description = <"Bewertung epilepsiespezifischer Familienanamnese.">
+				>
+				["at0001"] = <
+					text = <"Familiendaten">
+					description = <"Strukturierte Daten zur epilepsiespezifischen Familienanamnese.">
+				>
+				["at0010"] = <
+					text = <"Familienanamnese Epilepsie">
+					description = <"Kennzeichnet eine Epilepsie in der Familienanamnese.">
+				>
+				["at0011"] = <
+					text = <"Familienanamnese Fieberkraempfe">
+					description = <"Kennzeichnet Fieberkraempfe in der Familienanamnese.">
+				>
+				["at0012"] = <
+					text = <"Betroffene Verwandte">
+					description = <"Verwandtschaftsbeziehungen betroffener Familienmitglieder.">
+				>
+				["at0013"] = <
+					text = <"Syndromname in der Familie">
+					description = <"Bekannter Syndromname bei betroffenen Verwandten.">
+				>
+				["at0014"] = <
+					text = <"Genetischer Befund in der Familie bestaetigt">
+					description = <"Kennzeichnet einen bestaetigten genetischen Befund bei Verwandten.">
+				>
+				["at0015"] = <
+					text = <"Genname in der Familie">
+					description = <"Genname bei genetisch bestaetigten Verwandten.">
+				>
+				["at0016"] = <
+					text = <"Konsanguinitaet">
+					description = <"Kennzeichnet elterliche Konsanguinitaet.">
+				>
+				["at0017"] = <
+					text = <"Pedigree dokumentiert">
+					description = <"Kennzeichnet eine dokumentierte Stammbaumdarstellung.">
+				>
+				["at0018"] = <
+					text = <"Pedigree-Notiz">
+					description = <"Freitext zu Pedigree oder erblichen Besonderheiten.">
+				>
+				["at0019"] = <
+					text = <"Grad der Konsanguinitaet">
+					description = <"Strukturierter Grad der berichteten elterlichen Konsanguinitaet.">
+				>
+				["at0020"] = <
+					text = <"Konsanguinitaetsdetail">
+					description = <"Freitext zu Art oder genauer Verwandtschaftsbeziehung.">
+				>
+				["at0100"] = <
+					text = <"Mutter">
+					description = <"Betroffene Mutter.">
+				>
+				["at0101"] = <
+					text = <"Vater">
+					description = <"Betroffener Vater.">
+				>
+				["at0102"] = <
+					text = <"Geschwister">
+					description = <"Betroffenes Geschwister.">
+				>
+				["at0103"] = <
+					text = <"Grosseltern muetterlicherseits">
+					description = <"Betroffene Grosseltern muetterlicherseits.">
+				>
+				["at0104"] = <
+					text = <"Grosseltern vaeterlicherseits">
+					description = <"Betroffene Grosseltern vaeterlicherseits.">
+				>
+				["at0105"] = <
+					text = <"Onkel oder Tanten muetterlicherseits">
+					description = <"Betroffene Onkel oder Tanten muetterlicherseits.">
+				>
+				["at0106"] = <
+					text = <"Onkel oder Tanten vaeterlicherseits">
+					description = <"Betroffene Onkel oder Tanten vaeterlicherseits.">
+				>
+				["at0107"] = <
+					text = <"Halbgeschwister">
+					description = <"Betroffenes Halbgeschwister.">
+				>
+				["at0108"] = <
+					text = <"Andere">
+					description = <"Andere betroffene Verwandte.">
+				>
+				["at0109"] = <
+					text = <"Erstgradig verwandt">
+					description = <"Konsanguinitaet im Bereich enger Verwandtschaft, z. B. Cousin ersten Grades.">
+				>
+				["at0110"] = <
+					text = <"Zweitgradig verwandt">
+					description = <"Konsanguinitaet im Bereich entfernterer Verwandtschaft, z. B. Cousin zweiten Grades.">
+				>
+				["at0111"] = <
+					text = <"Weiter entfernt verwandt">
+					description = <"Konsanguinitaet jenseits der haeufigsten Grade.">
+				>
+				["at0112"] = <
+					text = <"Unbekannt">
+					description = <"Grad der Konsanguinitaet unbekannt.">
+				>
+				["at0113"] = <
+					text = <"Nicht dokumentiert">
+					description = <"Kein strukturierter Grad dokumentiert.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Epilepsy family history">
+					description = <"Evaluation of epilepsy-specific family history.">
+				>
+				["at0001"] = <
+					text = <"Family data">
+					description = <"Structured epilepsy-specific family-history data.">
+				>
+				["at0010"] = <
+					text = <"Family history epilepsy">
+					description = <"Indicates epilepsy in the family history.">
+				>
+				["at0011"] = <
+					text = <"Family history febrile seizures">
+					description = <"Indicates febrile seizures in the family history.">
+				>
+				["at0012"] = <
+					text = <"Affected relatives">
+					description = <"Relationships of affected family members.">
+				>
+				["at0013"] = <
+					text = <"Family syndrome name">
+					description = <"Known syndrome name in affected relatives.">
+				>
+				["at0014"] = <
+					text = <"Family gene confirmed">
+					description = <"Indicates a confirmed genetic finding in relatives.">
+				>
+				["at0015"] = <
+					text = <"Family gene name">
+					description = <"Gene name in genetically confirmed relatives.">
+				>
+				["at0016"] = <
+					text = <"Consanguinity">
+					description = <"Indicates parental consanguinity.">
+				>
+				["at0017"] = <
+					text = <"Pedigree documented">
+					description = <"Indicates that a pedigree is documented.">
+				>
+				["at0018"] = <
+					text = <"Pedigree note">
+					description = <"Free text about pedigree or hereditary context.">
+				>
+				["at0019"] = <
+					text = <"Consanguinity degree">
+					description = <"Structured degree of reported parental consanguinity.">
+				>
+				["at0020"] = <
+					text = <"Consanguinity detail">
+					description = <"Free text about the exact relationship or consanguinity detail.">
+				>
+				["at0100"] = <
+					text = <"Mother">
+					description = <"Affected mother.">
+				>
+				["at0101"] = <
+					text = <"Father">
+					description = <"Affected father.">
+				>
+				["at0102"] = <
+					text = <"Sibling">
+					description = <"Affected sibling.">
+				>
+				["at0103"] = <
+					text = <"Maternal grandparent">
+					description = <"Affected maternal grandparent.">
+				>
+				["at0104"] = <
+					text = <"Paternal grandparent">
+					description = <"Affected paternal grandparent.">
+				>
+				["at0105"] = <
+					text = <"Maternal aunt or uncle">
+					description = <"Affected maternal aunt or uncle.">
+				>
+				["at0106"] = <
+					text = <"Paternal aunt or uncle">
+					description = <"Affected paternal aunt or uncle.">
+				>
+				["at0107"] = <
+					text = <"Half sibling">
+					description = <"Affected half sibling.">
+				>
+				["at0108"] = <
+					text = <"Other">
+					description = <"Other affected relative.">
+				>
+				["at0109"] = <
+					text = <"First degree cousin relationship">
+					description = <"Consanguinity in the closer-degree range, for example first cousins.">
+				>
+				["at0110"] = <
+					text = <"Second degree cousin relationship">
+					description = <"Consanguinity in a more distant degree, for example second cousins.">
+				>
+				["at0111"] = <
+					text = <"More distant relationship">
+					description = <"Consanguinity beyond the most common reported degrees.">
+				>
+				["at0112"] = <
+					text = <"Unknown">
+					description = <"Degree of consanguinity unknown.">
+				>
+				["at0113"] = <
+					text = <"Not documented">
+					description = <"No structured consanguinity degree documented.">
+				>
+			>
+		>
+	>
