@@ -1,0 +1,305 @@
+archetype (adl_version=1.4; uid=55f49e24-33f7-4edf-899f-dc3d861fa278)
+	openEHR-EHR-CLUSTER.vec_extraction_provenance.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Gemeinsame Provenienzangaben fuer alle im vEC CDR maschinell extrahierten Werte.">
+			use = <"Zur Dokumentation von Konfidenz, Safety Gate, Textspanne, Review-Status und Quelldokumentmetadaten.">
+			misuse = <"Nicht als Ersatz fuer klinisch validierte Befunde oder Entscheidungen verwenden.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Shared provenance metadata for all machine-extracted values in the vEC CDR.">
+			use = <"Use for confidence, safety-gate status, text span, review state, and source document metadata.">
+			misuse = <"Do not use as a replacement for clinician-authored findings or decisions.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"858e354802ad5bbff4ceeed9304c4a5a">
+		["build_uid"] = <"6fe13cd9-469f-3646-9894-072b688752ca">
+	>
+
+definition
+	CLUSTER[at0000] matches {    -- Extraktionsprovenienz
+		items cardinality matches {0..*; unordered} matches {
+			ELEMENT[at0010] occurrences matches {0..1} matches {    -- Vertrauenswert
+				value matches {
+					DV_PROPORTION matches {*}
+				}
+			}
+			ELEMENT[at0011] occurrences matches {0..1} matches {    -- CDSS sicher
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0012] occurrences matches {0..1} matches {    -- Zeichenstart
+				value matches {
+					DV_COUNT matches {*}
+				}
+			}
+			ELEMENT[at0013] occurrences matches {0..1} matches {    -- Zeichenende
+				value matches {
+					DV_COUNT matches {*}
+				}
+			}
+			ELEMENT[at0014] occurrences matches {0..1} matches {    -- Negationsflag
+				value matches {
+					DV_BOOLEAN matches {*}
+				}
+			}
+			ELEMENT[at0015] occurrences matches {0..1} matches {    -- Review-Status
+				value matches {
+					DV_CODED_TEXT matches {
+						defining_code matches {
+							[local::
+							at0100,    -- Wartet auf aerztliche Pruefung
+							at0101,    -- Bestaetigt
+							at0102,    -- Abgelehnt
+							at0103]    -- Widerspruch markiert
+						}
+					}
+				}
+			}
+			ELEMENT[at0016] occurrences matches {0..1} matches {    -- Quelldokument-ID
+				value matches {
+					DV_TEXT matches {*}
+				}
+			}
+			ELEMENT[at0017] occurrences matches {0..1} matches {    -- Quelldokumenttyp
+				value matches {
+					DV_CODED_TEXT matches {
+						defining_code matches {
+							[local::
+							at0110,    -- Ambulanzbrief
+							at0111,    -- EEG-Bericht
+							at0112,    -- MRT-Bericht
+							at0113,    -- Genetik-Bericht
+							at0114,    -- Entlassbrief
+							at0115,    -- Ueberweisungsschreiben
+							at0116]    -- Caregiver Intake Form
+						}
+					}
+				}
+			}
+			ELEMENT[at0018] occurrences matches {0..1} matches {    -- Modellversion
+				value matches {
+					DV_TEXT matches {*}
+				}
+			}
+			ELEMENT[at0019] occurrences matches {0..1} matches {    -- Extraktionsschema-Version
+				value matches {
+					DV_TEXT matches {*}
+				}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Extraktionsprovenienz">
+					description = <"Gemeinsamer Provenienzcluster fuer vEC-NLP- und ML-Extraktionen.">
+				>
+				["at0010"] = <
+					text = <"Vertrauenswert">
+					description = <"Modellkonfidenz als Ratio zwischen 0.0 und 1.0.">
+				>
+				["at0011"] = <
+					text = <"CDSS sicher">
+					description = <"False als Standard; nur nach expliziter aerztlicher Bestaetigung auf true setzen.">
+				>
+				["at0012"] = <
+					text = <"Zeichenstart">
+					description = <"Startoffset der zugeordneten Textspanne im Quelldokument.">
+				>
+				["at0013"] = <
+					text = <"Zeichenende">
+					description = <"Endoffset der zugeordneten Textspanne im Quelldokument.">
+				>
+				["at0014"] = <
+					text = <"Negationsflag">
+					description = <"Kennzeichnet, dass die extrahierte Aussage negiert war.">
+				>
+				["at0015"] = <
+					text = <"Review-Status">
+					description = <"Status der aerztlichen oder fachlichen Pruefung des extrahierten Werts.">
+				>
+				["at0016"] = <
+					text = <"Quelldokument-ID">
+					description = <"Interne vEC-Referenz des Quelldokuments.">
+				>
+				["at0017"] = <
+					text = <"Quelldokumenttyp">
+					description = <"Art des Quelldokuments, aus dem der Wert extrahiert wurde.">
+				>
+				["at0018"] = <
+					text = <"Modellversion">
+					description = <"Version oder Kennung des Extraktionsmodells.">
+				>
+				["at0019"] = <
+					text = <"Extraktionsschema-Version">
+					description = <"Version des vEC-Extraktionsschemas.">
+				>
+				["at0100"] = <
+					text = <"Wartet auf aerztliche Pruefung">
+					description = <"Der Wert wartet noch auf fachliche oder aerztliche Pruefung.">
+				>
+				["at0101"] = <
+					text = <"Bestaetigt">
+					description = <"Der extrahierte Wert wurde bestaetigt.">
+				>
+				["at0102"] = <
+					text = <"Abgelehnt">
+					description = <"Der extrahierte Wert wurde verworfen.">
+				>
+				["at0103"] = <
+					text = <"Widerspruch markiert">
+					description = <"Der extrahierte Wert wurde als widerspruechlich markiert.">
+				>
+				["at0110"] = <
+					text = <"Ambulanzbrief">
+					description = <"Ambulanter Arztbrief.">
+				>
+				["at0111"] = <
+					text = <"EEG-Bericht">
+					description = <"Bericht einer EEG-Untersuchung.">
+				>
+				["at0112"] = <
+					text = <"MRT-Bericht">
+					description = <"Bericht einer MRT-Untersuchung.">
+				>
+				["at0113"] = <
+					text = <"Genetik-Bericht">
+					description = <"Genetischer Befundbericht.">
+				>
+				["at0114"] = <
+					text = <"Entlassbrief">
+					description = <"Entlassbrief oder discharge summary.">
+				>
+				["at0115"] = <
+					text = <"Ueberweisungsschreiben">
+					description = <"Referral letter oder Ueberweisungsschreiben.">
+				>
+				["at0116"] = <
+					text = <"Caregiver Intake Form">
+					description = <"Fragebogen oder Intake-Dokument fuer Sorgeberechtigte.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Extraction provenance">
+					description = <"Shared provenance cluster for vEC NLP and ML extractions.">
+				>
+				["at0010"] = <
+					text = <"Confidence score">
+					description = <"Model confidence expressed as a ratio between 0.0 and 1.0.">
+				>
+				["at0011"] = <
+					text = <"CDSS safe">
+					description = <"False by default; set to true only after explicit physician confirmation.">
+				>
+				["at0012"] = <
+					text = <"Character span start">
+					description = <"Start offset of the linked text span in the source document.">
+				>
+				["at0013"] = <
+					text = <"Character span end">
+					description = <"End offset of the linked text span in the source document.">
+				>
+				["at0014"] = <
+					text = <"Negation flag">
+					description = <"Indicates that the extracted statement was negated in the source text.">
+				>
+				["at0015"] = <
+					text = <"Review status">
+					description = <"Status of physician or expert review of the extracted value.">
+				>
+				["at0016"] = <
+					text = <"Source document ID">
+					description = <"Internal vEC identifier for the source document.">
+				>
+				["at0017"] = <
+					text = <"Source document type">
+					description = <"Type of source document from which the value was extracted.">
+				>
+				["at0018"] = <
+					text = <"Model version">
+					description = <"Version or identifier of the extraction model.">
+				>
+				["at0019"] = <
+					text = <"Extraction schema version">
+					description = <"Version of the vEC extraction schema.">
+				>
+				["at0100"] = <
+					text = <"Pending physician">
+					description = <"The value is still waiting for physician review.">
+				>
+				["at0101"] = <
+					text = <"Confirmed">
+					description = <"The extracted value was confirmed.">
+				>
+				["at0102"] = <
+					text = <"Rejected">
+					description = <"The extracted value was rejected.">
+				>
+				["at0103"] = <
+					text = <"Contradiction flagged">
+					description = <"The extracted value was flagged as contradictory.">
+				>
+				["at0110"] = <
+					text = <"Ambulanzbrief">
+					description = <"Outpatient clinical letter.">
+				>
+				["at0111"] = <
+					text = <"EEG report">
+					description = <"Report of an EEG study.">
+				>
+				["at0112"] = <
+					text = <"MRI report">
+					description = <"Report of an MRI study.">
+				>
+				["at0113"] = <
+					text = <"Genetics report">
+					description = <"Genetic findings report.">
+				>
+				["at0114"] = <
+					text = <"Discharge summary">
+					description = <"Discharge summary or discharge letter.">
+				>
+				["at0115"] = <
+					text = <"Referral letter">
+					description = <"Referral letter.">
+				>
+				["at0116"] = <
+					text = <"Caregiver intake form">
+					description = <"Caregiver intake or questionnaire document.">
+				>
+			>
+		>
+	>
