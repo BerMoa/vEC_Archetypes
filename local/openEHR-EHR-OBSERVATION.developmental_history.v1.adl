@@ -1,0 +1,646 @@
+archetype (adl_version=1.4; uid=a1bf8a20-1e5d-44ca-9218-183df2582d5a)
+	openEHR-EHR-OBSERVATION.developmental_history.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Perinatale Anamnese, Entwicklungsverlauf und Entwicklungsregression im paediatrischen Epilepsiekontext.">
+			use = <"Zur strukturierten Erfassung von Geburtsdaten, Entwicklungsmeilensteinen, Regression und formalen Entwicklungstests. Diagnosen wie ADHS, Autismus oder Intelligenzminderung werden in EVALUATION.problem_diagnosis.v1 gefuehrt.">
+			misuse = <"Nicht fuer schulische, wohnbezogene oder berufliche Basisdaten verwenden; dafuer publizierte Sozial- und Bildungsartefakte nutzen.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Perinatal history, developmental trajectory, and developmental regression in pediatric epilepsy care.">
+			use = <"Use for birth history, developmental milestones, regression, and formal developmental assessments. Diagnoses such as ADHD, autism spectrum disorder, or intellectual disability belong in EVALUATION.problem_diagnosis.v1.">
+			misuse = <"Do not use for baseline education, housing, or occupation data; use published social and education artefacts for that purpose.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"a26dae3150e9de5f00ec8d3278a15732">
+		["build_uid"] = <"779002ca-f8ca-30a4-9c32-c297df7be324">
+	>
+
+definition
+	OBSERVATION[at0000] matches {    -- Entwicklungsanamnese
+		data matches {
+			HISTORY[at0001] matches {    -- Verlauf
+				events cardinality matches {1..1; unordered} matches {
+					POINT_EVENT[at0002] matches {    -- Entwicklungsereignis
+						data matches {
+							ITEM_TREE[at0003] matches {    -- Entwicklungsdaten
+								items cardinality matches {0..*; unordered} matches {
+									ELEMENT[at0010] occurrences matches {0..1} matches {    -- Gestationsalter Wochen
+										value matches {
+											DV_QUANTITY matches {*}
+										}
+									}
+									ELEMENT[at0011] occurrences matches {0..1} matches {    -- Geburtsgewicht Gramm
+										value matches {
+											DV_QUANTITY matches {*}
+										}
+									}
+									ELEMENT[at0012] occurrences matches {0..*} matches {    -- Geburtskomplikationen
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0100,    -- Hypoxisch-ischaemische Enzephalopathie
+													at0101,    -- Fruehgeburt
+													at0102,    -- Neonatale Anfaelle
+													at0103,    -- Neonatale Meningitis
+													at0104,    -- Neonatale Hypoglykaemie
+													at0105,    -- Traumatische Hirnverletzung
+													at0106,    -- Keine
+													at0107]    -- Unbekannt
+												}
+											}
+										}
+									}
+									ELEMENT[at0013] occurrences matches {0..1} matches {    -- NICU-Aufnahme
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0014] occurrences matches {0..1} matches {    -- NICU-Dauer Tage
+										value matches {
+											DV_QUANTITY matches {*}
+										}
+									}
+									ELEMENT[at0015] occurrences matches {0..1} matches {    -- Grobmotorische Entwicklung
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0108,    -- Normal
+													at0109,    -- Verzoegert
+													at0110,    -- Schwer verzoegert
+													at0111,    -- Regression
+													at0112]    -- Unbekannt
+												}
+											}
+										}
+									}
+									ELEMENT[at0016] occurrences matches {0..1} matches {    -- Feinmotorische Entwicklung
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0108,    -- Normal
+													at0109,    -- Verzoegert
+													at0110,    -- Schwer verzoegert
+													at0111,    -- Regression
+													at0112]    -- Unbekannt
+												}
+											}
+										}
+									}
+									ELEMENT[at0017] occurrences matches {0..1} matches {    -- Sprachentwicklung
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0108,    -- Normal
+													at0109,    -- Verzoegert
+													at0110,    -- Schwer verzoegert
+													at0111,    -- Regression
+													at0112]    -- Unbekannt
+												}
+											}
+										}
+									}
+									ELEMENT[at0018] occurrences matches {0..1} matches {    -- Soziale Entwicklung
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0108,    -- Normal
+													at0109,    -- Verzoegert
+													at0110,    -- Schwer verzoegert
+													at0111,    -- Regression
+													at0112]    -- Unbekannt
+												}
+											}
+										}
+									}
+									ELEMENT[at0019] occurrences matches {0..1} matches {    -- Kognitive Entwicklung gesamt
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0108,    -- Normal
+													at0113,    -- Grenzwertig
+													at0114,    -- Leichte Verzoegerung
+													at0115,    -- Mittlere Verzoegerung
+													at0116,    -- Schwere Verzoegerung
+													at0117,    -- Tiefgreifende Verzoegerung
+													at0111,    -- Regression
+													at0112]    -- Unbekannt
+												}
+											}
+										}
+									}
+									ELEMENT[at0020] occurrences matches {0..1} matches {    -- Entwicklungsregression vorhanden
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0021] occurrences matches {0..*} matches {    -- Regressionsdomaene
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0118,    -- Sprache
+													at0119,    -- Motorik
+													at0120,    -- Sozial
+													at0121,    -- Kognition
+													at0122,    -- Adaptiv
+													at0123]    -- Global
+												}
+											}
+										}
+									}
+									ELEMENT[at0022] occurrences matches {0..1} matches {    -- Regressionsbeginn
+										value matches {
+											DV_DATE matches {*}
+										}
+									}
+									ELEMENT[at0023] occurrences matches {0..1} matches {    -- Formale Entwicklungsdiagnostik erfolgt
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0024] occurrences matches {0..1} matches {    -- Diagnostiktool
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0124,    -- Bayley
+													at0125,    -- Denver
+													at0126,    -- ASQ3
+													at0127,    -- Griffiths
+													at0128,    -- Wechsler
+													at0129,    -- Vineland
+													at0130,    -- Deutsche U-Untersuchung
+													at0131,    -- Andere
+													at0132]    -- Keine
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Entwicklungsanamnese">
+					description = <"Beobachtung der Entwicklungsanamnese.">
+				>
+				["at0001"] = <
+					text = <"Verlauf">
+					description = <"Historie der Entwicklungsanamnese.">
+				>
+				["at0002"] = <
+					text = <"Entwicklungsereignis">
+					description = <"Zeitpunktbezogenes Ereignis der Entwicklungsanamnese.">
+				>
+				["at0003"] = <
+					text = <"Entwicklungsdaten">
+					description = <"Strukturierte Entwicklungsdaten.">
+				>
+				["at0010"] = <
+					text = <"Gestationsalter Wochen">
+					description = <"Gestationsalter bei Geburt in Wochen.">
+				>
+				["at0011"] = <
+					text = <"Geburtsgewicht Gramm">
+					description = <"Geburtsgewicht in Gramm.">
+				>
+				["at0012"] = <
+					text = <"Geburtskomplikationen">
+					description = <"Perinatale Komplikationen.">
+				>
+				["at0013"] = <
+					text = <"NICU-Aufnahme">
+					description = <"Kennzeichnet eine neonatologische Intensivaufnahme.">
+				>
+				["at0014"] = <
+					text = <"NICU-Dauer Tage">
+					description = <"Dauer des NICU-Aufenthalts in Tagen.">
+				>
+				["at0015"] = <
+					text = <"Grobmotorische Entwicklung">
+					description = <"Bewertung der grobmotorischen Entwicklung.">
+				>
+				["at0016"] = <
+					text = <"Feinmotorische Entwicklung">
+					description = <"Bewertung der feinmotorischen Entwicklung.">
+				>
+				["at0017"] = <
+					text = <"Sprachentwicklung">
+					description = <"Bewertung der Sprachentwicklung.">
+				>
+				["at0018"] = <
+					text = <"Soziale Entwicklung">
+					description = <"Bewertung der sozialen Entwicklung.">
+				>
+				["at0019"] = <
+					text = <"Kognitive Entwicklung gesamt">
+					description = <"Gesamtbewertung der kognitiven Entwicklung.">
+				>
+				["at0020"] = <
+					text = <"Entwicklungsregression vorhanden">
+					description = <"Kennzeichnet den Verlust zuvor erworbener Faehigkeiten.">
+				>
+				["at0021"] = <
+					text = <"Regressionsdomaene">
+					description = <"Betroffene Regressionsdomaene.">
+				>
+				["at0022"] = <
+					text = <"Regressionsbeginn">
+					description = <"Beginn der Entwicklungsregression.">
+				>
+				["at0023"] = <
+					text = <"Formale Entwicklungsdiagnostik erfolgt">
+					description = <"Kennzeichnet eine formale Entwicklungsdiagnostik.">
+				>
+				["at0024"] = <
+					text = <"Diagnostiktool">
+					description = <"Verwendetes Entwicklungsdiagnostik-Instrument.">
+				>
+				["at0100"] = <
+					text = <"Hypoxisch-ischaemische Enzephalopathie">
+					description = <"Hypoxisch-ischaemische Enzephalopathie.">
+				>
+				["at0101"] = <
+					text = <"Fruehgeburt">
+					description = <"Fruehgeburt.">
+				>
+				["at0102"] = <
+					text = <"Neonatale Anfaelle">
+					description = <"Neonatale Anfaelle.">
+				>
+				["at0103"] = <
+					text = <"Neonatale Meningitis">
+					description = <"Neonatale Meningitis.">
+				>
+				["at0104"] = <
+					text = <"Neonatale Hypoglykaemie">
+					description = <"Neonatale Hypoglykaemie.">
+				>
+				["at0105"] = <
+					text = <"Traumatische Hirnverletzung">
+					description = <"Perinatale traumatische Hirnverletzung.">
+				>
+				["at0106"] = <
+					text = <"Keine">
+					description = <"Keine Komplikationen.">
+				>
+				["at0107"] = <
+					text = <"Unbekannt">
+					description = <"Komplikationen unbekannt.">
+				>
+				["at0108"] = <
+					text = <"Normal">
+					description = <"Normale Entwicklung.">
+				>
+				["at0109"] = <
+					text = <"Verzoegert">
+					description = <"Verzoegerte Entwicklung.">
+				>
+				["at0110"] = <
+					text = <"Schwer verzoegert">
+					description = <"Schwer verzoegerte Entwicklung.">
+				>
+				["at0111"] = <
+					text = <"Regression">
+					description = <"Regression.">
+				>
+				["at0112"] = <
+					text = <"Unbekannt">
+					description = <"Entwicklungsstatus unbekannt.">
+				>
+				["at0113"] = <
+					text = <"Grenzwertig">
+					description = <"Grenzwertige Entwicklung.">
+				>
+				["at0114"] = <
+					text = <"Leichte Verzoegerung">
+					description = <"Leichte Verzoegerung.">
+				>
+				["at0115"] = <
+					text = <"Mittlere Verzoegerung">
+					description = <"Mittlere Verzoegerung.">
+				>
+				["at0116"] = <
+					text = <"Schwere Verzoegerung">
+					description = <"Schwere Verzoegerung.">
+				>
+				["at0117"] = <
+					text = <"Tiefgreifende Verzoegerung">
+					description = <"Tiefgreifende Verzoegerung.">
+				>
+				["at0118"] = <
+					text = <"Sprache">
+					description = <"Sprachdomaene.">
+				>
+				["at0119"] = <
+					text = <"Motorik">
+					description = <"Motorische Domaene.">
+				>
+				["at0120"] = <
+					text = <"Sozial">
+					description = <"Soziale Domaene.">
+				>
+				["at0121"] = <
+					text = <"Kognition">
+					description = <"Kognitive Domaene.">
+				>
+				["at0122"] = <
+					text = <"Adaptiv">
+					description = <"Adaptive Domaene.">
+				>
+				["at0123"] = <
+					text = <"Global">
+					description = <"Globale Regression.">
+				>
+				["at0124"] = <
+					text = <"Bayley">
+					description = <"Bayley-Assessment.">
+				>
+				["at0125"] = <
+					text = <"Denver">
+					description = <"Denver-Assessment.">
+				>
+				["at0126"] = <
+					text = <"ASQ3">
+					description = <"ASQ3-Assessment.">
+				>
+				["at0127"] = <
+					text = <"Griffiths">
+					description = <"Griffiths-Assessment.">
+				>
+				["at0128"] = <
+					text = <"Wechsler">
+					description = <"Wechsler-Assessment.">
+				>
+				["at0129"] = <
+					text = <"Vineland">
+					description = <"Vineland-Assessment.">
+				>
+				["at0130"] = <
+					text = <"Deutsche U-Untersuchung">
+					description = <"Deutsche U-Untersuchungsserie.">
+				>
+				["at0131"] = <
+					text = <"Andere">
+					description = <"Anderes Tool.">
+				>
+				["at0132"] = <
+					text = <"Keine">
+					description = <"Kein Tool.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Developmental history">
+					description = <"Observation of developmental history.">
+				>
+				["at0001"] = <
+					text = <"History">
+					description = <"History of developmental information.">
+				>
+				["at0002"] = <
+					text = <"Development event">
+					description = <"Point event for developmental information.">
+				>
+				["at0003"] = <
+					text = <"Development data">
+					description = <"Structured developmental data.">
+				>
+				["at0010"] = <
+					text = <"Gestational age weeks">
+					description = <"Gestational age at birth in weeks.">
+				>
+				["at0011"] = <
+					text = <"Birth weight grams">
+					description = <"Birth weight in grams.">
+				>
+				["at0012"] = <
+					text = <"Birth complications">
+					description = <"Perinatal complications.">
+				>
+				["at0013"] = <
+					text = <"NICU admission">
+					description = <"Indicates NICU admission.">
+				>
+				["at0014"] = <
+					text = <"NICU duration days">
+					description = <"NICU stay in days.">
+				>
+				["at0015"] = <
+					text = <"Gross motor development">
+					description = <"Assessment of gross motor development.">
+				>
+				["at0016"] = <
+					text = <"Fine motor development">
+					description = <"Assessment of fine motor development.">
+				>
+				["at0017"] = <
+					text = <"Language development">
+					description = <"Assessment of language development.">
+				>
+				["at0018"] = <
+					text = <"Social development">
+					description = <"Assessment of social development.">
+				>
+				["at0019"] = <
+					text = <"Cognitive development overall">
+					description = <"Overall cognitive development assessment.">
+				>
+				["at0020"] = <
+					text = <"Developmental regression present">
+					description = <"Indicates loss of previously acquired skills.">
+				>
+				["at0021"] = <
+					text = <"Developmental regression domain">
+					description = <"Affected regression domain.">
+				>
+				["at0022"] = <
+					text = <"Developmental regression onset date">
+					description = <"Onset date of regression.">
+				>
+				["at0023"] = <
+					text = <"Formal developmental assessment done">
+					description = <"Indicates formal developmental assessment.">
+				>
+				["at0024"] = <
+					text = <"Assessment tool used">
+					description = <"Assessment instrument used.">
+				>
+				["at0100"] = <
+					text = <"Hypoxic ischemic encephalopathy">
+					description = <"Hypoxic ischemic encephalopathy.">
+				>
+				["at0101"] = <
+					text = <"Preterm birth">
+					description = <"Preterm birth.">
+				>
+				["at0102"] = <
+					text = <"Neonatal seizures">
+					description = <"Neonatal seizures.">
+				>
+				["at0103"] = <
+					text = <"Neonatal meningitis">
+					description = <"Neonatal meningitis.">
+				>
+				["at0104"] = <
+					text = <"Neonatal hypoglycemia">
+					description = <"Neonatal hypoglycemia.">
+				>
+				["at0105"] = <
+					text = <"Traumatic brain injury">
+					description = <"Perinatal traumatic brain injury.">
+				>
+				["at0106"] = <
+					text = <"None">
+					description = <"No complications.">
+				>
+				["at0107"] = <
+					text = <"Unknown">
+					description = <"Complications unknown.">
+				>
+				["at0108"] = <
+					text = <"Normal">
+					description = <"Normal development.">
+				>
+				["at0109"] = <
+					text = <"Delayed">
+					description = <"Delayed development.">
+				>
+				["at0110"] = <
+					text = <"Severely delayed">
+					description = <"Severely delayed development.">
+				>
+				["at0111"] = <
+					text = <"Regression">
+					description = <"Regression.">
+				>
+				["at0112"] = <
+					text = <"Unknown">
+					description = <"Development status unknown.">
+				>
+				["at0113"] = <
+					text = <"Borderline">
+					description = <"Borderline development.">
+				>
+				["at0114"] = <
+					text = <"Mild delay">
+					description = <"Mild delay.">
+				>
+				["at0115"] = <
+					text = <"Moderate delay">
+					description = <"Moderate delay.">
+				>
+				["at0116"] = <
+					text = <"Severe delay">
+					description = <"Severe delay.">
+				>
+				["at0117"] = <
+					text = <"Profound delay">
+					description = <"Profound delay.">
+				>
+				["at0118"] = <
+					text = <"Language">
+					description = <"Language domain.">
+				>
+				["at0119"] = <
+					text = <"Motor">
+					description = <"Motor domain.">
+				>
+				["at0120"] = <
+					text = <"Social">
+					description = <"Social domain.">
+				>
+				["at0121"] = <
+					text = <"Cognitive">
+					description = <"Cognitive domain.">
+				>
+				["at0122"] = <
+					text = <"Adaptive">
+					description = <"Adaptive domain.">
+				>
+				["at0123"] = <
+					text = <"Global">
+					description = <"Global regression.">
+				>
+				["at0124"] = <
+					text = <"Bayley">
+					description = <"Bayley assessment.">
+				>
+				["at0125"] = <
+					text = <"Denver">
+					description = <"Denver assessment.">
+				>
+				["at0126"] = <
+					text = <"ASQ3">
+					description = <"ASQ3 assessment.">
+				>
+				["at0127"] = <
+					text = <"Griffiths">
+					description = <"Griffiths assessment.">
+				>
+				["at0128"] = <
+					text = <"Wechsler">
+					description = <"Wechsler assessment.">
+				>
+				["at0129"] = <
+					text = <"Vineland">
+					description = <"Vineland assessment.">
+				>
+				["at0130"] = <
+					text = <"German U examination">
+					description = <"German U examination series.">
+				>
+				["at0131"] = <
+					text = <"Other">
+					description = <"Other tool.">
+				>
+				["at0132"] = <
+					text = <"None">
+					description = <"No tool.">
+				>
+			>
+		>
+	>
