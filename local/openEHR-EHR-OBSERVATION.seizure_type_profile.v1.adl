@@ -1,0 +1,1180 @@
+archetype (adl_version=1.4; uid=c5ead829-8698-4853-bdb5-d80127e8f71f)
+	openEHR-EHR-OBSERVATION.seizure_type_profile.v1
+
+concept
+	[at0000]
+
+language
+	original_language = <[ISO_639-1::de]>
+	translations = <
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			author = <
+				["name"] = <"vEC team">
+			>
+		>
+	>
+
+description
+	original_author = <
+		["date"] = <"2026-03-26">
+		["name"] = <"vEC - Virtual Epilepsy Clinic">
+		["organisation"] = <"Charite Universitaetsmedizin Berlin">
+	>
+	lifecycle_state = <"in_development">
+	details = <
+		["de"] = <
+			language = <[ISO_639-1::de]>
+			purpose = <"Beobachtung eines wiederkehrenden epileptischen Anfallsphaenotyps nach ILAE 2025.">
+			use = <"Eine Instanz pro wiederkehrendem Anfallsphaenotyp. Die Anfallsklasse, der ILAE-2025-Anfallstyp, der Bewusstseinsbeurteiler sowie die zugrunde liegenden Komponenten Erinnerungsfaehigkeit und Responsivitaet werden getrennt erfasst. Wenn seizure_class = generalized, dann beschreibt 'epileptic_spasms' einen Anfallstyp; wenn seizure_class = focal oder unknown_whether_focal_or_generalized, dann beschreibt 'epileptic_spasms' einen Deskriptor der Anfallsentwicklung.">
+			misuse = <"Nicht fuer minutengenaue Einzelanfallslogs, nicht fuer Epilepsietyp-, Syndrom-, Aetiologie- oder DRE-Modellierung verwenden. Frequenz und Notfalllast gehoeren in OBSERVATION.seizure_burden.v1.">
+		>
+		["en"] = <
+			language = <[ISO_639-1::en]>
+			purpose = <"Observation of one recurring epileptic seizure phenotype following the 2025 ILAE seizure classification.">
+			use = <"Use one instance per recurring seizure phenotype. Seizure class, explicit ILAE 2025 seizure type, the consciousness classifier, and the underlying recall and responsiveness components are recorded separately. If seizure_class = generalized, 'epileptic_spasms' represents a seizure type; if seizure_class = focal or unknown_whether_focal_or_generalized, 'epileptic_spasms' represents a descriptor of seizure evolution.">
+			misuse = <"Do not use for minute-by-minute seizure logs or for epilepsy type, syndrome, etiology, or DRE modeling. Frequency and emergency burden belong in OBSERVATION.seizure_burden.v1.">
+		>
+	>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"9d67a70ab881d9116dacf71d8852f84d">
+		["build_uid"] = <"3f6f2c80-49d4-3a99-b4a1-06df8c7a3737">
+	>
+
+definition
+	OBSERVATION[at0000] matches {    -- Anfallsphaenotyp
+		data matches {
+			HISTORY[at0001] matches {    -- Verlauf
+				events cardinality matches {1..1; unordered} matches {
+					POINT_EVENT[at0002] matches {    -- Anfallsereignis
+						data matches {
+							ITEM_TREE[at0003] matches {    -- Anfallsdaten
+								items cardinality matches {0..*; unordered} matches {
+									ELEMENT[at0010] occurrences matches {0..1} matches {    -- Anfallsklasse
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0100,    -- Fokal
+													at0101,    -- Generalisiert
+													at0102,    -- Unbekannt, ob fokal oder generalisiert
+													at0103]    -- Nicht klassifizierbar
+												}
+											}
+										}
+									}
+									ELEMENT[at0011] occurrences matches {0..1} matches {    -- Anfallstyp
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0104,    -- Fokaler motorischer Anfall
+													at0105,    -- Fokaler nicht-motorischer Anfall
+													at0106,    -- Fokale epileptische Spasmen
+													at0107,    -- Fokal zu bilateral tonisch-klonisch
+													at0108,    -- Generalisierter tonisch-klonischer Anfall
+													at0109,    -- Generalisierter Absencenanfall
+													at0110,    -- Generalisierter myoklonischer Anfall
+													at0111,    -- Generalisierter tonischer Anfall
+													at0112,    -- Generalisierter klonischer Anfall
+													at0113,    -- Generalisierter atonischer Anfall
+													at0114,    -- Generalisierter myoklonisch-tonisch-klonischer Anfall
+													at0115,    -- Generalisierte epileptische Spasmen
+													at0116,    -- Unbekannter motorischer Anfall
+													at0117,    -- Unbekannter nicht-motorischer Anfall
+													at0118,    -- Unbekannter tonisch-klonischer Anfall
+													at0119,    -- Unbekannte epileptische Spasmen
+													at0120]    -- Anderer spezifizierter Anfallstyp
+												}
+											}
+										}
+									}
+									ELEMENT[at0012] occurrences matches {0..1} matches {    -- Anfallsbewusstsein
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0121,    -- Bewusstsein erhalten
+													at0122,    -- Bewusstsein beeintraechtigt
+													at0123,    -- Unbekannt
+													at0124]    -- Nicht zutreffend
+												}
+											}
+										}
+									}
+									ELEMENT[at0013] occurrences matches {0..*} matches {    -- Semeiologische Deskriptoren
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0130,    -- Tonisch
+													at0131,    -- Klonisch
+													at0132,    -- Tonisch-klonisch
+													at0133,    -- Myoklonisch
+													at0134,    -- Myoklonisch-tonisch-klonisch
+													at0135,    -- Myoklonisch-atonisch
+													at0136,    -- Atonisch
+													at0137,    -- Epileptische Spasmen
+													at0138,    -- Hyperkinetisch
+													at0139,    -- Automatismen
+													at0140,    -- Absenz
+													at0141,    -- Typische Absenz
+													at0142,    -- Atypische Absenz
+													at0143,    -- Myoklonische Absenz
+													at0144,    -- Lidmyoklonie
+													at0145,    -- Autonom
+													at0146,    -- Verhaltensarrest
+													at0147,    -- Kognitiv
+													at0148,    -- Emotional
+													at0149,    -- Sensorisch
+													at0150,    -- Aphasisch
+													at0151,    -- Gelastisch
+													at0152]    -- Epileptischer negativer Myoklonus
+												}
+											}
+										}
+									}
+									ELEMENT[at0014] occurrences matches {0..1} matches {    -- Lateralisierung
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0153,    -- Links
+													at0154,    -- Rechts
+													at0155,    -- Beidseitig
+													at0156,    -- Nicht zutreffend
+													at0157]    -- Unbekannt
+												}
+											}
+										}
+									}
+									ELEMENT[at0015] occurrences matches {0..1} matches {    -- Ausbreitung
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0158,    -- Bleibt fokal
+													at0159,    -- Fokal zu bilateral
+													at0160,    -- Primaer generalisiert
+													at0161]    -- Unbekannt
+												}
+											}
+										}
+									}
+									ELEMENT[at0016] occurrences matches {0..1} matches {    -- Chronologische Anfallssemiologie
+										value matches {
+											DV_TEXT matches {*}
+										}
+									}
+									ELEMENT[at0017] occurrences matches {0..*} matches {    -- Anfallsausloeser
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0162,    -- Fieber
+													at0163,    -- Schlafentzug
+													at0164,    -- Stress
+													at0165,    -- Ausgelassene ASM-Einnahme
+													at0166,    -- Photosensitivitaet
+													at0167,    -- Menstruationszyklus
+													at0168,    -- Interkurrente Erkrankung
+													at0169,    -- Keiner identifiziert
+													at0170,    -- Unbekannt
+													at0171]    -- Andere
+												}
+											}
+										}
+									}
+									ELEMENT[at0018] occurrences matches {0..1} matches {    -- Naechtliche Dominanz
+										value matches {
+											DV_BOOLEAN matches {*}
+										}
+									}
+									ELEMENT[at0019] occurrences matches {0..1} matches {    -- Tagesmuster
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0172,    -- Wach
+													at0173,    -- Schlaf
+													at0174,    -- Wach und Schlaf
+													at0175,    -- Kein Muster
+													at0176]    -- Unbekannt
+												}
+											}
+										}
+									}
+									ELEMENT[at0020] occurrences matches {0..*} matches {    -- Postiktale Merkmale
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0177,    -- Todd-Parese
+													at0178,    -- Verwirrtheit
+													at0179,    -- Schlaf
+													at0180,    -- Kopfschmerz
+													at0181,    -- Erbrechen
+													at0182,    -- Keine
+													at0183]    -- Unbekannt
+												}
+											}
+										}
+									}
+									ELEMENT[at0021] occurrences matches {0..1} matches {    -- Alter beim ersten Auftreten des Phaenotyps in Monaten
+										value matches {
+											DV_QUANTITY matches {*}
+										}
+									}
+									ELEMENT[at0022] occurrences matches {0..1} matches {    -- ILAE-Klassifikationsversion
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0184,    -- ILAE 2025
+													at0185]    -- ILAE 2017
+												}
+											}
+										}
+									}
+									ELEMENT[at0023] occurrences matches {0..1} matches {    -- Erinnerungsfaehigkeit nach dem Ereignis
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0186,    -- Erinnerungsfaehigkeit erhalten
+													at0187,    -- Erinnerungsfaehigkeit beeintraechtigt
+													at0188,    -- Erinnerungsfaehigkeit unbekannt
+													at0189]    -- Erinnerungsfaehigkeit nicht beurteilbar
+												}
+											}
+										}
+									}
+									ELEMENT[at0024] occurrences matches {0..1} matches {    -- Responsivitaet waehrend des Ereignisses
+										value matches {
+											DV_CODED_TEXT matches {
+												defining_code matches {
+													[local::
+													at0190,    -- Responsivitaet erhalten
+													at0191,    -- Responsivitaet beeintraechtigt
+													at0192,    -- Responsivitaet unbekannt
+													at0193]    -- Responsivitaet nicht beurteilbar
+												}
+											}
+										}
+									}
+									allow_archetype CLUSTER[at0900] occurrences matches {0..1} matches {    -- Provenienzslot
+										include
+											archetype_id/value matches {/openEHR-EHR-CLUSTER\.vec_extraction_provenance\.v[0-9]+/}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	terminologies_available = <"SNOMED-CT","vEC">
+	term_definitions = <
+		["de"] = <
+			items = <
+				["at0000"] = <
+					text = <"Anfallsphaenotyp">
+					description = <"Beobachtung eines wiederkehrenden epileptischen Anfallsphaenotyps.">
+				>
+				["at0001"] = <
+					text = <"Verlauf">
+					description = <"Historie des Anfallsphaenotyps.">
+				>
+				["at0002"] = <
+					text = <"Anfallsereignis">
+					description = <"Zeitpunktbezogenes Ereignis fuer den Anfallsphaenotyp.">
+				>
+				["at0003"] = <
+					text = <"Anfallsdaten">
+					description = <"Strukturierte Daten zum Anfallsphaenotyp.">
+				>
+				["at0010"] = <
+					text = <"Anfallsklasse">
+					description = <"ILAE-2025-Anfallsklasse.">
+				>
+				["at0011"] = <
+					text = <"Anfallstyp">
+					description = <"Expliziter ILAE-2025-Anfallstyp innerhalb der Anfallsklasse.">
+				>
+				["at0012"] = <
+					text = <"Anfallsbewusstsein">
+					description = <"Klinisch beurteilte Bewusstseinslage anhand von Erinnerungsfaehigkeit und Responsivitaet.">
+				>
+				["at0013"] = <
+					text = <"Semeiologische Deskriptoren">
+					description = <"Semeiologische Deskriptoren nach ILAE 2025.">
+				>
+				["at0014"] = <
+					text = <"Lateralisierung">
+					description = <"Lateralisierung des Anfallsphaenotyps.">
+				>
+				["at0015"] = <
+					text = <"Ausbreitung">
+					description = <"Ausbreitung oder Generalisierung des Anfallsphaenotyps.">
+				>
+				["at0016"] = <
+					text = <"Chronologische Anfallssemiologie">
+					description = <"Zeitlicher Ablauf der Anfallsmerkmale in freier Form.">
+				>
+				["at0017"] = <
+					text = <"Anfallsausloeser">
+					description = <"Berichtete oder vermutete Anfallsausloeser.">
+				>
+				["at0018"] = <
+					text = <"Naechtliche Dominanz">
+					description = <"Kennzeichnet eine naechtliche Dominanz.">
+				>
+				["at0019"] = <
+					text = <"Tagesmuster">
+					description = <"Tageszeitliches Muster.">
+				>
+				["at0020"] = <
+					text = <"Postiktale Merkmale">
+					description = <"Merkmale nach dem Anfall.">
+				>
+				["at0021"] = <
+					text = <"Alter beim ersten Auftreten des Phaenotyps in Monaten">
+					description = <"Alter beim ersten Auftreten dieses Anfallsphaenotyps in Monaten.">
+				>
+				["at0022"] = <
+					text = <"ILAE-Klassifikationsversion">
+					description = <"Verwendete ILAE-Klassifikationsversion. ILAE 2025 ist der Primaerstandard ab April 2025; ILAE 2017 bleibt fuer Legacy-Dokumente relevant.">
+				>
+				["at0023"] = <
+					text = <"Erinnerungsfaehigkeit nach dem Ereignis">
+					description = <"Komponente der ILAE-2025-Bewusstseinsbeurteilung anhand erinnerter Inhalte nach dem Anfall.">
+				>
+				["at0024"] = <
+					text = <"Responsivitaet waehrend des Ereignisses">
+					description = <"Komponente der ILAE-2025-Bewusstseinsbeurteilung anhand beobachteter Responsivitaet waehrend des Anfalls.">
+				>
+				["at0100"] = <
+					text = <"Fokal">
+					description = <"Fokale Klasse nach ILAE 2025.">
+				>
+				["at0101"] = <
+					text = <"Generalisiert">
+					description = <"Generalisierte Klasse nach ILAE 2025.">
+				>
+				["at0102"] = <
+					text = <"Unbekannt, ob fokal oder generalisiert">
+					description = <"Anfall unklar zwischen fokal und generalisiert.">
+				>
+				["at0103"] = <
+					text = <"Nicht klassifizierbar">
+					description = <"Epileptischer Anfall ohne ausreichende Klassifikationsinformation.">
+				>
+				["at0104"] = <
+					text = <"Fokaler motorischer Anfall">
+					description = <"Fokaler Anfall mit motorischem Typ.">
+				>
+				["at0105"] = <
+					text = <"Fokaler nicht-motorischer Anfall">
+					description = <"Fokaler Anfall mit nicht-motorischem Typ.">
+				>
+				["at0106"] = <
+					text = <"Fokale epileptische Spasmen">
+					description = <"Fokaler Anfall mit epileptischen Spasmen als Typ oder dominanter Entwicklung.">
+				>
+				["at0107"] = <
+					text = <"Fokal zu bilateral tonisch-klonisch">
+					description = <"Fokaler Anfall mit bilateraler tonisch-klonischer Entwicklung.">
+				>
+				["at0108"] = <
+					text = <"Generalisierter tonisch-klonischer Anfall">
+					description = <"Generalisierter tonisch-klonischer Anfall.">
+				>
+				["at0109"] = <
+					text = <"Generalisierter Absencenanfall">
+					description = <"Generalisierter Absencenanfall.">
+				>
+				["at0110"] = <
+					text = <"Generalisierter myoklonischer Anfall">
+					description = <"Generalisierter myoklonischer Anfall.">
+				>
+				["at0111"] = <
+					text = <"Generalisierter tonischer Anfall">
+					description = <"Generalisierter tonischer Anfall.">
+				>
+				["at0112"] = <
+					text = <"Generalisierter klonischer Anfall">
+					description = <"Generalisierter klonischer Anfall.">
+				>
+				["at0113"] = <
+					text = <"Generalisierter atonischer Anfall">
+					description = <"Generalisierter atonischer Anfall.">
+				>
+				["at0114"] = <
+					text = <"Generalisierter myoklonisch-tonisch-klonischer Anfall">
+					description = <"Generalisierter myoklonisch-tonisch-klonischer Anfall.">
+				>
+				["at0115"] = <
+					text = <"Generalisierte epileptische Spasmen">
+					description = <"Generalisierter Anfallstyp epileptische Spasmen.">
+				>
+				["at0116"] = <
+					text = <"Unbekannter motorischer Anfall">
+					description = <"Unbekannter Anfall mit motorischer Erscheinung.">
+				>
+				["at0117"] = <
+					text = <"Unbekannter nicht-motorischer Anfall">
+					description = <"Unbekannter Anfall mit nicht-motorischer Erscheinung.">
+				>
+				["at0118"] = <
+					text = <"Unbekannter tonisch-klonischer Anfall">
+					description = <"Unbekannter tonisch-klonischer Anfall.">
+				>
+				["at0119"] = <
+					text = <"Unbekannte epileptische Spasmen">
+					description = <"Unbekannter Anfall mit epileptischen Spasmen.">
+				>
+				["at0120"] = <
+					text = <"Anderer spezifizierter Anfallstyp">
+					description = <"Anderer spezifizierter ILAE-2025-Anfallstyp.">
+				>
+				["at0121"] = <
+					text = <"Bewusstsein erhalten">
+					description = <"Bewusstsein erhalten nach ILAE 2025; kein passender SNOMED-CT-Code verfuegbar.">
+				>
+				["at0122"] = <
+					text = <"Bewusstsein beeintraechtigt">
+					description = <"Bewusstsein beeintraechtigt nach ILAE 2025; kein passender SNOMED-CT-Code verfuegbar.">
+				>
+				["at0123"] = <
+					text = <"Unbekannt">
+					description = <"Bewusstseinsstatus unbekannt.">
+				>
+				["at0124"] = <
+					text = <"Nicht zutreffend">
+					description = <"Bewusstseinsklassifikator nicht zutreffend.">
+				>
+				["at0130"] = <
+					text = <"Tonisch">
+					description = <"Tonisches Deskriptormerkmal.">
+				>
+				["at0131"] = <
+					text = <"Klonisch">
+					description = <"Klonisches Deskriptormerkmal.">
+				>
+				["at0132"] = <
+					text = <"Tonisch-klonisch">
+					description = <"Tonisch-klonisches Deskriptormerkmal.">
+				>
+				["at0133"] = <
+					text = <"Myoklonisch">
+					description = <"Myoklonisches Deskriptormerkmal.">
+				>
+				["at0134"] = <
+					text = <"Myoklonisch-tonisch-klonisch">
+					description = <"Myoklonisch-tonisch-klonisches Deskriptormerkmal.">
+				>
+				["at0135"] = <
+					text = <"Myoklonisch-atonisch">
+					description = <"Myoklonisch-atonisches Deskriptormerkmal.">
+				>
+				["at0136"] = <
+					text = <"Atonisch">
+					description = <"Atonisches Deskriptormerkmal.">
+				>
+				["at0137"] = <
+					text = <"Epileptische Spasmen">
+					description = <"Wenn seizure_class = generalized, entspricht dies einem Anfallstyp. Wenn seizure_class = focal oder unknown_whether_focal_or_generalized, beschreibt es einen Deskriptor der Anfallsentwicklung.">
+				>
+				["at0138"] = <
+					text = <"Hyperkinetisch">
+					description = <"Hyperkinetisches Deskriptormerkmal.">
+				>
+				["at0139"] = <
+					text = <"Automatismen">
+					description = <"Automatismen als Deskriptor.">
+				>
+				["at0140"] = <
+					text = <"Absenz">
+					description = <"Absenzmerkmal.">
+				>
+				["at0141"] = <
+					text = <"Typische Absenz">
+					description = <"Typische Absenz.">
+				>
+				["at0142"] = <
+					text = <"Atypische Absenz">
+					description = <"Atypische Absenz.">
+				>
+				["at0143"] = <
+					text = <"Myoklonische Absenz">
+					description = <"Myoklonische Absenz.">
+				>
+				["at0144"] = <
+					text = <"Lidmyoklonie">
+					description = <"Lidmyoklonie.">
+				>
+				["at0145"] = <
+					text = <"Autonom">
+					description = <"Autonomer Deskriptor.">
+				>
+				["at0146"] = <
+					text = <"Verhaltensarrest">
+					description = <"Verhaltensarrest.">
+				>
+				["at0147"] = <
+					text = <"Kognitiv">
+					description = <"Kognitiver Deskriptor.">
+				>
+				["at0148"] = <
+					text = <"Emotional">
+					description = <"Emotionaler Deskriptor.">
+				>
+				["at0149"] = <
+					text = <"Sensorisch">
+					description = <"Sensorischer Deskriptor.">
+				>
+				["at0150"] = <
+					text = <"Aphasisch">
+					description = <"Aphasischer Deskriptor.">
+				>
+				["at0151"] = <
+					text = <"Gelastisch">
+					description = <"Gelastischer Deskriptor.">
+				>
+				["at0152"] = <
+					text = <"Epileptischer negativer Myoklonus">
+					description = <"Epileptischer negativer Myoklonus; kein passender SNOMED-CT-Code verfuegbar.">
+				>
+				["at0153"] = <
+					text = <"Links">
+					description = <"Linksseitig.">
+				>
+				["at0154"] = <
+					text = <"Rechts">
+					description = <"Rechtsseitig.">
+				>
+				["at0155"] = <
+					text = <"Beidseitig">
+					description = <"Beidseitig.">
+				>
+				["at0156"] = <
+					text = <"Nicht zutreffend">
+					description = <"Lateralisierung nicht zutreffend.">
+				>
+				["at0157"] = <
+					text = <"Unbekannt">
+					description = <"Lateralisierung unbekannt.">
+				>
+				["at0158"] = <
+					text = <"Bleibt fokal">
+					description = <"Anfall bleibt fokal.">
+				>
+				["at0159"] = <
+					text = <"Fokal zu bilateral">
+					description = <"Fokaler Anfall mit bilateraler Ausbreitung.">
+				>
+				["at0160"] = <
+					text = <"Primaer generalisiert">
+					description = <"Anfall ist primaer generalisiert.">
+				>
+				["at0161"] = <
+					text = <"Unbekannt">
+					description = <"Ausbreitung unbekannt.">
+				>
+				["at0162"] = <
+					text = <"Fieber">
+					description = <"Fieber als Ausloeser.">
+				>
+				["at0163"] = <
+					text = <"Schlafentzug">
+					description = <"Schlafentzug als Ausloeser.">
+				>
+				["at0164"] = <
+					text = <"Stress">
+					description = <"Stress als Ausloeser.">
+				>
+				["at0165"] = <
+					text = <"Ausgelassene ASM-Einnahme">
+					description = <"Ausgelassene ASM-Einnahme als Ausloeser.">
+				>
+				["at0166"] = <
+					text = <"Photosensitivitaet">
+					description = <"Photosensitivitaet als Ausloeser.">
+				>
+				["at0167"] = <
+					text = <"Menstruationszyklus">
+					description = <"Menstruationszyklus als Ausloeser.">
+				>
+				["at0168"] = <
+					text = <"Interkurrente Erkrankung">
+					description = <"Interkurrente Erkrankung als Ausloeser.">
+				>
+				["at0169"] = <
+					text = <"Keiner identifiziert">
+					description = <"Kein identifizierter Ausloeser.">
+				>
+				["at0170"] = <
+					text = <"Unbekannt">
+					description = <"Ausloeser unbekannt.">
+				>
+				["at0171"] = <
+					text = <"Andere">
+					description = <"Anderer Ausloeser.">
+				>
+				["at0172"] = <
+					text = <"Wach">
+					description = <"Vorwiegend im Wachzustand.">
+				>
+				["at0173"] = <
+					text = <"Schlaf">
+					description = <"Vorwiegend im Schlaf.">
+				>
+				["at0174"] = <
+					text = <"Wach und Schlaf">
+					description = <"Im Wachzustand und Schlaf.">
+				>
+				["at0175"] = <
+					text = <"Kein Muster">
+					description = <"Kein klares Tagesmuster.">
+				>
+				["at0176"] = <
+					text = <"Unbekannt">
+					description = <"Tagesmuster unbekannt.">
+				>
+				["at0177"] = <
+					text = <"Todd-Parese">
+					description = <"Todd-Parese.">
+				>
+				["at0178"] = <
+					text = <"Verwirrtheit">
+					description = <"Postiktale Verwirrtheit.">
+				>
+				["at0179"] = <
+					text = <"Schlaf">
+					description = <"Postiktaler Schlaf.">
+				>
+				["at0180"] = <
+					text = <"Kopfschmerz">
+					description = <"Postiktaler Kopfschmerz.">
+				>
+				["at0181"] = <
+					text = <"Erbrechen">
+					description = <"Postiktales Erbrechen.">
+				>
+				["at0182"] = <
+					text = <"Keine">
+					description = <"Keine postiktalen Merkmale.">
+				>
+				["at0183"] = <
+					text = <"Unbekannt">
+					description = <"Postiktale Merkmale unbekannt.">
+				>
+				["at0184"] = <
+					text = <"ILAE 2025">
+					description = <"Primaere ILAE-Klassifikationsversion ab April 2025.">
+				>
+				["at0185"] = <
+					text = <"ILAE 2017">
+					description = <"Legacy-Klassifikation fuer Dokumente vor April 2025.">
+				>
+				["at0186"] = <
+					text = <"Erinnerungsfaehigkeit erhalten">
+					description = <"Erinnerungsfaehigkeit nach dem Ereignis spricht fuer erhaltenes Bewusstsein.">
+				>
+				["at0187"] = <
+					text = <"Erinnerungsfaehigkeit beeintraechtigt">
+					description = <"Erinnerungsfaehigkeit nach dem Ereignis spricht fuer beeintraechtigtes Bewusstsein.">
+				>
+				["at0188"] = <
+					text = <"Erinnerungsfaehigkeit unbekannt">
+					description = <"Erinnerungsfaehigkeit nach dem Ereignis ist unbekannt.">
+				>
+				["at0189"] = <
+					text = <"Erinnerungsfaehigkeit nicht beurteilbar">
+					description = <"Erinnerungsfaehigkeit nach dem Ereignis war nicht beurteilbar oder nicht anwendbar.">
+				>
+				["at0190"] = <
+					text = <"Responsivitaet erhalten">
+					description = <"Beobachtete Responsivitaet waehrend des Ereignisses spricht fuer erhaltenes Bewusstsein.">
+				>
+				["at0191"] = <
+					text = <"Responsivitaet beeintraechtigt">
+					description = <"Beobachtete Responsivitaet waehrend des Ereignisses spricht fuer beeintraechtigtes Bewusstsein.">
+				>
+				["at0192"] = <
+					text = <"Responsivitaet unbekannt">
+					description = <"Responsivitaet waehrend des Ereignisses ist unbekannt.">
+				>
+				["at0193"] = <
+					text = <"Responsivitaet nicht beurteilbar">
+					description = <"Responsivitaet waehrend des Ereignisses war nicht beurteilbar oder nicht anwendbar.">
+				>
+				["at0900"] = <
+					text = <"Provenienzslot">
+					description = <"Slot fuer den gemeinsamen vEC-Provenienzcluster.">
+				>
+			>
+		>
+		["en"] = <
+			items = <
+				["at0000"] = <
+					text = <"Seizure phenotype">
+					description = <"Observation of one recurring epileptic seizure phenotype.">
+				>
+				["at0001"] = <
+					text = <"History">
+					description = <"History of the seizure phenotype.">
+				>
+				["at0002"] = <
+					text = <"Seizure event">
+					description = <"Point event for the seizure phenotype.">
+				>
+				["at0003"] = <
+					text = <"Seizure data">
+					description = <"Structured seizure phenotype data.">
+				>
+				["at0010"] = <
+					text = <"Seizure class">
+					description = <"ILAE 2025 seizure class.">
+				>
+				["at0011"] = <
+					text = <"Seizure type">
+					description = <"Explicit ILAE 2025 seizure type within the seizure class.">
+				>
+				["at0012"] = <
+					text = <"Seizure consciousness">
+					description = <"Clinician-assessed consciousness based on awareness and responsiveness.">
+				>
+				["at0013"] = <
+					text = <"Semiology descriptors">
+					description = <"Semiology descriptors following ILAE 2025.">
+				>
+				["at0014"] = <
+					text = <"Seizure lateralization">
+					description = <"Lateralization of the seizure phenotype.">
+				>
+				["at0015"] = <
+					text = <"Seizure propagation">
+					description = <"Propagation or generalization pattern.">
+				>
+				["at0016"] = <
+					text = <"Chronological seizure semiology">
+					description = <"Temporal sequence of seizure features in free text.">
+				>
+				["at0017"] = <
+					text = <"Seizure triggers">
+					description = <"Reported or suspected seizure triggers.">
+				>
+				["at0018"] = <
+					text = <"Nocturnal predominance">
+					description = <"Indicates nocturnal predominance.">
+				>
+				["at0019"] = <
+					text = <"Diurnal pattern">
+					description = <"Time-of-day pattern.">
+				>
+				["at0020"] = <
+					text = <"Postictal features">
+					description = <"Features after the seizure.">
+				>
+				["at0021"] = <
+					text = <"Age at first phenotype in months">
+					description = <"Age at first occurrence of this seizure phenotype in months.">
+				>
+				["at0022"] = <
+					text = <"ILAE classification version">
+					description = <"Applied ILAE classification version. ILAE 2025 is the primary standard from April 2025 onward, while ILAE 2017 remains relevant for legacy documents.">
+				>
+				["at0023"] = <
+					text = <"Recall after event">
+					description = <"ILAE 2025 consciousness subcomponent describing whether recall after the seizure was preserved.">
+				>
+				["at0024"] = <
+					text = <"Responsiveness during event">
+					description = <"ILAE 2025 consciousness subcomponent describing observed responsiveness during the seizure.">
+				>
+				["at0100"] = <
+					text = <"Focal">
+					description = <"Focal class according to ILAE 2025.">
+				>
+				["at0101"] = <
+					text = <"Generalized">
+					description = <"Generalized class according to ILAE 2025.">
+				>
+				["at0102"] = <
+					text = <"Unknown whether focal or generalized">
+					description = <"Seizure class unknown between focal and generalized.">
+				>
+				["at0103"] = <
+					text = <"Unclassified">
+					description = <"Epileptic seizure without enough information to classify further.">
+				>
+				["at0104"] = <
+					text = <"Focal motor seizure">
+					description = <"Focal seizure with motor type.">
+				>
+				["at0105"] = <
+					text = <"Focal nonmotor seizure">
+					description = <"Focal seizure with nonmotor type.">
+				>
+				["at0106"] = <
+					text = <"Focal epileptic spasms">
+					description = <"Focal seizure with epileptic spasms as type or dominant evolution.">
+				>
+				["at0107"] = <
+					text = <"Focal to bilateral tonic-clonic seizure">
+					description = <"Focal seizure with bilateral tonic-clonic evolution.">
+				>
+				["at0108"] = <
+					text = <"Generalized tonic-clonic seizure">
+					description = <"Generalized tonic-clonic seizure.">
+				>
+				["at0109"] = <
+					text = <"Generalized absence seizure">
+					description = <"Generalized absence seizure.">
+				>
+				["at0110"] = <
+					text = <"Generalized myoclonic seizure">
+					description = <"Generalized myoclonic seizure.">
+				>
+				["at0111"] = <
+					text = <"Generalized tonic seizure">
+					description = <"Generalized tonic seizure.">
+				>
+				["at0112"] = <
+					text = <"Generalized clonic seizure">
+					description = <"Generalized clonic seizure.">
+				>
+				["at0113"] = <
+					text = <"Generalized atonic seizure">
+					description = <"Generalized atonic seizure.">
+				>
+				["at0114"] = <
+					text = <"Generalized myoclonic-tonic-clonic seizure">
+					description = <"Generalized myoclonic-tonic-clonic seizure.">
+				>
+				["at0115"] = <
+					text = <"Generalized epileptic spasms">
+					description = <"Generalized epileptic spasms as seizure type.">
+				>
+				["at0116"] = <
+					text = <"Unknown motor seizure">
+					description = <"Unknown seizure with motor manifestation.">
+				>
+				["at0117"] = <
+					text = <"Unknown nonmotor seizure">
+					description = <"Unknown seizure with nonmotor manifestation.">
+				>
+				["at0118"] = <
+					text = <"Unknown tonic-clonic seizure">
+					description = <"Unknown tonic-clonic seizure.">
+				>
+				["at0119"] = <
+					text = <"Unknown epileptic spasms">
+					description = <"Unknown seizure with epileptic spasms.">
+				>
+				["at0120"] = <
+					text = <"Other specified seizure type">
+					description = <"Other specified ILAE 2025 seizure type.">
+				>
+				["at0121"] = <
+					text = <"Preserved consciousness">
+					description = <"Preserved consciousness according to ILAE 2025; no current SNOMED-CT concept available.">
+				>
+				["at0122"] = <
+					text = <"Impaired consciousness">
+					description = <"Impaired consciousness according to ILAE 2025; no current SNOMED-CT concept available.">
+				>
+				["at0123"] = <
+					text = <"Unknown">
+					description = <"Consciousness status unknown.">
+				>
+				["at0124"] = <
+					text = <"Not applicable">
+					description = <"Consciousness classifier not applicable.">
+				>
+				["at0130"] = <
+					text = <"Tonic">
+					description = <"Tonic descriptor.">
+				>
+				["at0131"] = <
+					text = <"Clonic">
+					description = <"Clonic descriptor.">
+				>
+				["at0132"] = <
+					text = <"Tonic-clonic">
+					description = <"Tonic-clonic descriptor.">
+				>
+				["at0133"] = <
+					text = <"Myoclonic">
+					description = <"Myoclonic descriptor.">
+				>
+				["at0134"] = <
+					text = <"Myoclonic-tonic-clonic">
+					description = <"Myoclonic-tonic-clonic descriptor.">
+				>
+				["at0135"] = <
+					text = <"Myoclonic-atonic">
+					description = <"Myoclonic-atonic descriptor.">
+				>
+				["at0136"] = <
+					text = <"Atonic">
+					description = <"Atonic descriptor.">
+				>
+				["at0137"] = <
+					text = <"Epileptic spasms">
+					description = <"If seizure_class = generalized, this represents a seizure type. If seizure_class = focal or unknown_whether_focal_or_generalized, it is a descriptor of seizure evolution.">
+				>
+				["at0138"] = <
+					text = <"Hyperkinetic">
+					description = <"Hyperkinetic descriptor.">
+				>
+				["at0139"] = <
+					text = <"Automatisms">
+					description = <"Automatisms descriptor.">
+				>
+				["at0140"] = <
+					text = <"Absence">
+					description = <"Absence descriptor.">
+				>
+				["at0141"] = <
+					text = <"Typical absence">
+					description = <"Typical absence.">
+				>
+				["at0142"] = <
+					text = <"Atypical absence">
+					description = <"Atypical absence.">
+				>
+				["at0143"] = <
+					text = <"Myoclonic absence">
+					description = <"Myoclonic absence.">
+				>
+				["at0144"] = <
+					text = <"Eyelid myoclonia">
+					description = <"Eyelid myoclonia.">
+				>
+				["at0145"] = <
+					text = <"Autonomic">
+					description = <"Autonomic descriptor.">
+				>
+				["at0146"] = <
+					text = <"Behavior arrest">
+					description = <"Behavior arrest descriptor.">
+				>
+				["at0147"] = <
+					text = <"Cognitive">
+					description = <"Cognitive descriptor.">
+				>
+				["at0148"] = <
+					text = <"Emotional">
+					description = <"Emotional descriptor.">
+				>
+				["at0149"] = <
+					text = <"Sensory">
+					description = <"Sensory descriptor.">
+				>
+				["at0150"] = <
+					text = <"Aphasic">
+					description = <"Aphasic descriptor.">
+				>
+				["at0151"] = <
+					text = <"Gelastic">
+					description = <"Gelastic descriptor.">
+				>
+				["at0152"] = <
+					text = <"Epileptic negative myoclonus">
+					description = <"Epileptic negative myoclonus; no current SNOMED-CT concept available.">
+				>
+				["at0153"] = <
+					text = <"Left">
+					description = <"Left-sided.">
+				>
+				["at0154"] = <
+					text = <"Right">
+					description = <"Right-sided.">
+				>
+				["at0155"] = <
+					text = <"Bilateral">
+					description = <"Bilateral.">
+				>
+				["at0156"] = <
+					text = <"Not applicable">
+					description = <"Laterality not applicable.">
+				>
+				["at0157"] = <
+					text = <"Unknown">
+					description = <"Laterality unknown.">
+				>
+				["at0158"] = <
+					text = <"Remains focal">
+					description = <"The seizure remains focal.">
+				>
+				["at0159"] = <
+					text = <"Focal to bilateral">
+					description = <"Focal seizure with bilateral spread.">
+				>
+				["at0160"] = <
+					text = <"Primarily generalized">
+					description = <"The seizure is primarily generalized.">
+				>
+				["at0161"] = <
+					text = <"Unknown">
+					description = <"Propagation unknown.">
+				>
+				["at0162"] = <
+					text = <"Fever">
+					description = <"Fever as trigger.">
+				>
+				["at0163"] = <
+					text = <"Sleep deprivation">
+					description = <"Sleep deprivation as trigger.">
+				>
+				["at0164"] = <
+					text = <"Stress">
+					description = <"Stress as trigger.">
+				>
+				["at0165"] = <
+					text = <"Missed ASM dose">
+					description = <"Missed ASM dose as trigger.">
+				>
+				["at0166"] = <
+					text = <"Photosensitivity">
+					description = <"Photosensitivity as trigger.">
+				>
+				["at0167"] = <
+					text = <"Menstrual cycle">
+					description = <"Menstrual cycle as trigger.">
+				>
+				["at0168"] = <
+					text = <"Intercurrent illness">
+					description = <"Intercurrent illness as trigger.">
+				>
+				["at0169"] = <
+					text = <"None identified">
+					description = <"No identified trigger.">
+				>
+				["at0170"] = <
+					text = <"Unknown">
+					description = <"Trigger unknown.">
+				>
+				["at0171"] = <
+					text = <"Other">
+					description = <"Other trigger.">
+				>
+				["at0172"] = <
+					text = <"Waking">
+					description = <"Predominantly in wakefulness.">
+				>
+				["at0173"] = <
+					text = <"Sleep">
+					description = <"Predominantly during sleep.">
+				>
+				["at0174"] = <
+					text = <"Waking and sleep">
+					description = <"Occurs in wakefulness and sleep.">
+				>
+				["at0175"] = <
+					text = <"No pattern">
+					description = <"No clear time-of-day pattern.">
+				>
+				["at0176"] = <
+					text = <"Unknown">
+					description = <"Time-of-day pattern unknown.">
+				>
+				["at0177"] = <
+					text = <"Todd paresis">
+					description = <"Todd paresis.">
+				>
+				["at0178"] = <
+					text = <"Confusion">
+					description = <"Postictal confusion.">
+				>
+				["at0179"] = <
+					text = <"Sleep">
+					description = <"Postictal sleep.">
+				>
+				["at0180"] = <
+					text = <"Headache">
+					description = <"Postictal headache.">
+				>
+				["at0181"] = <
+					text = <"Vomiting">
+					description = <"Postictal vomiting.">
+				>
+				["at0182"] = <
+					text = <"None">
+					description = <"No postictal features.">
+				>
+				["at0183"] = <
+					text = <"Unknown">
+					description = <"Postictal features unknown.">
+				>
+				["at0184"] = <
+					text = <"ILAE 2025">
+					description = <"Primary ILAE classification version from April 2025 onward.">
+				>
+				["at0185"] = <
+					text = <"ILAE 2017">
+					description = <"Legacy classification used for documents before April 2025.">
+				>
+				["at0186"] = <
+					text = <"Recall preserved">
+					description = <"Post-event recall suggests preserved consciousness.">
+				>
+				["at0187"] = <
+					text = <"Recall impaired">
+					description = <"Post-event recall suggests impaired consciousness.">
+				>
+				["at0188"] = <
+					text = <"Recall unknown">
+					description = <"Post-event recall is unknown.">
+				>
+				["at0189"] = <
+					text = <"Recall not assessable">
+					description = <"Post-event recall was not assessable or not applicable.">
+				>
+				["at0190"] = <
+					text = <"Responsiveness preserved">
+					description = <"Observed responsiveness during the event suggests preserved consciousness.">
+				>
+				["at0191"] = <
+					text = <"Responsiveness impaired">
+					description = <"Observed responsiveness during the event suggests impaired consciousness.">
+				>
+				["at0192"] = <
+					text = <"Responsiveness unknown">
+					description = <"Responsiveness during the event is unknown.">
+				>
+				["at0193"] = <
+					text = <"Responsiveness not assessable">
+					description = <"Responsiveness during the event was not assessable or not applicable.">
+				>
+				["at0900"] = <
+					text = <"Provenance slot">
+					description = <"Slot for the shared vEC provenance cluster.">
+				>
+			>
+		>
+	>
+	term_bindings = <
+		["SNOMED-CT"] = <
+			items = <
+				["at0153"] = <[SNOMED-CT::7771000]>
+				["at0154"] = <[SNOMED-CT::24028007]>
+				["at0155"] = <[SNOMED-CT::51440002]>
+				["at0162"] = <[SNOMED-CT::386661006]>
+				["at0166"] = <[SNOMED-CT::8913005]>
+				["at0177"] = <[SNOMED-CT::55461004]>
+			>
+		>
+		["vEC"] = <
+			items = <
+				["at0121"] = <[vEC::PRESERVED-CONSCIOUSNESS]>
+				["at0122"] = <[vEC::IMPAIRED-CONSCIOUSNESS]>
+				["at0152"] = <[vEC::EPILEPTIC-NEGATIVE-MYOCLONUS]>
+			>
+		>
+	>
